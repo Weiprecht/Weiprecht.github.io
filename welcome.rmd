@@ -1,15 +1,15 @@
 ---
-title: "Welcome"
-author: "Adam E."
-date: "`r Sys.Date()`"
+title: "Welcome To My Home Page"
 output: html_document
 ---
 
+
 # Adam Ercanbrack
+IMG_0787.jpg
 
 ## Biography
 ### Adam Ercanbrack is a native of Nebraska and lives in Virginia with his wife, Lynette, and eight kids. He graduated with a BA in Political Philosophy from Weber State University in 1999 and received a MA in International Relations, Middle East Studies from American University in 2003. Adam has extensive experience working in international relations, he enjoys European, East Asian, and US Colonial History, and has become a fan of coding.
 ### During the COVID lockdowns, Adam experimented with Python and decided he'd like to try a new career. He found a job as an Analytic Methodologist and applied for an academic program with his work that would allow him to study Data Science. Adam is currently   pursuing an MS in Data Science with SMU and is excited to stretch his mind and learn new things.
 
-"D:\Website\SimpleWebsite\Weiprecht.github.io\IMG_0787.jpg"
+
 
