@@ -3,10 +3,12 @@ navbar:
   title: "Statistical Insights"
   left:
     - text: "Home"
-      href: index.html
+      href: welcome.html
     - text: "CLT"
       href: CLT_2.html
     - text: "Beach Comber"
       href: Beach_Comber_Pvalue_Simulation.html
     - text: "Beer Project"
       href: Beer_project_code.html
+    - text: "Help Index"
+      href: index.html
