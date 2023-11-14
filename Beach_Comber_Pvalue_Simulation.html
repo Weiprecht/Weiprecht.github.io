@@ -246,7 +246,7 @@ $(document).ready(function () {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="welcome.html">Home</a>
+  <a href="index.html">Welcome</a>
 </li>
 <li>
   <a href="CLT_2.html">CLT</a>
@@ -258,7 +258,7 @@ $(document).ready(function () {
   <a href="Beer_project_code.html">Beer Project</a>
 </li>
 <li>
-  <a href="index.html">Help Index</a>
+  <a href="help_file.html">Help</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -308,7 +308,7 @@ class="section level2">
 <h2>display the distribution of sample means (plot a histogram of the
 sample means)</h2>
 <pre class="r"><code>hist(xbar_holder, col = &quot;blue&quot;, main = paste(&quot;Distribution of the sample mean: n = &quot;, n), xlab = &quot;Sample Means&quot;, xlim = c(10,31))</code></pre>
-<p><img src="Beach_Comber_Pvalue_Simulation_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p><img src="Beach_Comber_Pvalue_Simulation_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 </div>
 <div
 id="summary-statistics-of-the-distribution-of-the-simulated-sample-means."
@@ -317,7 +317,7 @@ class="section level2">
 means.</h2>
 <pre class="r"><code>summary(xbar_holder)</code></pre>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##   10.62   19.15   20.98   20.98   22.79   30.60</code></pre>
+##   9.721  19.160  21.003  20.989  22.794  30.095</code></pre>
 </div>
 <div id="the-pvalue" class="section level2">
 <h2>The Pvalue!</h2>
@@ -325,7 +325,7 @@ means.</h2>
 what was observed assuming the null hypothesis is true.</p>
 <pre class="r"><code>pvalue = length(which(xbar_holder&gt;29.86))/simulations
 pvalue</code></pre>
-<pre><code>## [1] 6e-04</code></pre>
+<pre><code>## [1] 2e-04</code></pre>
 </div>
 </div>
 
