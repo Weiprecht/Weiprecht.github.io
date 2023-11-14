@@ -1,6 +1,5 @@
 ---
 title: "Welcome to MyBlog"
-author: "Adam E."
 date: "`r Sys.Date()`"
 output: html_document
 ---
