@@ -418,7 +418,17 @@ merged_data6
 
 lmerged_data3$Ale_Style <- ifelse(grepl("India Pale Ale|IPA", lmerged_data3$Style), "IPA", ifelse(grepl("Ale", lmerged_data3$Style) & !grepl("India Pale Ale|IPA", lmerged_data3$Style), "Ale", "other beer"))
 
+merged_data6 <- merged_data6 %>%
+  select(State, Abbr, City, Beer_Name, Beer_ID, ABV, IBU, Brewery_id, Brewery_Name, Style, Ale_Style, Ounces)
+merged_data6
+```
 
+```{r}
+
+WritePath <- "D:/University/SMU/Doing_Data_Science/DDS_repository/Doing-Data-Science/Unit12/beer_updated.csv"
+
+write.csv(merged_data6 , file = WritePath, row.names = FALSE)
+merged_data6 
 ```
 
 # Questions 8 part1: Budweiser would also like to investigate the difference with respect to IBU and ABV between IPAs (India Pale Ales) and other types of Ale (any beer with “Ale” in its name other than IPA).  You decide to use KNN classification to investigate this relationship.  Provide statistical evidence one way or the other. You can of course assume your audience is comfortable with percentages … KNN is very easy to understand conceptually. 
