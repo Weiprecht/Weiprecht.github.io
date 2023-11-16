@@ -254,7 +254,12 @@ $(document).ready(function () {
 <li>
   <a href="Beach_Comber_Pvalue_Simulation.html">Beach Comber</a>
 </li>
-<li class="dropdown-header">Beer Project</li>
+<li>
+  <a href="Beer_project_code.html">Beer Project Code</a>
+</li>
+<li>
+  <a href="https://weiprecht.shinyapps.io/Beer_application/">Beer Application</a>
+</li>
 <li>
   <a href="help_file.html">Help</a>
 </li>
@@ -315,7 +320,7 @@ class="section level2">
 means.</h2>
 <pre class="r"><code>summary(xbar_holder)</code></pre>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##   11.23   19.19   21.00   21.01   22.83   31.48</code></pre>
+##   11.07   19.16   21.00   20.98   22.79   31.55</code></pre>
 </div>
 <div id="the-pvalue" class="section level2">
 <h2>The Pvalue!</h2>
@@ -323,7 +328,7 @@ means.</h2>
 what was observed assuming the null hypothesis is true.</p>
 <pre class="r"><code>pvalue = length(which(xbar_holder&gt;29.86))/simulations
 pvalue</code></pre>
-<pre><code>## [1] 5e-04</code></pre>
+<pre><code>## [1] 3e-04</code></pre>
 </div>
 </div>
 
