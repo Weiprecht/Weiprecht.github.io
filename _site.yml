@@ -9,7 +9,10 @@ navbar:
     - text: "Beach Comber"
       href: Beach_Comber_Pvalue_Simulation.html
     - text: "Beer Project"
-      href: Beer_project_code.html
+      dropdown:
+        - text: "Beer Project Code"
+          href: Beer_project_code.html
+        - text: "Beer Application"
+          href: "https://weiprecht.shinyapps.io/Beer_application/"
     - text: "Help"
       href: help_file.html
-      

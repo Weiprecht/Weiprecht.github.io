@@ -56,7 +56,7 @@ server <- function(input, output, session) {  # Added 'session'
   output$histogram <- renderPlot({
     ggplot(filtered_data(), aes_string(x = input$varInput)) +
       geom_histogram(binwidth = binwidth(), fill = "blue", color = "black") +
-      labs(x = input$varInput, y = "Frequency", title = "Beer Data Histogram")
+      labs(x = input$varInput, y = "Frequency", title = "Count of Beer Observations at the Selected Level (IBU, ABV)")
   })
   
   observeEvent(input$returnButton, {  # Event handler for the button
