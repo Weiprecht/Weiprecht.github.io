@@ -25,7 +25,7 @@ rsconnect::setAccountInfo(name='weiprecht', token='D2109DC6A8D53703148393E4F7EBA
 ```{r}
 library(rsconnect)
 library(shiny)
-    rsconnect::deployApp('https://raw.githubusercontent.com/Weiprecht/Weiprecht.github.io/main/Beer_folder')
+    rsconnect::deployApp('https://raw.githubusercontent.com/Weiprecht/Weiprecht.github.io/main/Beer_folder/Shiny.Rmd')
 ```
 
 
