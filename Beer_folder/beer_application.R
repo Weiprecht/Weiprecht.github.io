@@ -6,10 +6,10 @@ library(readr)
 # beer_data <- read.csv(beerPath, header = TRUE)
 
 # URL to the raw content of the CSV file on GitHub
-github_url <- "https://raw.githubusercontent.com/braemma2013/DDS-MidtermProject/main/beer_data_updated.csv"
+github_url <- "https://raw.githubusercontent.com/Weiprecht/Weiprecht.github.io/main/Beer_folder/beer_updated.csv"
 
 # Read the CSV file from the GitHub repository
-beer_data <- read_csv(github_url, header = TRUE)
+beer_data <- read_csv(github_url)
 
 # UI part
 ui <- fluidPage(
