@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r}
 library(shiny)
 library(ggplot2)
-
+library(readr)
 
 # URL to the raw content of the CSV file on GitHub
 github_url <- "https://raw.githubusercontent.com/Weiprecht/Weiprecht.github.io/main/Beer_folder/beer_updated.csv"
@@ -22,9 +22,6 @@ github_url <- "https://raw.githubusercontent.com/Weiprecht/Weiprecht.github.io/m
 # Read the CSV file from the GitHub repository
 beer_data <- read_csv(github_url)
 
-
-# beerPath <- "D:/Website/SimpleWebsite/Weiprecht.github.io/beer_folder/beer_updated.csv"
-# beer_data <- read.csv(beerPath, header = TRUE)
 
 # UI part
 ui <- fluidPage(
@@ -76,12 +73,10 @@ server <- function(input, output, session) {  # Added 'session'
   
   observeEvent(input$returnButton, {  # Event handler for the button
     session$close()  # Close the Shiny app session
-    runjs("history.go(-1);")  # JavaScript to navigate back one page
   })
 }
 
 # Run the application 
 shinyApp(ui = ui, server = server)
-
 
 ```
