@@ -60,7 +60,8 @@ server <- function(input, output, session) {  # Added 'session'
   })
   
   observeEvent(input$returnButton, {  # Event handler for the button
-    session$close()  # Close the Shiny app session
+    runjs("history.go(-1);")  # JavaScript to navigate back one page
+    #session$close()  # Close the Shiny app session
   })
 }
 
