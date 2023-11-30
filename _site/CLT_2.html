@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Bivin" />
+
+
+<title>LIve Session 2 CLT</title>
+
+<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Statistical Insights</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Welcome</a>
+</li>
+<li>
+  <a href="CLT_2.html">CLT</a>
+</li>
+<li>
+  <a href="Beach_Comber_Pvalue_Simulation.html">Beach Comber</a>
+</li>
+<li>
+  <a href="Beer_project_code.html">Beer Project Code</a>
+</li>
+<li>
+  <a href="https://weiprecht.shinyapps.io/Beer_application/">Beer Application</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="help_file.html">Help</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">LIve Session 2 CLT</h1>
+<h4 class="author">Bivin</h4>
+<h4 class="date">9/6/2018</h4>
+
+</div>
+
+
+<div id="simulator-to-demonstrate-clt" class="section level1">
+<h1>Simulator to Demonstrate CLT</h1>
+<div id="control-parameters" class="section level2">
+<h2>Control Parameters</h2>
+<pre class="r"><code>Path &lt;- &quot;D:/University/SMU/Doing_Data_Science/DDS_repository/Doing-Data-Science/Unit1/yob2016.txt&quot;
+df_yob = read.table(Path, stringsAsFactors = FALSE,header = FALSE,sep = &quot;;&quot;)
+#df = read.table(&quot;/Users/bivin/Desktop/OLD COMPUTER ARCHIVES/KadAfrica/MSDS/DDS/MSDS 6306/Unit 5/yob2016.txt&quot;,stringsAsFactors = FALSE,header = FALSE,sep = &quot;;&quot;)
+n1 = 10 # sample size per sample for 1st distribution
+n2 = 100 # sample size per sample for 2nd distribution (we will compare these distribuions) 
+simulations = 1000 #number of samples and thus number of xbars we will generate.  
+mu = 0; # mean parameter for use with normal distribuions
+sigma = 1; # standard deviation parameter for use with normal distribuions
+df_yob</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["V1"],"name":[1],"type":["chr"],"align":["left"]},{"label":["V2"],"name":[2],"type":["chr"],"align":["left"]},{"label":["V3"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"Emma","2":"F","3":"19414"},{"1":"Olivia","2":"F","3":"19246"},{"1":"Ava","2":"F","3":"16237"},{"1":"Sophia","2":"F","3":"16070"},{"1":"Isabella","2":"F","3":"14722"},{"1":"Mia","2":"F","3":"14366"},{"1":"Charlotte","2":"F","3":"13030"},{"1":"Abigail","2":"F","3":"11699"},{"1":"Emily","2":"F","3":"10926"},{"1":"Harper","2":"F","3":"10733"},{"1":"Amelia","2":"F","3":"10702"},{"1":"Evelyn","2":"F","3":"10060"},{"1":"Elizabeth","2":"F","3":"9493"},{"1":"Sofia","2":"F","3":"9134"},{"1":"Madison","2":"F","3":"8982"},{"1":"Avery","2":"F","3":"8733"},{"1":"Ella","2":"F","3":"7866"},{"1":"Scarlett","2":"F","3":"7680"},{"1":"Grace","2":"F","3":"7531"},{"1":"Chloe","2":"F","3":"7410"},{"1":"Victoria","2":"F","3":"7267"},{"1":"Riley","2":"F","3":"7110"},{"1":"Aria","2":"F","3":"6904"},{"1":"Lily","2":"F","3":"6558"},{"1":"Aubrey","2":"F","3":"6507"},{"1":"Zoey","2":"F","3":"6414"},{"1":"Penelope","2":"F","3":"6367"},{"1":"Lillian","2":"F","3":"6333"},{"1":"Addison","2":"F","3":"6295"},{"1":"Layla","2":"F","3":"6234"},{"1":"Natalie","2":"F","3":"6156"},{"1":"Camila","2":"F","3":"6036"},{"1":"Hannah","2":"F","3":"5976"},{"1":"Brooklyn","2":"F","3":"5922"},{"1":"Zoe","2":"F","3":"5706"},{"1":"Nora","2":"F","3":"5561"},{"1":"Leah","2":"F","3":"5380"},{"1":"Savannah","2":"F","3":"5336"},{"1":"Audrey","2":"F","3":"5330"},{"1":"Claire","2":"F","3":"5190"},{"1":"Eleanor","2":"F","3":"5100"},{"1":"Skylar","2":"F","3":"5099"},{"1":"Ellie","2":"F","3":"5045"},{"1":"Samantha","2":"F","3":"4924"},{"1":"Stella","2":"F","3":"4912"},{"1":"Paisley","2":"F","3":"4839"},{"1":"Violet","2":"F","3":"4837"},{"1":"Mila","2":"F","3":"4802"},{"1":"Allison","2":"F","3":"4762"},{"1":"Alexa","2":"F","3":"4760"},{"1":"Anna","2":"F","3":"4749"},{"1":"Hazel","2":"F","3":"4634"},{"1":"Aaliyah","2":"F","3":"4611"},{"1":"Ariana","2":"F","3":"4577"},{"1":"Lucy","2":"F","3":"4568"},{"1":"Caroline","2":"F","3":"4410"},{"1":"Sarah","2":"F","3":"4378"},{"1":"Genesis","2":"F","3":"4325"},{"1":"Kennedy","2":"F","3":"4313"},{"1":"Sadie","2":"F","3":"4264"},{"1":"Gabriella","2":"F","3":"4215"},{"1":"Madelyn","2":"F","3":"4208"},{"1":"Adeline","2":"F","3":"4103"},{"1":"Maya","2":"F","3":"4055"},{"1":"Autumn","2":"F","3":"3990"},{"1":"Aurora","2":"F","3":"3963"},{"1":"Piper","2":"F","3":"3926"},{"1":"Hailey","2":"F","3":"3918"},{"1":"Arianna","2":"F","3":"3869"},{"1":"Kaylee","2":"F","3":"3814"},{"1":"Ruby","2":"F","3":"3796"},{"1":"Serenity","2":"F","3":"3789"},{"1":"Eva","2":"F","3":"3777"},{"1":"Naomi","2":"F","3":"3772"},{"1":"Nevaeh","2":"F","3":"3756"},{"1":"Alice","2":"F","3":"3669"},{"1":"Luna","2":"F","3":"3645"},{"1":"Bella","2":"F","3":"3641"},{"1":"Quinn","2":"F","3":"3636"},{"1":"Lydia","2":"F","3":"3590"},{"1":"Peyton","2":"F","3":"3482"},{"1":"Melanie","2":"F","3":"3473"},{"1":"Kylie","2":"F","3":"3396"},{"1":"Aubree","2":"F","3":"3390"},{"1":"Mackenzie","2":"F","3":"3390"},{"1":"Kinsley","2":"F","3":"3353"},{"1":"Cora","2":"F","3":"3350"},{"1":"Julia","2":"F","3":"3310"},{"1":"Taylor","2":"F","3":"3261"},{"1":"Katherine","2":"F","3":"3259"},{"1":"Madeline","2":"F","3":"3257"},{"1":"Gianna","2":"F","3":"3209"},{"1":"Eliana","2":"F","3":"3185"},{"1":"Elena","2":"F","3":"3168"},{"1":"Vivian","2":"F","3":"3124"},{"1":"Willow","2":"F","3":"3086"},{"1":"Reagan","2":"F","3":"3081"},{"1":"Brianna","2":"F","3":"3076"},{"1":"Clara","2":"F","3":"3055"},{"1":"Faith","2":"F","3":"3035"},{"1":"Ashley","2":"F","3":"3024"},{"1":"Emilia","2":"F","3":"3019"},{"1":"Isabelle","2":"F","3":"3008"},{"1":"Annabelle","2":"F","3":"2974"},{"1":"Rylee","2":"F","3":"2947"},{"1":"Valentina","2":"F","3":"2908"},{"1":"Everly","2":"F","3":"2873"},{"1":"Hadley","2":"F","3":"2871"},{"1":"Sophie","2":"F","3":"2851"},{"1":"Alexandra","2":"F","3":"2831"},{"1":"Natalia","2":"F","3":"2813"},{"1":"Ivy","2":"F","3":"2797"},{"1":"Maria","2":"F","3":"2788"},{"1":"Josephine","2":"F","3":"2766"},{"1":"Delilah","2":"F","3":"2715"},{"1":"Bailey","2":"F","3":"2689"},{"1":"Jade","2":"F","3":"2685"},{"1":"Ximena","2":"F","3":"2673"},{"1":"Alexis","2":"F","3":"2662"},{"1":"Alyssa","2":"F","3":"2662"},{"1":"Brielle","2":"F","3":"2651"},{"1":"Jasmine","2":"F","3":"2625"},{"1":"Liliana","2":"F","3":"2624"},{"1":"Adalynn","2":"F","3":"2585"},{"1":"Khloe","2":"F","3":"2520"},{"1":"Isla","2":"F","3":"2504"},{"1":"Mary","2":"F","3":"2487"},{"1":"Andrea","2":"F","3":"2473"},{"1":"Kayla","2":"F","3":"2456"},{"1":"Emery","2":"F","3":"2410"},{"1":"London","2":"F","3":"2339"},{"1":"Kimberly","2":"F","3":"2321"},{"1":"Morgan","2":"F","3":"2319"},{"1":"Lauren","2":"F","3":"2311"},{"1":"Sydney","2":"F","3":"2309"},{"1":"Nova","2":"F","3":"2272"},{"1":"Trinity","2":"F","3":"2215"},{"1":"Lyla","2":"F","3":"2209"},{"1":"Margaret","2":"F","3":"2202"},{"1":"Ariel","2":"F","3":"2177"},{"1":"Adalyn","2":"F","3":"2176"},{"1":"Athena","2":"F","3":"2162"},{"1":"Lilly","2":"F","3":"2132"},{"1":"Melody","2":"F","3":"2128"},{"1":"Isabel","2":"F","3":"2100"},{"1":"Jordyn","2":"F","3":"2092"},{"1":"Jocelyn","2":"F","3":"2088"},{"1":"Eden","2":"F","3":"2068"},{"1":"Paige","2":"F","3":"2041"},{"1":"Teagan","2":"F","3":"2034"},{"1":"Valeria","2":"F","3":"2031"},{"1":"Sara","2":"F","3":"2024"},{"1":"Norah","2":"F","3":"2016"},{"1":"Rose","2":"F","3":"2016"},{"1":"Aliyah","2":"F","3":"1993"},{"1":"Mckenzie","2":"F","3":"1982"},{"1":"Molly","2":"F","3":"1977"},{"1":"Raelynn","2":"F","3":"1971"},{"1":"Leilani","2":"F","3":"1959"},{"1":"Valerie","2":"F","3":"1949"},{"1":"Emerson","2":"F","3":"1947"},{"1":"Juliana","2":"F","3":"1944"},{"1":"Nicole","2":"F","3":"1941"},{"1":"Laila","2":"F","3":"1937"},{"1":"Makayla","2":"F","3":"1918"},{"1":"Elise","2":"F","3":"1905"},{"1":"Mariah","2":"F","3":"1905"},{"1":"Mya","2":"F","3":"1902"},{"1":"Arya","2":"F","3":"1890"},{"1":"Ryleigh","2":"F","3":"1877"},{"1":"Adaline","2":"F","3":"1873"},{"1":"Brooke","2":"F","3":"1856"},{"1":"Rachel","2":"F","3":"1854"},{"1":"Eliza","2":"F","3":"1851"},{"1":"Angelina","2":"F","3":"1843"},{"1":"Amy","2":"F","3":"1828"},{"1":"Reese","2":"F","3":"1815"},{"1":"Alina","2":"F","3":"1814"},{"1":"Cecilia","2":"F","3":"1814"},{"1":"Londyn","2":"F","3":"1811"},{"1":"Gracie","2":"F","3":"1799"},{"1":"Payton","2":"F","3":"1793"},{"1":"Esther","2":"F","3":"1789"},{"1":"Alaina","2":"F","3":"1760"},{"1":"Charlie","2":"F","3":"1751"},{"1":"Iris","2":"F","3":"1736"},{"1":"Arabella","2":"F","3":"1723"},{"1":"Genevieve","2":"F","3":"1723"},{"1":"Finley","2":"F","3":"1719"},{"1":"Daisy","2":"F","3":"1717"},{"1":"Harmony","2":"F","3":"1703"},{"1":"Anastasia","2":"F","3":"1694"},{"1":"Kendall","2":"F","3":"1694"},{"1":"Daniela","2":"F","3":"1663"},{"1":"Catherine","2":"F","3":"1660"},{"1":"Adelyn","2":"F","3":"1659"},{"1":"Vanessa","2":"F","3":"1654"},{"1":"Brooklynn","2":"F","3":"1649"},{"1":"Juliette","2":"F","3":"1646"},{"1":"Julianna","2":"F","3":"1597"},{"1":"Presley","2":"F","3":"1595"},{"1":"Summer","2":"F","3":"1590"},{"1":"Destiny","2":"F","3":"1573"},{"1":"Amaya","2":"F","3":"1571"},{"1":"Hayden","2":"F","3":"1569"},{"1":"Alana","2":"F","3":"1564"},{"1":"Rebecca","2":"F","3":"1563"},{"1":"Michelle","2":"F","3":"1559"},{"1":"Eloise","2":"F","3":"1554"},{"1":"Lila","2":"F","3":"1549"},{"1":"Fiona","2":"F","3":"1547"},{"1":"Fionayyy","2":"F","3":"1547"},{"1":"Callie","2":"F","3":"1531"},{"1":"Lucia","2":"F","3":"1511"},{"1":"Angela","2":"F","3":"1503"},{"1":"Marley","2":"F","3":"1491"},{"1":"Adriana","2":"F","3":"1489"},{"1":"Parker","2":"F","3":"1470"},{"1":"Alexandria","2":"F","3":"1460"},{"1":"Giselle","2":"F","3":"1457"},{"1":"Alivia","2":"F","3":"1452"},{"1":"Alayna","2":"F","3":"1431"},{"1":"Brynlee","2":"F","3":"1428"},{"1":"Ana","2":"F","3":"1425"},{"1":"Harley","2":"F","3":"1422"},{"1":"Gabrielle","2":"F","3":"1410"},{"1":"Dakota","2":"F","3":"1405"},{"1":"Georgia","2":"F","3":"1405"},{"1":"Juliet","2":"F","3":"1391"},{"1":"Tessa","2":"F","3":"1385"},{"1":"Leila","2":"F","3":"1383"},{"1":"Kate","2":"F","3":"1382"},{"1":"Jayla","2":"F","3":"1377"},{"1":"Jessica","2":"F","3":"1375"},{"1":"Lola","2":"F","3":"1372"},{"1":"Stephanie","2":"F","3":"1366"},{"1":"Sienna","2":"F","3":"1365"},{"1":"Josie","2":"F","3":"1352"},{"1":"Daleyza","2":"F","3":"1346"},{"1":"Rowan","2":"F","3":"1344"},{"1":"Evangeline","2":"F","3":"1324"},{"1":"Hope","2":"F","3":"1324"},{"1":"Maggie","2":"F","3":"1312"},{"1":"Camille","2":"F","3":"1300"},{"1":"Makenzie","2":"F","3":"1299"},{"1":"Vivienne","2":"F","3":"1275"},{"1":"Sawyer","2":"F","3":"1272"},{"1":"Gemma","2":"F","3":"1264"},{"1":"Joanna","2":"F","3":"1263"},{"1":"Noelle","2":"F","3":"1260"},{"1":"Elliana","2":"F","3":"1257"},{"1":"Mckenna","2":"F","3":"1245"},{"1":"Gabriela","2":"F","3":"1243"},{"1":"Kinley","2":"F","3":"1243"},{"1":"Rosalie","2":"F","3":"1241"},{"1":"Brynn","2":"F","3":"1231"},{"1":"Amiyah","2":"F","3":"1228"},{"1":"Melissa","2":"F","3":"1228"},{"1":"Adelaide","2":"F","3":"1227"},{"1":"Malia","2":"F","3":"1227"},{"1":"Ayla","2":"F","3":"1226"},{"1":"Izabella","2":"F","3":"1216"},{"1":"Delaney","2":"F","3":"1198"},{"1":"Cali","2":"F","3":"1194"},{"1":"Journey","2":"F","3":"1193"},{"1":"Maci","2":"F","3":"1185"},{"1":"Elaina","2":"F","3":"1184"},{"1":"Sloane","2":"F","3":"1184"},{"1":"June","2":"F","3":"1180"},{"1":"Diana","2":"F","3":"1178"},{"1":"Blakely","2":"F","3":"1173"},{"1":"Aniyah","2":"F","3":"1159"},{"1":"Olive","2":"F","3":"1155"},{"1":"Jennifer","2":"F","3":"1153"},{"1":"Paris","2":"F","3":"1152"},{"1":"Miranda","2":"F","3":"1135"},{"1":"Lena","2":"F","3":"1134"},{"1":"Jacqueline","2":"F","3":"1130"},{"1":"Paislee","2":"F","3":"1130"},{"1":"Jane","2":"F","3":"1129"},{"1":"Raegan","2":"F","3":"1129"},{"1":"Lyric","2":"F","3":"1128"},{"1":"Lilliana","2":"F","3":"1126"},{"1":"Adelynn","2":"F","3":"1123"},{"1":"Lucille","2":"F","3":"1122"},{"1":"Selena","2":"F","3":"1119"},{"1":"River","2":"F","3":"1118"},{"1":"Annie","2":"F","3":"1113"},{"1":"Cassidy","2":"F","3":"1113"},{"1":"Jordan","2":"F","3":"1113"},{"1":"Thea","2":"F","3":"1113"},{"1":"Mariana","2":"F","3":"1106"},{"1":"Amina","2":"F","3":"1100"},{"1":"Miriam","2":"F","3":"1100"},{"1":"Haven","2":"F","3":"1098"},{"1":"Remi","2":"F","3":"1095"},{"1":"Charlee","2":"F","3":"1094"},{"1":"Blake","2":"F","3":"1091"},{"1":"Lilah","2":"F","3":"1082"},{"1":"Ruth","2":"F","3":"1081"},{"1":"Amara","2":"F","3":"1078"},{"1":"Kali","2":"F","3":"1078"},{"1":"Kylee","2":"F","3":"1073"},{"1":"Arielle","2":"F","3":"1068"},{"1":"Emersyn","2":"F","3":"1068"},{"1":"Alessandra","2":"F","3":"1066"},{"1":"Fatima","2":"F","3":"1059"},{"1":"Talia","2":"F","3":"1052"},{"1":"Vera","2":"F","3":"1052"},{"1":"Nina","2":"F","3":"1041"},{"1":"Ariah","2":"F","3":"1040"},{"1":"Allie","2":"F","3":"1035"},{"1":"Addilyn","2":"F","3":"1033"},{"1":"Keira","2":"F","3":"1030"},{"1":"Catalina","2":"F","3":"1024"},{"1":"Raelyn","2":"F","3":"1024"},{"1":"Phoebe","2":"F","3":"1021"},{"1":"Lexi","2":"F","3":"1019"},{"1":"Zara","2":"F","3":"1018"},{"1":"Makenna","2":"F","3":"1017"},{"1":"Ember","2":"F","3":"1009"},{"1":"Leia","2":"F","3":"1005"},{"1":"Rylie","2":"F","3":"1003"},{"1":"Angel","2":"F","3":"1001"},{"1":"Haley","2":"F","3":"999"},{"1":"Madilyn","2":"F","3":"999"},{"1":"Kaitlyn","2":"F","3":"994"},{"1":"Heaven","2":"F","3":"993"},{"1":"Nyla","2":"F","3":"993"},{"1":"Amanda","2":"F","3":"992"},{"1":"Freya","2":"F","3":"991"},{"1":"Journee","2":"F","3":"986"},{"1":"Daniella","2":"F","3":"984"},{"1":"Danielle","2":"F","3":"984"},{"1":"Kenzie","2":"F","3":"984"},{"1":"Ariella","2":"F","3":"981"},{"1":"Lia","2":"F","3":"980"},{"1":"Brinley","2":"F","3":"979"},{"1":"Maddison","2":"F","3":"979"},{"1":"Shelby","2":"F","3":"978"},{"1":"Elsie","2":"F","3":"974"},{"1":"Kamila","2":"F","3":"974"},{"1":"Camilla","2":"F","3":"972"},{"1":"Alison","2":"F","3":"966"},{"1":"Ainsley","2":"F","3":"963"},{"1":"Ada","2":"F","3":"959"},{"1":"Laura","2":"F","3":"958"},{"1":"Kendra","2":"F","3":"954"},{"1":"Kayleigh","2":"F","3":"951"},{"1":"Adrianna","2":"F","3":"947"},{"1":"Madeleine","2":"F","3":"947"},{"1":"Joy","2":"F","3":"941"},{"1":"Juniper","2":"F","3":"939"},{"1":"Chelsea","2":"F","3":"928"},{"1":"Sage","2":"F","3":"928"},{"1":"Erin","2":"F","3":"920"},{"1":"Felicity","2":"F","3":"917"},{"1":"Gracelyn","2":"F","3":"909"},{"1":"Nadia","2":"F","3":"908"},{"1":"Skyler","2":"F","3":"905"},{"1":"Briella","2":"F","3":"904"},{"1":"Aspen","2":"F","3":"896"},{"1":"Myla","2":"F","3":"892"},{"1":"Heidi","2":"F","3":"885"},{"1":"Katie","2":"F","3":"885"},{"1":"Zuri","2":"F","3":"884"},{"1":"Jenna","2":"F","3":"883"},{"1":"Kyla","2":"F","3":"882"},{"1":"Kaia","2":"F","3":"879"},{"1":"Kira","2":"F","3":"876"},{"1":"Sabrina","2":"F","3":"874"},{"1":"Gracelynn","2":"F","3":"871"},{"1":"Gia","2":"F","3":"868"},{"1":"Amira","2":"F","3":"867"},{"1":"Alexia","2":"F","3":"865"},{"1":"Amber","2":"F","3":"865"},{"1":"Cadence","2":"F","3":"864"},{"1":"Esmeralda","2":"F","3":"864"},{"1":"Katelyn","2":"F","3":"864"},{"1":"Scarlet","2":"F","3":"862"},{"1":"Kamryn","2":"F","3":"861"},{"1":"Alicia","2":"F","3":"859"},{"1":"Miracle","2":"F","3":"856"},{"1":"Kelsey","2":"F","3":"853"},{"1":"Logan","2":"F","3":"852"},{"1":"Kiara","2":"F","3":"850"},{"1":"Bianca","2":"F","3":"849"},{"1":"Kaydence","2":"F","3":"845"},{"1":"Alondra","2":"F","3":"843"},{"1":"Evelynn","2":"F","3":"843"},{"1":"Christina","2":"F","3":"841"},{"1":"Lana","2":"F","3":"841"},{"1":"Aviana","2":"F","3":"839"},{"1":"Dahlia","2":"F","3":"839"},{"1":"Dylan","2":"F","3":"837"},{"1":"Anaya","2":"F","3":"836"},{"1":"Ashlyn","2":"F","3":"830"},{"1":"Jada","2":"F","3":"829"},{"1":"Kathryn","2":"F","3":"829"},{"1":"Jimena","2":"F","3":"827"},{"1":"Elle","2":"F","3":"825"},{"1":"Gwendolyn","2":"F","3":"824"},{"1":"April","2":"F","3":"820"},{"1":"Carmen","2":"F","3":"820"},{"1":"Mikayla","2":"F","3":"819"},{"1":"Annalise","2":"F","3":"816"},{"1":"Maeve","2":"F","3":"816"},{"1":"Camryn","2":"F","3":"815"},{"1":"Helen","2":"F","3":"813"},{"1":"Daphne","2":"F","3":"809"},{"1":"Braelynn","2":"F","3":"803"},{"1":"Carly","2":"F","3":"802"},{"1":"Cheyenne","2":"F","3":"802"},{"1":"Leslie","2":"F","3":"801"},{"1":"Veronica","2":"F","3":"801"},{"1":"Nylah","2":"F","3":"795"},{"1":"Kennedi","2":"F","3":"794"},{"1":"Skye","2":"F","3":"788"},{"1":"Evie","2":"F","3":"784"},{"1":"Averie","2":"F","3":"782"},{"1":"Harlow","2":"F","3":"781"},{"1":"Allyson","2":"F","3":"770"},{"1":"Carolina","2":"F","3":"769"},{"1":"Tatum","2":"F","3":"765"},{"1":"Francesca","2":"F","3":"762"},{"1":"Aylin","2":"F","3":"761"},{"1":"Ashlynn","2":"F","3":"759"},{"1":"Sierra","2":"F","3":"757"},{"1":"Mckinley","2":"F","3":"755"},{"1":"Leighton","2":"F","3":"754"},{"1":"Maliyah","2":"F","3":"754"},{"1":"Annabella","2":"F","3":"746"},{"1":"Megan","2":"F","3":"743"},{"1":"Margot","2":"F","3":"742"},{"1":"Luciana","2":"F","3":"736"},{"1":"Mallory","2":"F","3":"735"},{"1":"Millie","2":"F","3":"735"},{"1":"Regina","2":"F","3":"733"},{"1":"Nia","2":"F","3":"730"},{"1":"Rosemary","2":"F","3":"729"},{"1":"Saylor","2":"F","3":"727"},{"1":"Abby","2":"F","3":"724"},{"1":"Briana","2":"F","3":"719"},{"1":"Phoenix","2":"F","3":"719"},{"1":"Viviana","2":"F","3":"718"},{"1":"Alejandra","2":"F","3":"717"},{"1":"Frances","2":"F","3":"716"},{"1":"Jayleen","2":"F","3":"716"},{"1":"Serena","2":"F","3":"716"},{"1":"Lorelei","2":"F","3":"711"},{"1":"Zariah","2":"F","3":"711"},{"1":"Ariyah","2":"F","3":"707"},{"1":"Jazmin","2":"F","3":"705"},{"1":"Avianna","2":"F","3":"703"},{"1":"Carter","2":"F","3":"699"},{"1":"Marlee","2":"F","3":"699"},{"1":"Eve","2":"F","3":"698"},{"1":"Aleah","2":"F","3":"697"},{"1":"Remington","2":"F","3":"696"},{"1":"Amari","2":"F","3":"695"},{"1":"Bethany","2":"F","3":"687"},{"1":"Fernanda","2":"F","3":"684"},{"1":"Malaysia","2":"F","3":"683"},{"1":"Willa","2":"F","3":"682"},{"1":"Liana","2":"F","3":"680"},{"1":"Ryan","2":"F","3":"680"},{"1":"Addyson","2":"F","3":"677"},{"1":"Yaretzi","2":"F","3":"677"},{"1":"Colette","2":"F","3":"672"},{"1":"Macie","2":"F","3":"672"},{"1":"Selah","2":"F","3":"672"},{"1":"Nayeli","2":"F","3":"670"},{"1":"Madelynn","2":"F","3":"669"},{"1":"Michaela","2":"F","3":"669"},{"1":"Priscilla","2":"F","3":"666"},{"1":"Janelle","2":"F","3":"663"},{"1":"Samara","2":"F","3":"663"},{"1":"Justice","2":"F","3":"662"},{"1":"Itzel","2":"F","3":"654"},{"1":"Emely","2":"F","3":"649"},{"1":"Lennon","2":"F","3":"649"},{"1":"Aubrie","2":"F","3":"645"},{"1":"Julie","2":"F","3":"644"},{"1":"Kyleigh","2":"F","3":"641"},{"1":"Sarai","2":"F","3":"641"},{"1":"Braelyn","2":"F","3":"640"},{"1":"Alani","2":"F","3":"634"},{"1":"Lacey","2":"F","3":"634"},{"1":"Edith","2":"F","3":"631"},{"1":"Elisa","2":"F","3":"628"},{"1":"Macy","2":"F","3":"628"},{"1":"Marilyn","2":"F","3":"628"},{"1":"Baylee","2":"F","3":"626"},{"1":"Karina","2":"F","3":"626"},{"1":"Raven","2":"F","3":"626"},{"1":"Celeste","2":"F","3":"625"},{"1":"Adelina","2":"F","3":"624"},{"1":"Matilda","2":"F","3":"623"},{"1":"Kara","2":"F","3":"622"},{"1":"Jamie","2":"F","3":"621"},{"1":"Charleigh","2":"F","3":"620"},{"1":"Aisha","2":"F","3":"617"},{"1":"Kassidy","2":"F","3":"617"},{"1":"Hattie","2":"F","3":"616"},{"1":"Karen","2":"F","3":"614"},{"1":"Sylvia","2":"F","3":"614"},{"1":"Winter","2":"F","3":"614"},{"1":"Aleena","2":"F","3":"611"},{"1":"Angelica","2":"F","3":"609"},{"1":"Magnolia","2":"F","3":"609"},{"1":"Cataleya","2":"F","3":"606"},{"1":"Danna","2":"F","3":"605"},{"1":"Henley","2":"F","3":"602"},{"1":"Mabel","2":"F","3":"602"},{"1":"Kelly","2":"F","3":"601"},{"1":"Brylee","2":"F","3":"599"},{"1":"Jazlyn","2":"F","3":"599"},{"1":"Virginia","2":"F","3":"599"},{"1":"Helena","2":"F","3":"598"},{"1":"Jillian","2":"F","3":"597"},{"1":"Madilynn","2":"F","3":"597"},{"1":"Blair","2":"F","3":"594"},{"1":"Galilea","2":"F","3":"594"},{"1":"Kensley","2":"F","3":"591"},{"1":"Wren","2":"F","3":"589"},{"1":"Bristol","2":"F","3":"585"},{"1":"Emmalyn","2":"F","3":"585"},{"1":"Holly","2":"F","3":"585"},{"1":"Lauryn","2":"F","3":"585"},{"1":"Cameron","2":"F","3":"583"},{"1":"Hanna","2":"F","3":"583"},{"1":"Meredith","2":"F","3":"583"},{"1":"Royalty","2":"F","3":"581"},{"1":"Sasha","2":"F","3":"581"},{"1":"Lilith","2":"F","3":"580"},{"1":"Jazmine","2":"F","3":"578"},{"1":"Alayah","2":"F","3":"576"},{"1":"Madisyn","2":"F","3":"575"},{"1":"Cecelia","2":"F","3":"573"},{"1":"Renata","2":"F","3":"573"},{"1":"Lainey","2":"F","3":"571"},{"1":"Liberty","2":"F","3":"571"},{"1":"Brittany","2":"F","3":"570"},{"1":"Savanna","2":"F","3":"570"},{"1":"Imani","2":"F","3":"568"},{"1":"Kyra","2":"F","3":"568"},{"1":"Mira","2":"F","3":"567"},{"1":"Mariam","2":"F","3":"566"},{"1":"Tenley","2":"F","3":"565"},{"1":"Aitana","2":"F","3":"564"},{"1":"Gloria","2":"F","3":"563"},{"1":"Maryam","2":"F","3":"562"},{"1":"Giuliana","2":"F","3":"561"},{"1":"Skyla","2":"F","3":"561"},{"1":"Anne","2":"F","3":"560"},{"1":"Johanna","2":"F","3":"560"},{"1":"Myra","2":"F","3":"560"},{"1":"Charley","2":"F","3":"555"},{"1":"Tiffany","2":"F","3":"555"},{"1":"Beatrice","2":"F","3":"553"},{"1":"Karla","2":"F","3":"551"},{"1":"Cynthia","2":"F","3":"550"},{"1":"Janiyah","2":"F","3":"550"},{"1":"Melany","2":"F","3":"550"},{"1":"Alanna","2":"F","3":"549"},{"1":"Lilian","2":"F","3":"549"},{"1":"Demi","2":"F","3":"548"},{"1":"Pearl","2":"F","3":"546"},{"1":"Jaylah","2":"F","3":"543"},{"1":"Maia","2":"F","3":"542"},{"1":"Cassandra","2":"F","3":"540"},{"1":"Jolene","2":"F","3":"540"},{"1":"Crystal","2":"F","3":"539"},{"1":"Everleigh","2":"F","3":"538"},{"1":"Maisie","2":"F","3":"536"},{"1":"Anahi","2":"F","3":"535"},{"1":"Elianna","2":"F","3":"535"},{"1":"Hallie","2":"F","3":"533"},{"1":"Ivanna","2":"F","3":"532"},{"1":"Oakley","2":"F","3":"531"},{"1":"Ophelia","2":"F","3":"529"},{"1":"Emelia","2":"F","3":"527"},{"1":"Mae","2":"F","3":"527"},{"1":"Marie","2":"F","3":"526"},{"1":"Rebekah","2":"F","3":"522"},{"1":"Azalea","2":"F","3":"520"},{"1":"Haylee","2":"F","3":"519"},{"1":"Bailee","2":"F","3":"518"},{"1":"Anika","2":"F","3":"516"},{"1":"Monica","2":"F","3":"515"},{"1":"Kimber","2":"F","3":"514"},{"1":"Sloan","2":"F","3":"514"},{"1":"Jayda","2":"F","3":"509"},{"1":"Anya","2":"F","3":"507"},{"1":"Bridget","2":"F","3":"506"},{"1":"Kailey","2":"F","3":"504"},{"1":"Julissa","2":"F","3":"502"},{"1":"Marissa","2":"F","3":"502"},{"1":"Leona","2":"F","3":"501"},{"1":"Aileen","2":"F","3":"499"},{"1":"Addisyn","2":"F","3":"498"},{"1":"Kaliyah","2":"F","3":"497"},{"1":"Coraline","2":"F","3":"496"},{"1":"Dayana","2":"F","3":"496"},{"1":"Kaylie","2":"F","3":"496"},{"1":"Celine","2":"F","3":"492"},{"1":"Jaliyah","2":"F","3":"492"},{"1":"Elaine","2":"F","3":"490"},{"1":"Lillie","2":"F","3":"490"},{"1":"Melina","2":"F","3":"489"},{"1":"Jaelyn","2":"F","3":"488"},{"1":"Shiloh","2":"F","3":"488"},{"1":"Jemma","2":"F","3":"487"},{"1":"Madalyn","2":"F","3":"487"},{"1":"Addilynn","2":"F","3":"486"},{"1":"Alaia","2":"F","3":"486"},{"1":"Mikaela","2":"F","3":"485"},{"1":"Adley","2":"F","3":"482"},{"1":"Saige","2":"F","3":"481"},{"1":"Angie","2":"F","3":"480"},{"1":"Dallas","2":"F","3":"479"},{"1":"Braylee","2":"F","3":"478"},{"1":"Elsa","2":"F","3":"476"},{"1":"Emmy","2":"F","3":"476"},{"1":"Hayley","2":"F","3":"476"},{"1":"Siena","2":"F","3":"475"},{"1":"Lorelai","2":"F","3":"474"},{"1":"Miah","2":"F","3":"474"},{"1":"Royal","2":"F","3":"474"},{"1":"Tiana","2":"F","3":"474"},{"1":"Elliot","2":"F","3":"473"},{"1":"Kori","2":"F","3":"473"},{"1":"Greta","2":"F","3":"471"},{"1":"Charli","2":"F","3":"470"},{"1":"Elliott","2":"F","3":"469"},{"1":"Julieta","2":"F","3":"468"},{"1":"Alena","2":"F","3":"465"},{"1":"Rory","2":"F","3":"465"},{"1":"Harlee","2":"F","3":"462"},{"1":"Rosa","2":"F","3":"459"},{"1":"Ivory","2":"F","3":"458"},{"1":"Guadalupe","2":"F","3":"457"},{"1":"Jessie","2":"F","3":"456"},{"1":"Laurel","2":"F","3":"456"},{"1":"Annika","2":"F","3":"454"},{"1":"Clarissa","2":"F","3":"453"},{"1":"Karsyn","2":"F","3":"453"},{"1":"Collins","2":"F","3":"451"},{"1":"Kenia","2":"F","3":"450"},{"1":"Milani","2":"F","3":"450"},{"1":"Alia","2":"F","3":"449"},{"1":"Chanel","2":"F","3":"449"},{"1":"Dorothy","2":"F","3":"448"},{"1":"Armani","2":"F","3":"447"},{"1":"Emory","2":"F","3":"447"},{"1":"Ellen","2":"F","3":"446"},{"1":"Irene","2":"F","3":"444"},{"1":"Adele","2":"F","3":"443"},{"1":"Jaelynn","2":"F","3":"442"},{"1":"Myah","2":"F","3":"442"},{"1":"Hadassah","2":"F","3":"440"},{"1":"Jayde","2":"F","3":"440"},{"1":"Lilyana","2":"F","3":"440"},{"1":"Malaya","2":"F","3":"440"},{"1":"Kenna","2":"F","3":"439"},{"1":"Amelie","2":"F","3":"438"},{"1":"Reyna","2":"F","3":"435"},{"1":"Teresa","2":"F","3":"435"},{"1":"Angelique","2":"F","3":"434"},{"1":"Linda","2":"F","3":"434"},{"1":"Nathalie","2":"F","3":"434"},{"1":"Kora","2":"F","3":"433"},{"1":"Zahra","2":"F","3":"432"},{"1":"Aurelia","2":"F","3":"431"},{"1":"Kalani","2":"F","3":"431"},{"1":"Rayna","2":"F","3":"431"},{"1":"Jolie","2":"F","3":"430"},{"1":"Sutton","2":"F","3":"430"},{"1":"Aniya","2":"F","3":"429"},{"1":"Jessa","2":"F","3":"429"},{"1":"Laylah","2":"F","3":"429"},{"1":"Esme","2":"F","3":"426"},{"1":"Keyla","2":"F","3":"425"},{"1":"Ariya","2":"F","3":"424"},{"1":"Elisabeth","2":"F","3":"424"},{"1":"Marina","2":"F","3":"424"},{"1":"Mara","2":"F","3":"423"},{"1":"Meadow","2":"F","3":"423"},{"1":"Aliza","2":"F","3":"422"},{"1":"Zelda","2":"F","3":"420"},{"1":"Lea","2":"F","3":"419"},{"1":"Elyse","2":"F","3":"417"},{"1":"Monroe","2":"F","3":"416"},{"1":"Penny","2":"F","3":"416"},{"1":"Lilianna","2":"F","3":"415"},{"1":"Lylah","2":"F","3":"414"},{"1":"Liv","2":"F","3":"413"},{"1":"Scarlette","2":"F","3":"411"},{"1":"Kadence","2":"F","3":"410"},{"1":"Ansley","2":"F","3":"409"},{"1":"Emilee","2":"F","3":"407"},{"1":"Perla","2":"F","3":"407"},{"1":"Annabel","2":"F","3":"406"},{"1":"Alaya","2":"F","3":"405"},{"1":"Milena","2":"F","3":"405"},{"1":"Karter","2":"F","3":"404"},{"1":"Avah","2":"F","3":"403"},{"1":"Amirah","2":"F","3":"399"},{"1":"Leyla","2":"F","3":"399"},{"1":"Livia","2":"F","3":"399"},{"1":"Chaya","2":"F","3":"397"},{"1":"Wynter","2":"F","3":"397"},{"1":"Jaycee","2":"F","3":"396"},{"1":"Lailah","2":"F","3":"396"},{"1":"Amani","2":"F","3":"395"},{"1":"Milana","2":"F","3":"395"},{"1":"Lennox","2":"F","3":"394"},{"1":"Remy","2":"F","3":"394"},{"1":"Zariyah","2":"F","3":"394"},{"1":"Clare","2":"F","3":"392"},{"1":"Hadlee","2":"F","3":"392"},{"1":"Kiera","2":"F","3":"391"},{"1":"Rosie","2":"F","3":"391"},{"1":"Alma","2":"F","3":"390"},{"1":"Kaelyn","2":"F","3":"390"},{"1":"Eileen","2":"F","3":"389"},{"1":"Jayden","2":"F","3":"389"},{"1":"Martha","2":"F","3":"389"},{"1":"Noa","2":"F","3":"389"},{"1":"Christine","2":"F","3":"388"},{"1":"Ariadne","2":"F","3":"387"},{"1":"Natasha","2":"F","3":"387"},{"1":"Emerie","2":"F","3":"386"},{"1":"Tatiana","2":"F","3":"386"},{"1":"Joselyn","2":"F","3":"385"},{"1":"Joyce","2":"F","3":"385"},{"1":"Salma","2":"F","3":"385"},{"1":"Amiya","2":"F","3":"384"},{"1":"Audrina","2":"F","3":"383"},{"1":"Kinslee","2":"F","3":"383"},{"1":"Jaylene","2":"F","3":"382"},{"1":"Analia","2":"F","3":"381"},{"1":"Erika","2":"F","3":"381"},{"1":"Lexie","2":"F","3":"381"},{"1":"Mina","2":"F","3":"380"},{"1":"Patricia","2":"F","3":"380"},{"1":"Dulce","2":"F","3":"379"},{"1":"Poppy","2":"F","3":"379"},{"1":"Aubrielle","2":"F","3":"378"},{"1":"Clementine","2":"F","3":"378"},{"1":"Lara","2":"F","3":"377"},{"1":"Amaris","2":"F","3":"376"},{"1":"Milan","2":"F","3":"376"},{"1":"Aliana","2":"F","3":"375"},{"1":"Kailani","2":"F","3":"374"},{"1":"Kaylani","2":"F","3":"374"},{"1":"Maleah","2":"F","3":"374"},{"1":"Belen","2":"F","3":"373"},{"1":"Simone","2":"F","3":"373"},{"1":"Whitney","2":"F","3":"373"},{"1":"Elora","2":"F","3":"372"},{"1":"Claudia","2":"F","3":"371"},{"1":"Gwen","2":"F","3":"371"},{"1":"Rylan","2":"F","3":"371"},{"1":"Antonella","2":"F","3":"370"},{"1":"Khaleesi","2":"F","3":"370"},{"1":"Arely","2":"F","3":"369"},{"1":"Princess","2":"F","3":"369"},{"1":"Kenley","2":"F","3":"368"},{"1":"Itzayana","2":"F","3":"367"},{"1":"Karlee","2":"F","3":"367"},{"1":"Paulina","2":"F","3":"367"},{"1":"Laney","2":"F","3":"366"},{"1":"Bria","2":"F","3":"364"},{"1":"Chana","2":"F","3":"364"},{"1":"Kynlee","2":"F","3":"364"},{"1":"Astrid","2":"F","3":"363"},{"1":"Giovanna","2":"F","3":"363"},{"1":"Lindsey","2":"F","3":"363"},{"1":"Sky","2":"F","3":"362"},{"1":"Aryanna","2":"F","3":"361"},{"1":"Ayleen","2":"F","3":"361"},{"1":"Azariah","2":"F","3":"361"},{"1":"Joelle","2":"F","3":"361"},{"1":"Nala","2":"F","3":"361"},{"1":"Tori","2":"F","3":"361"},{"1":"Noemi","2":"F","3":"360"},{"1":"Breanna","2":"F","3":"358"},{"1":"Emmeline","2":"F","3":"358"},{"1":"Mavis","2":"F","3":"358"},{"1":"Amalia","2":"F","3":"357"},{"1":"Mercy","2":"F","3":"357"},{"1":"Tinley","2":"F","3":"357"},{"1":"Averi","2":"F","3":"356"},{"1":"Aiyana","2":"F","3":"355"},{"1":"Alyson","2":"F","3":"354"},{"1":"Corinne","2":"F","3":"354"},{"1":"Leanna","2":"F","3":"354"},{"1":"Madalynn","2":"F","3":"354"},{"1":"Briar","2":"F","3":"353"},{"1":"Jaylee","2":"F","3":"353"},{"1":"Kailyn","2":"F","3":"353"},{"1":"Kassandra","2":"F","3":"353"},{"1":"Kaylin","2":"F","3":"353"},{"1":"Nataly","2":"F","3":"353"},{"1":"Amia","2":"F","3":"351"},{"1":"Yareli","2":"F","3":"351"},{"1":"Cara","2":"F","3":"350"},{"1":"Taliyah","2":"F","3":"350"},{"1":"Thalia","2":"F","3":"350"},{"1":"Carolyn","2":"F","3":"349"},{"1":"Estrella","2":"F","3":"349"},{"1":"Montserrat","2":"F","3":"349"},{"1":"Zaylee","2":"F","3":"349"},{"1":"Anabelle","2":"F","3":"348"},{"1":"Deborah","2":"F","3":"348"},{"1":"Frida","2":"F","3":"348"},{"1":"Zaria","2":"F","3":"348"},{"1":"Kairi","2":"F","3":"347"},{"1":"Katalina","2":"F","3":"347"},{"1":"Nola","2":"F","3":"347"},{"1":"Erica","2":"F","3":"346"},{"1":"Isabela","2":"F","3":"346"},{"1":"Jazlynn","2":"F","3":"346"},{"1":"Paula","2":"F","3":"346"},{"1":"Faye","2":"F","3":"345"},{"1":"Louisa","2":"F","3":"345"},{"1":"Alessia","2":"F","3":"344"},{"1":"Courtney","2":"F","3":"344"},{"1":"Reign","2":"F","3":"344"},{"1":"Ryann","2":"F","3":"343"},{"1":"Stevie","2":"F","3":"343"},{"1":"Heavenly","2":"F","3":"342"},{"1":"Lisa","2":"F","3":"342"},{"1":"Roselyn","2":"F","3":"342"},{"1":"Raina","2":"F","3":"341"},{"1":"Adrienne","2":"F","3":"340"},{"1":"Celia","2":"F","3":"339"},{"1":"Estelle","2":"F","3":"339"},{"1":"Marianna","2":"F","3":"339"},{"1":"Brenda","2":"F","3":"338"},{"1":"Kathleen","2":"F","3":"338"},{"1":"Paola","2":"F","3":"336"},{"1":"Hunter","2":"F","3":"335"},{"1":"Ellis","2":"F","3":"334"},{"1":"Hana","2":"F","3":"334"},{"1":"Lina","2":"F","3":"332"},{"1":"Raquel","2":"F","3":"332"},{"1":"Aliya","2":"F","3":"331"},{"1":"Iliana","2":"F","3":"331"},{"1":"Kallie","2":"F","3":"331"},{"1":"Emmalynn","2":"F","3":"330"},{"1":"Naya","2":"F","3":"329"},{"1":"Reina","2":"F","3":"328"},{"1":"Wendy","2":"F","3":"328"},{"1":"Landry","2":"F","3":"327"},{"1":"Barbara","2":"F","3":"326"},{"1":"Casey","2":"F","3":"325"},{"1":"Karlie","2":"F","3":"325"},{"1":"Kiana","2":"F","3":"325"},{"1":"Rivka","2":"F","3":"325"},{"1":"Kenya","2":"F","3":"324"},{"1":"Aya","2":"F","3":"322"},{"1":"Carla","2":"F","3":"322"},{"1":"Dalary","2":"F","3":"322"},{"1":"Jaylynn","2":"F","3":"322"},{"1":"Sariah","2":"F","3":"322"},{"1":"Andi","2":"F","3":"321"},{"1":"Romina","2":"F","3":"321"},{"1":"Dana","2":"F","3":"320"},{"1":"Danica","2":"F","3":"320"},{"1":"Ingrid","2":"F","3":"320"},{"1":"Kehlani","2":"F","3":"320"},{"1":"Zaniyah","2":"F","3":"320"},{"1":"Alannah","2":"F","3":"318"},{"1":"Avalynn","2":"F","3":"318"},{"1":"Evalyn","2":"F","3":"318"},{"1":"Sandra","2":"F","3":"318"},{"1":"Veda","2":"F","3":"318"},{"1":"Hadleigh","2":"F","3":"317"},{"1":"Paityn","2":"F","3":"317"},{"1":"Abril","2":"F","3":"316"},{"1":"Ciara","2":"F","3":"316"},{"1":"Holland","2":"F","3":"316"},{"1":"Lillianna","2":"F","3":"316"},{"1":"Kai","2":"F","3":"315"},{"1":"Bryleigh","2":"F","3":"314"},{"1":"Emilie","2":"F","3":"314"},{"1":"Carlee","2":"F","3":"313"},{"1":"Judith","2":"F","3":"313"},{"1":"Kristina","2":"F","3":"313"},{"1":"Janessa","2":"F","3":"312"},{"1":"Annalee","2":"F","3":"311"},{"1":"Zoie","2":"F","3":"311"},{"1":"Maliah","2":"F","3":"310"},{"1":"Bonnie","2":"F","3":"309"},{"1":"Emmaline","2":"F","3":"309"},{"1":"Louise","2":"F","3":"309"},{"1":"Kaylynn","2":"F","3":"308"},{"1":"Monserrat","2":"F","3":"308"},{"1":"Nancy","2":"F","3":"306"},{"1":"Noor","2":"F","3":"306"},{"1":"Vada","2":"F","3":"306"},{"1":"Aubriella","2":"F","3":"305"},{"1":"Maxine","2":"F","3":"305"},{"1":"Nathalia","2":"F","3":"305"},{"1":"Tegan","2":"F","3":"305"},{"1":"Aranza","2":"F","3":"303"},{"1":"Emmie","2":"F","3":"303"},{"1":"Brenna","2":"F","3":"302"},{"1":"Estella","2":"F","3":"302"},{"1":"Ellianna","2":"F","3":"301"},{"1":"Kailee","2":"F","3":"301"},{"1":"Ailani","2":"F","3":"300"},{"1":"Caylee","2":"F","3":"300"},{"1":"Zainab","2":"F","3":"300"},{"1":"Zendaya","2":"F","3":"300"},{"1":"Jana","2":"F","3":"299"},{"1":"Julianne","2":"F","3":"298"},{"1":"Ellison","2":"F","3":"297"},{"1":"Sariyah","2":"F","3":"297"},{"1":"Lizbeth","2":"F","3":"296"},{"1":"Susan","2":"F","3":"296"},{"1":"Alyvia","2":"F","3":"295"},{"1":"Jewel","2":"F","3":"295"},{"1":"Marjorie","2":"F","3":"295"},{"1":"Marleigh","2":"F","3":"295"},{"1":"Nathaly","2":"F","3":"295"},{"1":"Sharon","2":"F","3":"295"},{"1":"Yamileth","2":"F","3":"295"},{"1":"Zion","2":"F","3":"295"},{"1":"Mariyah","2":"F","3":"294"},{"1":"Lyra","2":"F","3":"292"},{"1":"Belle","2":"F","3":"291"},{"1":"Yasmin","2":"F","3":"291"},{"1":"Kaiya","2":"F","3":"290"},{"1":"Maren","2":"F","3":"290"},{"1":"Marisol","2":"F","3":"290"},{"1":"Vienna","2":"F","3":"290"},{"1":"Calliope","2":"F","3":"289"},{"1":"Hailee","2":"F","3":"289"},{"1":"Rayne","2":"F","3":"289"},{"1":"Tabitha","2":"F","3":"289"},{"1":"Anabella","2":"F","3":"287"},{"1":"Blaire","2":"F","3":"287"},{"1":"Giana","2":"F","3":"287"},{"1":"Milania","2":"F","3":"287"},{"1":"Paloma","2":"F","3":"287"},{"1":"Amya","2":"F","3":"286"},{"1":"Novalee","2":"F","3":"286"},{"1":"Harleigh","2":"F","3":"285"},{"1":"Ramona","2":"F","3":"285"},{"1":"Rhea","2":"F","3":"285"},{"1":"Aadhya","2":"F","3":"284"},{"1":"Miya","2":"F","3":"284"},{"1":"Desiree","2":"F","3":"282"},{"1":"Frankie","2":"F","3":"282"},{"1":"Sylvie","2":"F","3":"282"},{"1":"Jasmin","2":"F","3":"281"},{"1":"Moriah","2":"F","3":"281"},{"1":"Rosalyn","2":"F","3":"281"},{"1":"Kaya","2":"F","3":"280"},{"1":"Joslyn","2":"F","3":"279"},{"1":"Tinsley","2":"F","3":"279"},{"1":"Farrah","2":"F","3":"278"},{"1":"Aislinn","2":"F","3":"276"},{"1":"Halle","2":"F","3":"276"},{"1":"Madyson","2":"F","3":"276"},{"1":"Micah","2":"F","3":"276"},{"1":"Arden","2":"F","3":"275"},{"1":"Bexley","2":"F","3":"275"},{"1":"Ari","2":"F","3":"274"},{"1":"Aubri","2":"F","3":"274"},{"1":"Ayana","2":"F","3":"273"},{"1":"Cherish","2":"F","3":"273"},{"1":"Davina","2":"F","3":"273"},{"1":"Anniston","2":"F","3":"272"},{"1":"Riya","2":"F","3":"272"},{"1":"Adilynn","2":"F","3":"271"},{"1":"Ally","2":"F","3":"271"},{"1":"Amayah","2":"F","3":"271"},{"1":"Harmoni","2":"F","3":"271"},{"1":"Heather","2":"F","3":"271"},{"1":"Saoirse","2":"F","3":"271"},{"1":"Azaria","2":"F","3":"270"},{"1":"Alisha","2":"F","3":"269"},{"1":"Nalani","2":"F","3":"269"},{"1":"Maylee","2":"F","3":"268"},{"1":"Shayla","2":"F","3":"268"},{"1":"Briley","2":"F","3":"267"},{"1":"Elin","2":"F","3":"266"},{"1":"Lilia","2":"F","3":"266"},{"1":"Ann","2":"F","3":"264"},{"1":"Antonia","2":"F","3":"264"},{"1":"Aryana","2":"F","3":"264"},{"1":"Chandler","2":"F","3":"264"},{"1":"Esperanza","2":"F","3":"264"},{"1":"Lilyanna","2":"F","3":"264"},{"1":"Alianna","2":"F","3":"263"},{"1":"Luz","2":"F","3":"263"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div id="data-holder" class="section level2">
+<h2>Data Holder</h2>
+<pre class="r"><code>xbar_holder1 = numeric(simulations) # This will hold all the sample means for the first distribution.
+xbar_holder2 = numeric(simulations) # This will hold all the sample means for the second distribution.</code></pre>
+</div>
+<div id="simulate-and-store" class="section level2">
+<h2>Simulate and Store</h2>
+<p>Generate 1000 samples each of size 10 and find the mean of each
+sample. Then store each mean in the xbar_holder vector.</p>
+<pre class="r"><code>for (i in 1:simulations)
+{ 
+  sample1 = rnorm(n1,mean = mu, sd = sigma)
+  sample2 = rnorm(n2,mean = mu, sd = sigma)
+  xbar1 = mean(sample1)
+  xbar2 = mean(sample2)
+  xbar_holder1[i] = xbar1
+  xbar_holder2[i] = xbar2
+}</code></pre>
+</div>
+<div
+id="display-the-distribution-of-sample-means-plot-a-histogram-of-the-sample-means"
+class="section level2">
+<h2>display the distribution of sample means (plot a histogram of the
+sample means)</h2>
+<pre class="r"><code>par(mfrow = c(2,1))
+hist(xbar_holder1, col = &quot;blue&quot;, main = paste(&quot;Distribution of the sample mean: n = &quot;, n1), xlab = &quot;Dist 1 Sample Means&quot;, xlim = c(-4,4))
+hist(xbar_holder2, col = &quot;red&quot;, main = paste(&quot;Distribution of the sample mean: n = &quot;, n2), xlab = &quot;Dist 2 Sample Means&quot;, xlim = c(-4,4))</code></pre>
+<p><img src="CLT_2_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+</div>
+<div
+id="summary-statistics-of-the-distribution-of-the-simulated-sample-means."
+class="section level2">
+<h2>summary statistics of the distribution of the simulated sample
+means.</h2>
+<pre class="r"><code>summary(xbar_holder1) #5 number summary and the mean</code></pre>
+<pre><code>##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+## -0.912435 -0.222878 -0.007276 -0.005035  0.217919  1.227402</code></pre>
+<pre class="r"><code>summary(xbar_holder2) #5 number summary and the mean</code></pre>
+<pre><code>##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+## -0.350454 -0.063164  0.005109  0.004479  0.071784  0.295020</code></pre>
+<pre class="r"><code>sd(xbar_holder1) # standard deviation of dstribuion 1</code></pre>
+<pre><code>## [1] 0.3149711</code></pre>
+<pre class="r"><code>sd(xbar_holder2) #standard deviation of distribuion 2</code></pre>
+<pre><code>## [1] 0.09737827</code></pre>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
