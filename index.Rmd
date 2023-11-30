@@ -5,7 +5,7 @@ output: html_document
 ---
 # Adam Ercanbrack
 
-<img src="https://raw.githubusercontent.com/Weiprecht/Weiprecht.github.io/main/IMG_0787.jpg" alt="Image Alt Text" width="200">
+<img src="https://raw.githubusercontent.com/Weiprecht/Weiprecht.github.io/assets/img/statistical.front.jpg" alt="Image Alt Text" width="200">
 ---
 ## Biography
 ### Adam Ercanbrack is a native of Nebraska and lives in Virginia with his wife, Lynette, and eight kids. He graduated with a BA in Political Philosophy from Weber State University in 1999 and received a MA in International Relations, Middle East Studies from American University in 2003. Adam has extensive experience working in international relations, he enjoys European, East Asian, and US Colonial History, and has become a fan of coding.
