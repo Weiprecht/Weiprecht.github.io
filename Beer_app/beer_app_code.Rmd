@@ -1,15 +1,27 @@
+---
+title: "Beer app file"
+author: "Adam E."
+date: "`r Sys.Date()`"
+output: html_document
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 library(shiny)
 library(ggplot2)
 library(readr)
-
-# beerPath <- "D:/Website/SimpleWebsite/Weiprecht.github.io/Beer_folder/beer_updated.csv"
-# beer_data <- read.csv(beerPath, header = TRUE)
 
 # URL to the raw content of the CSV file on GitHub
 github_url <- "https://raw.githubusercontent.com/Weiprecht/Weiprecht.github.io/main/Beer_app/beer_updated.csv"
 
 # Read the CSV file from the GitHub repository
 beer_data <- read_csv(github_url)
+
 
 # UI part
 ui <- fluidPage(
@@ -23,7 +35,7 @@ ui <- fluidPage(
       actionButton("returnButton", "Return to Previous Page")  # New button
     ),
     mainPanel(
-      plotOutput("histogram")
+      plotOutput(outputId = "histogram")
     )
   )
 )
@@ -54,7 +66,7 @@ server <- function(input, output, session) {  # Added 'session'
   })
   
   output$histogram <- renderPlot({
-    ggplot(filtered_data(), aes_string(x = input$varInput)) +
+    ggplot(filtered_data(), aes(x = .data[[input$varInput]])) +
       geom_histogram(binwidth = binwidth(), fill = "blue", color = "black") +
       labs(x = input$varInput, y = "Frequency", title = "Count of Beer Observations at the Selected Level (IBU, ABV)")
   })
@@ -62,7 +74,7 @@ server <- function(input, output, session) {  # Added 'session'
   observeEvent(input$returnButton, {  # Event handler for the button
     url <- "https://weiprecht.github.io"
     runjs(sprintf("window.location.href = '%s'", url))
-    #runjs("history.go(-1);")  # JavaScript to navigate back one page
+    # runjs("history.go(-1); window.close();")  # JavaScript to navigate back one page
     #session$close()  # Close the Shiny app session
   })
 }
@@ -70,3 +82,4 @@ server <- function(input, output, session) {  # Added 'session'
 # Run the application 
 shinyApp(ui = ui, server = server)
 
+```
