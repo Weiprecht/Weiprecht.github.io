@@ -12,6 +12,8 @@ navbar:
       href: Beer_project_code.html
     - text: "Beer Application"
       href: "https://weiprecht.shinyapps.io/Beer_application/"
+    - text: "About"
+      href: about.rmd
     - text: "Help"
       href: help_file.html
 
