@@ -7,7 +7,7 @@ navbar:
     - text: "Projects"  # New dropdown menu for Projects
       menu:
         - text: "US Beer Analysis"
-          href: Beer_project_code.html
+          href: mid_term_project_code.html
         - text: "Beer Project Apps"
           menu:
             - text: "Beer Application"
