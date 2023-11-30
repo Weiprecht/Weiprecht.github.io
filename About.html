@@ -246,14 +246,31 @@ $(document).ready(function () {
         <li>
   <a href="index.html">Welcome</a>
 </li>
-<li>
-  <a href="CLT_2.html">CLT</a>
-</li>
-<li>
-  <a href="Beach_Comber_Pvalue_Simulation.html">Beach Comber</a>
-</li>
-<li>
-  <a href="Beer_project_code.html">Beer Project Code</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Projects
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Beer_project_code.html">US Beer Analysis</a>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Beer Project Apps</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="https://weiprecht.shinyapps.io/beer_app_code/">Beer Application</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="Employment_Attrition_Analysis.html">Employment Attrition Analysis</a>
+    </li>
+    <li>
+      <a href="Ames_Real_Estate_Analysis.html">Ames Real Estate Analysis</a>
+    </li>
+  </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -263,10 +280,25 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="https://weiprecht.shinyapps.io/Beer_application/">Beer Application</a>
+      <a href="https://weiprecht.shinyapps.io/beer_app_code/">Beer Application</a>
     </li>
     <li>
       <a href="https://your-second-shinyapp-link-here/">Another Shiny App</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Code Examples
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="CLT_2.html">Central Limit Theorem</a>
+    </li>
+    <li>
+      <a href="Beach_Comber_Pvalue_Simulation.html">Beach Comber</a>
     </li>
   </ul>
 </li>

@@ -248,17 +248,61 @@ $(document).ready(function () {
         <li>
   <a href="index.html">Welcome</a>
 </li>
-<li>
-  <a href="CLT_2.html">CLT</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Projects
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Beer_project_code.html">US Beer Analysis</a>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Beer Project Apps</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="https://weiprecht.shinyapps.io/beer_app_code/">Beer Application</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="Employment_Attrition_Analysis.html">Employment Attrition Analysis</a>
+    </li>
+    <li>
+      <a href="Ames_Real_Estate_Analysis.html">Ames Real Estate Analysis</a>
+    </li>
+  </ul>
 </li>
-<li>
-  <a href="Beach_Comber_Pvalue_Simulation.html">Beach Comber</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Apps
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="https://weiprecht.shinyapps.io/beer_app_code/">Beer Application</a>
+    </li>
+    <li>
+      <a href="https://your-second-shinyapp-link-here/">Another Shiny App</a>
+    </li>
+  </ul>
 </li>
-<li>
-  <a href="Beer_project_code.html">Beer Project Code</a>
-</li>
-<li>
-  <a href="https://weiprecht.shinyapps.io/Beer_application/">Beer Application</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Code Examples
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="CLT_2.html">Central Limit Theorem</a>
+    </li>
+    <li>
+      <a href="Beach_Comber_Pvalue_Simulation.html">Beach Comber</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="about.html">About</a>
@@ -323,7 +367,7 @@ class="section level2">
 means.</h2>
 <pre class="r"><code>summary(xbar_holder)</code></pre>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##   9.899  19.113  20.981  20.995  22.850  31.580</code></pre>
+##   10.55   19.18   21.01   21.01   22.80   30.06</code></pre>
 </div>
 <div id="the-pvalue" class="section level2">
 <h2>The Pvalue!</h2>
@@ -331,7 +375,7 @@ means.</h2>
 what was observed assuming the null hypothesis is true.</p>
 <pre class="r"><code>pvalue = length(which(xbar_holder&gt;29.86))/simulations
 pvalue</code></pre>
-<pre><code>## [1] 4e-04</code></pre>
+<pre><code>## [1] 1e-04</code></pre>
 </div>
 </div>
 

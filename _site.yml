@@ -7,7 +7,7 @@ navbar:
     - text: "Projects"  # New dropdown menu for Projects
       menu:
         - text: "US Beer Analysis"
-          href: US_Beer_Analysis.html
+          href: Beer_project_code.html
         - text: "Beer Project Apps"
           menu:
             - text: "Beer Application"
@@ -22,12 +22,14 @@ navbar:
           href: "https://weiprecht.shinyapps.io/beer_app_code/"
         - text: "Another Shiny App"  # Replace with the name of your second app
           href: "https://your-second-shinyapp-link-here/"
-    - text: "CLT"
-      href: CLT_2.html
-    - text: "Beach Comber"
-      href: Beach_Comber_Pvalue_Simulation.html
-    - text: "Beer Project Code"
-      href: Beer_project_code.html
+
+    - text: "Code Examples"  # New dropdown menu for Projects
+      menu:
+        - text: "Central Limit Theorem"
+          href: CLT_2.html
+        - text: "Beach Comber"
+          href: Beach_Comber_Pvalue_Simulation.html
+
     - text: "About"
       href: about.html
     - text: "Help"
