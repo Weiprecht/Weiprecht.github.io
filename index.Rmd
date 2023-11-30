@@ -3,10 +3,8 @@ title: "Statistical Insights"
 date: "`r Sys.Date()`"
 output: html_document
 ---
+<img src="https://github.com/Weiprecht/Weiprecht.github.io/blob/main/statistical.front.jpg" alt="Image Alt Text" width="400">
 
-<img src="https://github.com/Weiprecht/Weiprecht.github.io/blob/main/assets/img/statistical.front.jpg" alt="Image Alt Text" width="400">
----
 ## Learning Statistics and Data Science
 ### This site is designed to showcase different projects completed in the MSDS program at Southern Methodist University (SMU).
 
-<img src="https://github.com/Weiprecht/Weiprecht.github.io/blob/main/statistical.front.jpg" alt="Image Alt Text" width="400">
