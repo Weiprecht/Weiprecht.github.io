@@ -12,16 +12,20 @@ navbar:
           menu:
             - text: "Beer Application"
               href: "https://weiprecht.shinyapps.io/beer_app_code/"
+              
         - text: "Employment Attrition Analysis"
           href: Employment_Attrition_Analysis.html
+        - text: "Employment Project Apps"
+          menu:
+            - text: "Attrition Application"
+              href: "https://weiprecht.shinyapps.io/attrition_app_code/"
+              
         - text: "Ames Real Estate Analysis"
           href: Ames_Real_Estate_Analysis.html
-    - text: "Apps"
-      menu:
-        - text: "Beer Application"
-          href: "https://weiprecht.shinyapps.io/beer_app_code/"
-        - text: "Another Shiny App"  # Replace with the name of your second app
-          href: "https://your-second-shinyapp-link-here/"
+        - text: "Ames Real Estate Project App"
+          menu:
+            - text: "Ames Real Estate Application"
+              href: "https://weiprecht.shinyapps.io/ames_real_estate_app_code/"
 
     - text: "Code Examples"  # New dropdown menu for Projects
       menu:
