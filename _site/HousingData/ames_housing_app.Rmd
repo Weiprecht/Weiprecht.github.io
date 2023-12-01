@@ -56,7 +56,7 @@ server <- function(input, output) {
     ggplot(housing_data, aes(x = lGrLivAreaHundr, y = lSalePriceHundr, color = Neighborhood)) +
       geom_point() +
       geom_smooth(method = "lm", formula = y ~ x, se = FALSE) +
-      labs(title = "Relationship of Logged Price and Logged Living Area by Neighborhood",
+      labs(title = "Relationship of LogPrice and LogLiving Area by Neighborhood",
            x = "Logged Area (in hundreds of sqrft)", y = "Logged Sale Price (in hundreds)", color = "Neighborhood")
   })
   
