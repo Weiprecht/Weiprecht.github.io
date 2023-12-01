@@ -21,11 +21,11 @@ navbar:
               href: "https://weiprecht.shinyapps.io/attrition_app_code/"
               
         - text: "Ames Real Estate Analysis"
-          href: Ames_Real_Estate_Analysis.html
+          href: Housing_Final_Prroject_code.html
         - text: "Ames Real Estate Project App"
           menu:
             - text: "Ames Real Estate Application"
-              href: "https://weiprecht.shinyapps.io/ames_real_estate_app_code/"
+              href: "https://weiprecht.shinyapps.io/ames_housing_app/"
 
     - text: "Code Examples"  # New dropdown menu for Projects
       menu:

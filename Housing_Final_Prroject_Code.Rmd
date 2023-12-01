@@ -1,0 +1,673 @@
+---
+title: "SFDS Final Project"
+author: "Adam E."
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Packages
+```{r Load_libraries, include = FALSE, echo = FALSE} 
+# install.packages("multcomp")
+#install.packages("xtable")
+#install.packages("vcd")
+
+# Required libraries
+library(tidyverse)
+library(broom)
+library(gridExtra)
+#library(pwr)
+#library(emmeans)
+#library(GGally)
+library(car)
+
+# library(maps)
+# library(kableExtra)
+# library(class)
+# library(patchwork)
+# library(RCurl) 
+# library(jsonlite)
+
+#Import all libraries - ggplot2 for visualization
+library(ggplot2)
+library(ggthemes)
+library(klaR)
+library(caret)
+# library(e1071)
+# library(vcd)
+
+
+```
+
+
+# Data Import from csv
+```{r csv_import}
+# Read in Data
+Path <- "https://raw.githubusercontent.com/Weiprecht/Weiprecht.github.io/main/HousingData/train.csv"
+AmesHousing_Data = read.csv(Path, header=TRUE)
+
+#MF = read.csv(file.choose(), header = TRUE)
+
+# Drop rows where 'Id' column contains "MM"
+AmesHousing_Data <- AmesHousing_Data[!grepl( "NA", AmesHousing_Data$Id), ]
+
+
+AmesHousing_Data2 <- AmesHousing_Data %>%
+  filter(Neighborhood %in% c("NAmes", "Edwards", "BrkSide"))
+AmesHousing_Data2$Neighborhood <- as.factor(AmesHousing_Data2$Neighborhood)
+
+# Create a new column that holds the'SalePrice' in hundreds
+AmesHousing_Data2$SalePriceHundr <- floor(AmesHousing_Data2$SalePrice /100)
+
+# Create a new column that holds the'SalePrice' in hundreds
+AmesHousing_Data2$GrLivAreaHundr <- floor(AmesHousing_Data2$GrLivArea /100)
+
+# Write new dataset
+# write.csv(AmesHousing_Data2, "D:/University/SMU/Statistical_Foundations_for_Data_Science/Stat_foundations_repository/Statistical_Foundations/Final_Project/AmesHousing_Data2.csv", row.names = FALSE)
+
+AmesHousing_Data2
+
+```
+# Initial dataset for Analysis Question 1: check assumptions
+```{r housing_regression}
+
+# Fit a multiple linear regression model
+lm_model <- lm(SalePriceHundr ~ GrLivAreaHundr + Neighborhood, data = AmesHousing_Data2)
+
+# Summarize the model
+summary(lm_model)
+
+# Calculate VIF for the variables in the model
+vif_result <- vif(lm_model)
+vif_result
+
+# Calculate mean and standard deviation
+mean_sale_price <- mean(AmesHousing_Data2$SalePriceHundr)
+sd_sale_price <- sd(AmesHousing_Data2$SalePriceHundr)
+mean_sqr_ft <- mean(AmesHousing_Data2$GrLivAreaHundr)
+sd_sqr_ft <- sd(AmesHousing_Data2$GrLivAreaHundr)
+
+# Check Assumptions Visually
+plot(lm_model)
+avPlots(lm(SalePriceHundr ~ GrLivAreaHundr + Neighborhood, data = AmesHousing_Data2))  
+
+# For histograms
+ggplot(AmesHousing_Data2, aes(x = SalePriceHundr)) +
+  geom_histogram(aes(y = ..density..), color = "black", fill = "grey") +
+  geom_density(aes(color = "Actual")) +
+  stat_function(aes(color = "Normal"), 
+                fun = dnorm, 
+                args = list(mean = mean_sale_price, sd = sd_sale_price)) +
+  xlab("Sale Price (in Hundreds)") +
+  scale_colour_manual("Distribution", values = c("darkred", "darkblue"))
+
+ggplot(AmesHousing_Data2, aes(x = GrLivAreaHundr)) +
+  geom_histogram(aes(y = ..density..), color = "black", fill = "grey") +
+  geom_density(aes(color = "Actual")) +
+  stat_function(aes(color = "Normal"), 
+                fun = dnorm, 
+                args = list(mean = mean_sqr_ft, sd = sd_sqr_ft)) +
+  xlab("Area sqr ft (in Hundreds)") +
+  scale_colour_manual("Distribution", values = c("darkred", "darkblue"))
+
+# Boxplot for SalePrice 
+ggplot(AmesHousing_Data2, aes(x = Neighborhood, y = SalePriceHundr)) +
+  geom_boxplot() +
+  labs(title = "SalePrice Distribution Across Neighborhoods",
+       x = "Neighborhood",
+       y = "SalePrice (in hundreds)")
+
+# Boxplot for square feet 
+ggplot(AmesHousing_Data2, aes(x = Neighborhood, y = GrLivAreaHundr)) +
+  geom_boxplot() +
+  labs(title = "Square Feet Across Neighborhoods",
+       x = "Neighborhood",
+       y = "Square Feet (in tens)")
+
+```
+# Since the is some right skewedness and variables that are leveraging the3 regression - look at the outliers
+```{r examine_outliers}
+# Calculate IQR for SalePrice and GrLivArea
+Q1 <- quantile(AmesHousing_Data2$SalePrice, 0.25)
+Q3 <- quantile(AmesHousing_Data2$SalePrice, 0.75)
+IQR_SalePrice <- Q3 - Q1
+
+Q1_area <- quantile(AmesHousing_Data2$GrLivArea, 0.25)
+Q3_area <- quantile(AmesHousing_Data2$GrLivArea, 0.75)
+IQR_GrLivArea <- Q3_area - Q1_area
+
+# Define thresholds for outliers 
+threshold_SalePrice <- 2.5 * IQR_SalePrice
+threshold_GrLivArea <- 2.5 * IQR_GrLivArea
+
+# Identify outliers
+outliers <- AmesHousing_Data2[(AmesHousing_Data2$SalePrice < (Q1 - threshold_SalePrice)) |
+                              (AmesHousing_Data2$SalePrice > (Q3 + threshold_SalePrice)) |
+                              (AmesHousing_Data2$GrLivArea < (Q1_area - threshold_GrLivArea)) |
+                              (AmesHousing_Data2$GrLivArea > (Q3_area + threshold_GrLivArea)), ]
+outliers
+
+# Assuming 'AmesHousing_Data2' is your dataset
+partial_sales <- AmesHousing_Data2$SaleCondition == "Partial"
+partial_rows <- AmesHousing_Data2[partial_sales, ]
+
+partial_rows
+
+# Export outliers to a CSV file
+# write.csv(outliers, "D:/University/SMU/Statistical_Foundations_for_Data_Science/Stat_foundations_repository/Statistical_Foundations/Final_Project/outliers.csv", row.names = FALSE)
+```
+
+
+
+# 524(131) and 1299(339) in Edwards, have over 10000 sqft including the unfinished basements and 1 and 1.5 acres-most likley an error - no homes over .5 acres built after 2007
+# 534(136) in Brookside, has a price and square feet that are likely missing a zero - Brookside smallest structure has 729 square feet this one, 334
+# 725(190) in Edwards, 643 (169) in NAmes prices are high for living space and thus the sales-living regression is off
+```{r outliers_high_leverage}
+# Identify the rows of interest'
+outlier_indices <- c( 131, 136, 169, 190, 339)
+
+# Extracting rows corresponding to the outlier indices
+outlier_rows <- AmesHousing_Data2[outlier_indices, ]
+
+outlier_rows
+
+
+```
+```{r drop_investigated_outliers}
+# Drop rows 131, 136, and 339
+rows_to_drop <- c( 131, 136, 190, 339)
+AmesHousing_Data3 <- AmesHousing_Data2[-rows_to_drop, ]
+
+AmesHousing_Data3
+summary(AmesHousing_Data3)
+
+# Fit a multiple linear regression model
+lm_reduced <- lm(SalePriceHundr ~ GrLivAreaHundr + Neighborhood, data = AmesHousing_Data3)
+
+# Summarize the model
+summary(lm_reduced)
+
+# Calculate VIF for the variables in the model
+vif_reduced <- vif(lm_reduced)
+vif_reduced
+
+
+# Calculate mean and standard deviation
+mean_sale_price <- mean(AmesHousing_Data3$SalePriceHundr)
+sd_sale_price <- sd(AmesHousing_Data3$SalePriceHundr)
+mean_sqr_ft <- mean(AmesHousing_Data3$GrLivAreaHundr)
+sd_sqr_ft <- sd(AmesHousing_Data3$GrLivAreaHundr)
+
+# Check Assumptions Visually
+plot(lm_reduced)
+avPlots(lm(SalePriceHundr ~ GrLivAreaHundr + Neighborhood, data = AmesHousing_Data3))
+
+# Identify outliers
+identify(lm_reduced$fit, labels = row.names(AmesHousing_Data3), plot = TRUE)
+
+# For histograms
+ggplot(AmesHousing_Data3, aes(x = SalePriceHundr)) +
+  geom_histogram(aes(y = ..density..), color = "black", fill = "grey") +
+  geom_density(aes(color = "Actual")) +
+  stat_function(aes(color = "Normal"), 
+                fun = dnorm, 
+                args = list(mean = mean_sale_price, sd = sd_sale_price)) +
+  xlab("Sale Price (in Hundreds)") +
+  scale_colour_manual("Distribution", values = c("darkred", "darkblue"))
+
+ggplot(AmesHousing_Data3, aes(x = GrLivAreaHundr)) +
+  geom_histogram(aes(y = ..density..), color = "black", fill = "grey") +
+  geom_density(aes(color = "Actual")) +
+  stat_function(aes(color = "Normal"), 
+                fun = dnorm, 
+                args = list(mean = mean_sqr_ft, sd = sd_sqr_ft)) +
+  xlab("Area sqr ft (in Hundreds)") +
+  scale_colour_manual("Distribution", values = c("darkred", "darkblue"))
+
+# Boxplot for SalePrice 
+ggplot(AmesHousing_Data3, aes(x = Neighborhood, y = SalePriceHundr)) +
+  geom_boxplot() +
+  labs(title = "SalePrice Distribution Across Neighborhoods",
+       x = "Neighborhood",
+       y = "SalePrice (in hundreds)")
+
+# Boxplot for square feet 
+ggplot(AmesHousing_Data3, aes(x = Neighborhood, y = GrLivAreaHundr)) +
+  geom_boxplot() +
+  labs(title = "Square Feet Across Neighborhoods",
+       x = "Neighborhood",
+       y = "Square Feet (in tens)")
+
+```
+
+
+```{r internal_cross_validation}
+# Define the model formula
+formula <- SalePriceHundr ~ GrLivAreaHundr + Neighborhood
+
+# Create a train control object for cross-validation
+ctrl <- trainControl(method = "cv",  # Cross-validation method
+                     number = 5,     # Number of folds (you can change this)
+                     verboseIter = TRUE,  # Display iteration progress
+                     summaryFunction = defaultSummary)  # Use default summary function
+
+# Train the model with cross-validation
+lm_model <- train(formula,
+                  data = AmesHousing_Data2,
+                  method = "lm",  # Linear regression method
+                  trControl = ctrl)
+
+# View results
+lm_model
+```
+
+
+
+
+
+
+```{r logged_housing_data}
+# Create a new column called 'lSalePrice' and place the log of the values in 'SalePrice' in this column
+AmesHousing_Data3$lSalePriceHundr <- log(AmesHousing_Data3$SalePriceHundr)
+
+# Create a new column called 'lGrLivArea' and place the log of the values in 'GrLivArea' in this column
+AmesHousing_Data3$lGrLivAreaHundr <- log(AmesHousing_Data3$GrLivAreaHundr)
+
+AmesHousing_Data3
+
+# Write new dataset
+#write.csv(AmesHousing_Data3, "D:/Website/Weiprecht.github.io/HousingData/AmesHousing_Data3.csv", row.names = FALSE)
+```
+
+
+
+```{r housing_regression_logged}
+
+# Fit a multiple linear regression model
+lm_model2 <- lm(lSalePriceHundr ~ lGrLivAreaHundr + Neighborhood, data = AmesHousing_Data3)
+
+# Summarize the model
+summary(lm_model2)
+
+# Get coefficients and statistical summary in a tidy format
+tidy_summary2 <- tidy(lm_model2)
+print(tidy_summary2)
+
+plot(lm_model2)
+```
+
+```{r internal_cross_validation2}
+# Define the model formula
+formula <- lSalePriceHundr ~ lGrLivAreaHundr + Neighborhood
+
+# Create a train control object for cross-validation
+ctrl <- trainControl(method = "cv",  # Cross-validation method
+                     number = 5,     # Number of folds (you can change this)
+                     verboseIter = TRUE,  # Display iteration progress
+                     summaryFunction = defaultSummary)  # Use default summary function
+
+# Train the model with cross-validation
+lm_model <- train(formula,
+                  data = AmesHousing_Data3,
+                  method = "lm",  # Linear regression method
+                  trControl = ctrl)
+
+# View results
+lm_model
+
+```
+
+
+
+```{r housing_regression_logged2}
+# ref is always the element that does not show up in the model.
+cat("\n-------------------------------Neighborhood no interaction----------------------\n")
+pricefit = lm(lSalePriceHundr ~ relevel(Neighborhood, ref = "BrkSide") + lGrLivAreaHundr, data = AmesHousing_Data3)
+summary(pricefit)
+
+confint(pricefit)
+
+# Get coefficients and statistical summary in a tidy format
+tidy_summary2 <- tidy(pricefit)
+print(tidy_summary2)
+
+plot(pricefit)
+
+cat("\n--------------------------Neighborhood interaction---------------------\n")
+
+# No Interaction (Parallel Regression Lines)
+pricefit2 = lm(lSalePriceHundr ~ relevel(Neighborhood, ref = "BrkSide") * lGrLivAreaHundr, data = AmesHousing_Data3)
+summary(pricefit2)
+
+confint(pricefit2)
+
+# Get coefficients and statistical summary in a tidy format
+tidy_summary2 <- tidy(pricefit2)
+print(tidy_summary2)
+
+plot(pricefit2)
+```
+
+
+
+```{r histogram_comparisons}
+
+# Filter the data for each neighborhood
+NAmes_data <- filter(AmesHousing_Data3, Neighborhood == "NAmes")
+Edwards_data <- filter(AmesHousing_Data3, Neighborhood == "Edwards")
+BrkSide_data <- filter(AmesHousing_Data3, Neighborhood == "BrkSide")
+
+Combined_plot <- ggplot() +
+  geom_histogram(data = NAmes_data, aes(x = lSalePriceHundr, fill = "NAmes"), color = "black", alpha = 0.5, bins = 30, show.legend = TRUE) +
+  geom_histogram(data = Edwards_data, aes(x = lSalePriceHundr, fill = "Edwards"), color = "black", alpha = 0.5, bins = 30, show.legend = TRUE) +
+  geom_histogram(data = BrkSide_data, aes(x = lSalePriceHundr, fill = "BrkSide"), color = "black", alpha = 0.5, bins = 30, show.legend = TRUE) +
+  labs(title = "Sale Prices by Neighborhood",
+       x = "Sale Price (in Hundreds)",
+       y = "Frequency") +
+  scale_fill_manual(values = c("NAmes" = "cornflowerblue", "Edwards" = "red", "BrkSide" = "green"), 
+                    name = "Neighborhood") +
+ guides(fill = guide_legend(title = "Neighborhood"))
+# Show legend
+#Combined_plot + guides(fill = guide_legend(title = "Neighborhood"))
+
+#-------------------------NAmes-------------------------------------
+
+# Calculate mean and standard deviation
+mean_sale_price <- mean(NAmes_data$lSalePriceHundr)
+sd_sale_price <- sd(NAmes_data$lSalePriceHundr)
+
+# Create histogram with normal and density curves (NAMES)
+NAmes_plot <- ggplot(NAmes_data, aes(x = lSalePriceHundr)) +
+  geom_histogram(aes(y = ..density..), color = "black", fill = "cornflowerblue") +
+  geom_density(aes(color = "Actual")) +
+  stat_function(aes(color = "Normal"), 
+                fun = dnorm, 
+                args = list(mean = mean_sale_price, sd = sd_sale_price)) +
+  ggtitle("Sale Prices in North Ames") +
+  xlab("Sale Price (in Hundreds)") +
+  scale_colour_manual("Distribution", values = c("darkred", "darkblue"))
+
+#--------------------------Edwards---------------------------------------
+
+# Calculate mean and standard deviation
+mean_sale_price <- mean(Edwards_data$lSalePriceHundr)
+sd_sale_price <- sd(Edwards_data$lSalePriceHundr)
+
+# Create histogram with normal and density curves (NAMES)
+Edwards_plot <- ggplot(Edwards_data, aes(x = lSalePriceHundr)) +
+  geom_histogram(aes(y = ..density..), color = "black", fill = "red") +
+  geom_density(aes(color = "Actual")) +
+  stat_function(aes(color = "Normal"), 
+                fun = dnorm, 
+                args = list(mean = mean_sale_price, sd = sd_sale_price)) +
+  ggtitle("Sale Prices in Edwards") +
+  xlab("Sale Price (in Hundreds)") +
+  scale_colour_manual("Distribution", values = c("darkred", "darkblue"))
+
+#--------------------------BrkSide--------------------------------
+# Calculate mean and standard deviation
+mean_sale_price <- mean(BrkSide_data$lSalePriceHundr)
+sd_sale_price <- sd(BrkSide_data$lSalePriceHundr)
+
+# Create histogram with normal and density curves (BrkSide)
+BrkSide_plot <- ggplot(BrkSide_data, aes(x = lSalePriceHundr)) +
+  geom_histogram(aes(y = ..density..), color = "black", fill = "green") +
+  geom_density(aes(color = "Actual")) +
+  stat_function(aes(color = "Normal"), 
+                fun = dnorm, 
+                args = list(mean = mean_sale_price, sd = sd_sale_price)) +
+  ggtitle("Sale Prices in BrkSide") +
+  xlab("Sale Price (in Hundreds)") +
+  scale_colour_manual("Distribution", values = c("darkred", "darkblue"))
+
+grid.arrange(Combined_plot, NAmes_plot, Edwards_plot, BrkSide_plot, ncol = 2, nrow = 2)
+```
+
+
+```{r histogram_comparisons2}
+
+# Filter the data for each neighborhood
+NAmes_data <- filter(AmesHousing_Data3, Neighborhood == "NAmes")
+Edwards_data <- filter(AmesHousing_Data3, Neighborhood == "Edwards")
+BrkSide_data <- filter(AmesHousing_Data3, Neighborhood == "BrkSide")
+
+Combined_plot <- ggplot() +
+  geom_histogram(data = NAmes_data, aes(x = lGrLivAreaHundr, fill = "NAmes"), color = "black", alpha = 0.5, bins = 30, show.legend = TRUE) +
+  geom_histogram(data = Edwards_data, aes(x = lGrLivAreaHundr, fill = "Edwards"), color = "black", alpha = 0.5, bins = 30, show.legend = TRUE) +
+  geom_histogram(data = BrkSide_data, aes(x = lGrLivAreaHundr, fill = "BrkSide"), color = "black", alpha = 0.5, bins = 30, show.legend = TRUE) +
+  labs(title = "Square Feet by Neighborhood",
+       x = "Square Feet (in hundreds)",
+       y = "Frequency") +
+  scale_fill_manual(values = c("NAmes" = "cornflowerblue", "Edwards" = "red", "BrkSide" = "green"), 
+                    name = "Neighborhood") +
+ guides(fill = guide_legend(title = "Neighborhood"))
+# Show legend
+#Combined_plot + guides(fill = guide_legend(title = "Neighborhood"))
+
+#-------------------------NAmes-------------------------------------
+
+# Calculate mean and standard deviation
+mean_Square_Feet <- mean(NAmes_data$lGrLivAreaHundr)
+sd_Square_Feet <- sd(NAmes_data$lGrLivAreaHundr)
+
+# Create histogram with normal and density curves (NAMES)
+NAmes_plot <- ggplot(NAmes_data, aes(x = lGrLivAreaHundr)) +
+  geom_histogram(aes(y = ..density..), color = "black", fill = "cornflowerblue") +
+  geom_density(aes(color = "Actual")) +
+  stat_function(aes(color = "Normal"), 
+                fun = dnorm, 
+                args = list(mean = mean_Square_Feet, sd = sd_Square_Feet)) +
+  ggtitle("Square Feet in North Ames") +
+  xlab("Square Feet (in hundreds)") +
+  scale_colour_manual("Distribution", values = c("darkred", "darkblue"))
+
+#--------------------------Edwards---------------------------------------
+
+# Calculate mean and standard deviation
+mean_Square_Feet <- mean(Edwards_data$lGrLivAreaHundr)
+sd_Square_Feet <- sd(Edwards_data$lGrLivAreaHundr)
+
+# Create histogram with normal and density curves (NAMES)
+Edwards_plot <- ggplot(Edwards_data, aes(x = lGrLivAreaHundr)) +
+  geom_histogram(aes(y = ..density..), color = "black", fill = "red") +
+  geom_density(aes(color = "Actual")) +
+  stat_function(aes(color = "Normal"), 
+                fun = dnorm, 
+                args = list(mean = mean_Square_Feet, sd = sd_Square_Feet)) +
+  ggtitle("Square Feet in Edwards") +
+  xlab("Square Feet (in hundreds)") +
+  scale_colour_manual("Distribution", values = c("darkred", "darkblue"))
+
+#--------------------------BrkSide--------------------------------
+# Calculate mean and standard deviation
+mean_Square_Feet <- mean(BrkSide_data$lGrLivAreaHundr)
+sd_Square_Feet <- sd(BrkSide_data$lGrLivAreaHundr)
+
+# Create histogram with normal and density curves (BrkSide)
+BrkSide_plot <- ggplot(BrkSide_data, aes(x = lGrLivAreaHundr)) +
+  geom_histogram(aes(y = ..density..), color = "black", fill = "green") +
+  geom_density(aes(color = "Actual")) +
+  stat_function(aes(color = "Normal"), 
+                fun = dnorm, 
+                args = list(mean = mean_Square_Feet, sd = sd_Square_Feet)) +
+  ggtitle("Square Feet in BrkSide") +
+  xlab("Square Feet (in hundreds)") +
+  scale_colour_manual("Distribution", values = c("darkred", "darkblue"))
+
+grid.arrange(Combined_plot, NAmes_plot, Edwards_plot, BrkSide_plot, ncol = 2, nrow = 2)
+```
+
+
+
+
+```{r unlogged_scatterplot}
+library(ggplot2)
+ggplot(AmesHousing_Data3, aes(x = GrLivAreaHundr, y = SalePriceHundr, color = Neighborhood)) + 
+  geom_point() + 
+  geom_smooth(method = "lm", formula = y ~ x, se = FALSE) + 
+  labs(title = "Relationship of Price and Living Area by Neighborhood", x = "Total Area", y = "Sale Price", color = "Neighborhood")
+
+```
+
+
+
+```{r logged_scatterplot}
+
+library(ggplot2)
+ggplot(AmesHousing_Data3, aes(x = lGrLivAreaHundr, y = lSalePriceHundr, color = Neighborhood)) + 
+  geom_point() + 
+  geom_smooth(method = "lm", formula = y ~ x, se = FALSE) + 
+  labs(title = "Relationship of Logged Price and Logged Living Area by Neighborhood", x = "Logged Area (in hundreds of sqrft)", y = "Logged Sale Price (in hundreds)", color = "Neighborhood")
+```
+
+```{r conversion}
+# Coefficients from the regression model
+intercept <- 5.79475
+coeff_Edwards <- -0.02507
+coeff_NAmes <- 0.12769
+coeff_GrLivArea <- 0.53874
+
+# Transforming coefficients back to original scale
+original_intercept <- exp(intercept)
+original_coeff_Edwards <- exp(coeff_Edwards)
+original_coeff_NAmes <- exp(coeff_NAmes)
+original_coeff_GrLivArea <- exp(coeff_GrLivArea)
+
+# Interpretation in dollars and square feet
+# Assuming GrLivArea is measured in square feet
+# Assuming the SalePrice was measured in dollars
+# Interpretation of coefficients in original scale
+interpretation_intercept <- paste("Intercept (in hundreds of dollars):", round(original_intercept, 2))
+interpretation_Edwards <- paste("Effect of Edwards (in hundreds of dollars):", round(original_coeff_Edwards, 2))
+interpretation_NAmes <- paste("Effect of NAmes (in hundreds of dollars):", round(original_coeff_NAmes, 2))
+interpretation_GrLivArea <- paste("Effect of GrLivArea (in hundreds of square feet):", round(original_coeff_GrLivArea, 2))
+
+# Printing interpretations
+print(interpretation_intercept)
+print(interpretation_Edwards)
+print(interpretation_NAmes)
+print(interpretation_GrLivArea)
+```
+
+
+
+
+
+
+# Initial dataset for Analysis Question 2
+```{r housing_regression_large}
+
+AmesHousing_Data$Neighborhood <- as.factor(AmesHousing_Data$Neighborhood)
+
+# Create a new column that holds the'SalePrice' in hundreds
+AmesHousing_Data$SalePriceHundr <- floor(AmesHousing_Data$SalePrice /100)
+
+# Create a new column that holds the'SalePrice' in hundreds
+AmesHousing_Data$GrLivAreaTen <- floor(AmesHousing_Data$GrLivArea /100)
+
+# Fit a multiple linear regression model
+lm_model <- lm(SalePriceHundr ~ GrLivAreaTen + Neighborhood, data = AmesHousing_Data)
+
+# Summarize the model
+summary(lm_model)
+
+# Calculate mean and standard deviation
+mean_sale_price <- mean(AmesHousing_Data$SalePriceHundr)
+sd_sale_price <- sd(AmesHousing_Data$SalePriceHundr)
+mean_sqr_ft <- mean(AmesHousing_Data$GrLivAreaTen)
+sd_sqr_ft <- sd(AmesHousing_Data$GrLivAreaTen)
+
+# Check Assumptions Visually
+plot(lm_model)
+
+# For histograms
+ggplot(AmesHousing_Data, aes(x = SalePriceHundr)) +
+  geom_histogram(aes(y = ..density..), color = "black", fill = "grey") +
+  geom_density(aes(color = "Actual")) +
+  stat_function(aes(color = "Normal"), 
+                fun = dnorm, 
+                args = list(mean = mean_sale_price, sd = sd_sale_price)) +
+  xlab("Sale Price (in Hundreds)") +
+  scale_colour_manual("Distribution", values = c("darkred", "darkblue"))
+
+ggplot(AmesHousing_Data, aes(x = GrLivAreaTen)) +
+  geom_histogram(aes(y = ..density..), color = "black", fill = "grey") +
+  geom_density(aes(color = "Actual")) +
+  stat_function(aes(color = "Normal"), 
+                fun = dnorm, 
+                args = list(mean = mean_sqr_ft, sd = sd_sqr_ft)) +
+  xlab("Area sqr ft (in Hundreds)") +
+  scale_colour_manual("Distribution", values = c("darkred", "darkblue"))
+
+# Boxplot for SalePrice 
+ggplot(AmesHousing_Data, aes(x = Neighborhood, y = SalePriceHundr)) +
+  geom_boxplot() +
+  labs(title = "SalePrice Distribution Across Neighborhoods",
+       x = "Neighborhood",
+       y = "SalePrice (in hundreds)") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+# Boxplot for square feet 
+ggplot(AmesHousing_Data, aes(x = Neighborhood, y = GrLivAreaTen)) +
+  geom_boxplot() +
+  labs(title = "Square Feet Across Neighborhoods",
+       x = "Neighborhood",
+       y = "Square Feet (in tens)") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+```
+
+```{r examine_all_outliers_large}
+# Calculate IQR for SalePrice and GrLivArea
+Q1 <- quantile(AmesHousing_Data$SalePrice, 0.25)
+Q3 <- quantile(AmesHousing_Data$SalePrice, 0.75)
+IQR_SalePrice <- Q3 - Q1
+
+Q1_area <- quantile(AmesHousing_Data$GrLivArea, 0.25)
+Q3_area <- quantile(AmesHousing_Data$GrLivArea, 0.75)
+IQR_GrLivArea <- Q3_area - Q1_area
+
+# Define thresholds for outliers 
+threshold_SalePrice <- 3.5 * IQR_SalePrice
+threshold_GrLivArea <- 3.5 * IQR_GrLivArea
+
+# Identify outliers
+outliers <- AmesHousing_Data[(AmesHousing_Data$SalePrice < (Q1 - threshold_SalePrice)) |
+                              (AmesHousing_Data$SalePrice > (Q3 + threshold_SalePrice)) |
+                              (AmesHousing_Data$GrLivArea < (Q1_area - threshold_GrLivArea)) |
+                              (AmesHousing_Data$GrLivArea > (Q3_area + threshold_GrLivArea)), ]
+outliers
+
+# Assuming 'AmesHousing_Data2' is your dataset
+partial_sales <- AmesHousing_Data$SaleCondition == "Partial"
+partial_rows <- AmesHousing_Data[partial_sales, ]
+
+partial_rows
+
+# Export outliers to a CSV file
+# write.csv(outliers, "D:/University/SMU/Statistical_Foundations_for_Data_Science/Stat_foundations_repository/Statistical_Foundations/Final_Project/outliers.csv", row.names = FALSE)
+```
+
+
+
+# 131 and 339 in Edwards, have over 10000 sqft including the unfinished basements and 1 and 1.5 acres-most likley an error - no homes over .5 acres built after 2007
+# 136 in Brookside, has a price and square feet that are likely missing a zero - Brookside smallest structure has 729 square feet this one, 334
+```{r outliers_high_leverage_large}
+# Identify the rows of interest'
+outlier_indices <- c(339, 136, 131, 169, 190)
+
+# Extracting rows corresponding to the outlier indices
+outlier_rows <- AmesHousing_Data2[outlier_indices, ]
+
+outlier_rows
+
+
+```
+
+
+
+
