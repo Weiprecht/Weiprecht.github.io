@@ -19,14 +19,14 @@ navbar:
           menu:
             - text: "Attrition Application"
               href: "https://weiprecht.shinyapps.io/attrition_app_code/"
-              
         - text: "Ames Real Estate Analysis"
           href: Housing_Final_Project_Code.html
         - text: "Ames Real Estate Project App"
           menu:
             - text: "Ames Real Estate Application"
               href: "https://weiprecht.shinyapps.io/ames_housing_app/"
-
+        - text: "Real Estate analysis PDF"
+          href: "https://raw.githubusercontent.com/Weiprecht/weiprecht.github.io/main/RealEastatePDF/Ercanbrack_Opoku_SFDS_Project.pdf"
     - text: "Code Examples"  # New dropdown menu for Projects
       menu:
         - text: "Central Limit Theorem"
