@@ -35,23 +35,19 @@ Here’s the tricky part.  A higher ABV can cancel out much of the bitterness of
 # Packages
 ```{r Load_libraries, include = FALSE, echo = FALSE} 
 # install.packages("multcomp")
-#install.packages("xtable")
+# install.packages("xtable")
+
 # Required libraries
 library(tidyverse)
-#library(pwr)
-#library(emmeans)
-#library(GGally)
 library(ggplot2)
 library(ggthemes)
-#library(multcomp)
-#library(pairwiseCI)
-#library(usmap)
 library(maps)
 library(knitr)
 library(kableExtra)
 library(class)
 library(patchwork)
 library(caret)
+library(readr)
 
 ```
 
@@ -60,13 +56,20 @@ library(caret)
 # This data was collected in January 2017 from CraftCans.com.
 #Question 2:	Merge beer data with the breweries data. Print the first 6 observations and the last six observations to check the merged file.  (RMD only, this does not need to be included in the presentation or the deck.)
 ```{r csv_import_join}
-Path <- "D:/University/SMU/Doing_Data_Science/DDS_repository/Doing-Data-Science/Unit7/Beers.csv"
-Beer_Data = read.csv(Path, header=TRUE)
 #Beer_Data
 
-Path2 <- "D:/University/SMU/Doing_Data_Science/DDS_repository/Doing-Data-Science/Unit7/Breweries.csv"
-Breweries_Data = read.csv(Path2, header=TRUE)
+# URL to the raw content of the CSV file on GitHub
+github_url <- "https://raw.githubusercontent.com/Weiprecht/Weiprecht.github.io/main/Beer_code_data/Beers.csv"
+
+# Read the CSV file from the GitHub repository
+#Beer_Data <- read_csv(github_url)
+
 #Breweries_Data
+github_url2 <- "https://raw.githubusercontent.com/Weiprecht/Weiprecht.github.io/main/Beer_code_data/Breweries.csv"
+#Breweries_Data = read.csv(github_url2)
+
+Beer_Data <- read_csv(github_url, locale = locale(encoding = "UTF-8"))
+Breweries_Data <- read_csv(github_url2, locale = locale(encoding = "UTF-8"))
 
 # Merge the data on the ID
 merged_data <- inner_join(Beer_Data, Breweries_Data, by = c("Brewery_id" = "Brew_ID"))

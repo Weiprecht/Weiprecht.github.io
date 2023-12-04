@@ -1,13 +1,19 @@
 ---
-title: "Help file"
-author: "Adam E."
+title: "Information About This Site"
 date: "`r Sys.Date()`"
 output: html_document
 ---
 
-# Simple Website Test.
-## Note: The six lines of text above are the YAML tags
-### We will knit the RMD to a html file next
-### Then push  index.html to the github.io repo.
-### Remember to use gitbash to commit the site_lib files.
-### Use library(rmarkdown) then the function render_site
+# This site contains the following code examples or projects (click on each tab or subtab to see the details):
+## Project tabs:
+###   * Beer Analysis
+###   * Employment Attrition Analysis
+###   * Ames Real Estate Analysis
+## Code Examples:
+###   * Central Limit Theorem
+###  * Beach Comber Example
+
+
+### You can find more information about the context of this site [here](https://github.com/Weiprecht/Weiprecht.github.io).
+
+

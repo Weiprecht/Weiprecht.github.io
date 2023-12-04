@@ -1,0 +1,53 @@
+---
+title: "Real Estate PDF"
+author: "Adam E."
+date: "`r Sys.Date()`"
+output: html_document
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(shiny)
+
+# # URL to the raw content of the CSV file on GitHub
+# github_url <- "https://raw.githubusercontent.com/Weiprecht/weiprecht.github.io/main/RealEastatePDF/Ercanbrack_Opoku_SFDS_Project.pdf"
+# 
+# 
+# # Read the CSV file from the GitHub repository
+# pdf_data <- read_pdf(github_url)
+
+# UI part
+ui <- fluidPage(
+  titlePanel("Real Estate PDF"),
+  sidebarLayout(
+    sidebarPanel(
+      # Place your sidebar content here if needed
+    ),
+    mainPanel(
+      tabsetPanel(
+        tabPanel("PDF Viewer", 
+          tags$li(
+            tags$a(href = "https://raw.githubusercontent.com/Weiprecht/weiprecht.github.io/main/RealEastatePDF/Ercanbrack_Opoku_SFDS_Project.pdf", target="_blank", "Click here to view PDF")
+          )
+        )
+      )
+    )
+  )
+)
+
+server <- function(input, output) {
+  observeEvent(input$view_pdf, {
+    # Open the PDF in a new window using the viewer function
+    viewer("https://raw.githubusercontent.com/Weiprecht/weiprecht.github.io/main/RealEastatePDF/Ercanbrack_Opoku_SFDS_Project.pdf")
+  })
+}
+
+# Run the application
+shinyApp(ui = ui, server = server)
+```
+
