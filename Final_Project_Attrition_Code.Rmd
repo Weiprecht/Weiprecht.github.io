@@ -1,0 +1,1151 @@
+---
+title: "DDS_Final_Project_Code"
+author: "Adam E."
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    df_print: paged
+---
+
+#Readme: This employee attrition model seeks to analyze the relationship of over 30 variables on employee attrition levels in the Frito Lay Coorporation. Employee attrition is the process whereby a company loses its employees through self election, usually because of a lack of satisfaction or better opportunities elsewhere. Companies spend millions of dollars annually to hire, process, and train talent to make their workforce efficient and productive. Conversely, a talented workforce that is dedicated to a job can increase efficiency in production, reduce workhours, and invite innovation that can save a coorporation millions. Our approach to analyzing the data began with a visual analysis of the impact of certain variables on attrition. The visual analysis was then buttressed with tests using multiple regression models. We then used a stepwise analysis process to identify the most powerful and useful variables to test against attrition. For this study, we used three prediction models, a K to the nearest neighbor (KNN) model, a Naive Bayes model, and a predictive regression model. We tested these models against various variable patterns (using stepwise analysis: Forward, Backward, and Both) to identify which variables had the most statistically significant impact on Attrition rates.
+
+Variable Definitions:
+Age: Employee age
+Attrition: if the employee leaves the job (1 = Yes, 0 = No)
+BusinessTravel: The frequency of job travels
+DailyRate: Billing cost for employee’s services for a single day
+Department: Employee work department
+DistanceFromHome: Distance traveled to work from home
+Education: Employee education level (1 = Below College, 2 = College, 3 = Bachelor, 4 = Master, 5 = Doctor)
+EducationField: Employee education field
+EmployeeCount: Employee Count (Constant)
+EmployeeNumber: Employee ID
+EnvironmentSatisfaction: Num value for environment satisfaction (1 = Low, 2 = Medium, 3 = High, 4 = Very High)
+Gender: Employee gender
+HourlyRate: The amount of money that employee earns for every hour worked
+JobInvolvement: Numerical value for job involvement (1 = Low, 2 = Medium, 3 = High, 4 = Very High)
+JobLevel: Numerical value for job level
+JobRole: Employee job position
+JobSatisfaction: Numerical value for job satisfaction (1 = Low, 2 = Medium, 3 = High, 4 = Very High)
+MaritalStatus: Employee marital status
+MonthlyIncome: The amount of money that employee earns in one month, before taxes or deductions
+MonthlyRate: Billing cost for employee’s services for a month
+NumCompaniesWorked: Number of companies worked at
+Over18: if employee is over 18 years old
+OverTime: if employee works overtime
+PercentSalaryHike: Percent increase in salary
+PerformanceRating: Numerical value for performance rating (1 = Low, 2 = Good, 3 = Excellent, 4 = Outstanding)
+RelationshipSatisfaction: Numerical value for relationship satisfaction (1 = Low, 2 = Medium, 3 = High, 4 = Very High)
+StandardHours: Hours employee spent working (Constant)
+StockOptionsLevel: Numerical value for stock options
+TotalWorkingYears: Total number of years employee worked
+TrainingTimesLastYear: Hours employee spent on training last year
+WorkLifeBalance: Numerical value for work life balance (1 = Bad, 2 = Good, 3 = Better, 4 = Best)
+YearsAtCompany: Number of years employee worked at company
+YearsInCurrentRole: Number of years employee worked as their current job role
+YearsSinceLastPromotion: Number of years since last promotion
+YearsWithCurrentManager: Number of years employee worked with current manager
+
+# These models draw on code chuncks from sources such as SMU's DDS class lectures, Internet Sources, such as (https://bradleyboehmke.github.io/HOML/knn.html, https://rpubs.com/mary18/929056, https://rpubs.com/hanifahpl/emp_att, https://www.datacamp.com/tutorial/k-nearest-neighbors-knn-classification-with-r-tutorial), and chatGPT.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Packages
+```{r Load_libraries, include = FALSE, echo = FALSE} 
+# install.packages("ggcorrplot")
+
+
+# Required libraries
+library(dplyr)
+library(tidyverse)
+# library(broom)
+# library(olsrr)
+
+#Libraries for visualization
+library(ggplot2)
+library(ggthemes)
+library(car)
+library(performance)
+library(ggcorrplot)
+library(gridExtra)
+
+# Libraries for prediction models
+library(klaR)
+library(class)
+library(caret)
+library(e1071)
+library(vcd)
+
+
+```
+
+
+# Data Import from csv
+```{r csv_import}
+# Read in Data
+Path <- "D:/University/SMU/Doing_Data_Science/DDS_repository/DDS_Final_project/CaseStudy2DDS/Attrition_Datasets/CaseStudy2-FallData.csv"
+attrition_Data = read.csv(Path, header=TRUE)
+
+# Drop because they are irrelavant and only have one option
+attrition_Data <- attrition_Data[, !names(attrition_Data) %in% c("Over18", "Over18Num", "EmployeeCount", "StandardHours", "TravelNum")]
+attrition_Data
+
+# create an alternative model for regression
+attrition_Data3 <- attrition_Data
+
+convert_to_numeric <- function(x) {
+  as.numeric(factor(x, levels = unique(x)))
+}
+
+attrition_Data3 <- attrition_Data3 %>% 
+            mutate(Attrition = ifelse(Attrition == 'Yes', 1, 0),
+                   OverTime = ifelse(OverTime == 'Yes', 1, 0),
+                   Gender = ifelse(Gender=='Female', 1, 0)) %>% 
+            mutate_at(vars(BusinessTravel, OverTime, MaritalStatus, Department, EducationField, JobRole), convert_to_numeric)
+
+attrition_Data$WorkLifeBalance2 <- factor(attrition_Data$WorkLifeBalance,
+                                                levels = c(1, 2, 3, 4),
+                                                labels = c("Bad", "Good", "Better", "Best"))
+
+
+#---------------------------------read in of no_attrition data ----------------------
+
+# Read in Data
+Path2 <- "D:/University/SMU/Doing_Data_Science/DDS_repository/DDS_Final_project/CaseStudy2DDS/Attrition_Datasets/CaseStudy2CompSet_No_Attrition.csv"
+attrition_Data_no_attrition = read.csv(Path2, header=TRUE)
+
+# Drop because they are irrelavant and only have one option
+attrition_Data_no_attrition <- attrition_Data_no_attrition[, !names(attrition_Data_no_attrition) %in% c("Over18", "Over18Num", "EmployeeCount", "StandardHours", "TravelNum")]
+attrition_Data_no_attrition
+
+
+attrition_Data_no_attrition <- attrition_Data_no_attrition %>% 
+            mutate(OverTime = ifelse(OverTime == 'Yes', 1, 0),
+                   Gender = ifelse(Gender=='Female', 1, 0)) %>% 
+            mutate_at(vars(BusinessTravel, OverTime, MaritalStatus, Department, EducationField, JobRole), convert_to_numeric)
+
+
+
+
+attrition_Data
+
+attrition_Data %>% 
+  dplyr::select(Attrition) %>% 
+  group_by(Attrition) %>% 
+  summarise(total_count=n()) %>%
+  mutate(percentage = (total_count / sum(total_count)) * 100)
+
+```
+
+# Visual analysis of the data
+```{r Attrition_pie}
+# Compute percentages for Attrition
+attrition_percentage <- attrition_Data %>% 
+  dplyr::select(Attrition) %>% 
+  group_by(Attrition) %>% 
+  summarise(total_count = n()) %>%
+  mutate(percentage = (total_count / sum(total_count)) * 100)
+
+# Create a pie chart with percentage labels
+ggplot(attrition_percentage, aes(x = "", y = percentage, fill = Attrition)) +
+  geom_bar(stat = "identity", width = 1) +
+  coord_polar("y", start = 0) +
+  labs(title = "Total Attrition Percentage",
+       fill = "Attrition") +
+  scale_fill_manual(values = c("Yes" = "red", "No" = "blue")) +
+  theme_bw() +
+  geom_text(aes(label = paste0(round(percentage), "%")), 
+            position = position_stack(vjust = 0.5), size = 4, color = "white")
+
+
+# library(gridExtra)
+p1 <- ggplot(attrition_Data) + geom_histogram(aes(Age), binwidth = 5, fill = "blue",col = "black")
+p2 <- ggplot(attrition_Data) + geom_histogram(aes(DistanceFromHome), binwidth = 5, fill = "blue",col = "black")
+p3 <- ggplot(attrition_Data) + geom_histogram(aes(NumCompaniesWorked), binwidth = 2, fill = "blue",col = "black")
+p4 <- ggplot(attrition_Data) + geom_histogram(aes(TotalWorkingYears), binwidth = 4, fill = "blue",col = "black")
+p5 <- ggplot(attrition_Data) + geom_histogram(aes(YearsSinceLastPromotion), binwidth = 3, fill = "blue",col = "black")
+p6 <- ggplot(attrition_Data) + geom_histogram(aes(TrainingTimesLastYear), binwidth = 1, fill = "blue",col = "black")
+
+grid.arrange(p1, p2, p3, p4, p5, p6, ncol = 3, nrow = 2) 
+```
+
+
+
+```{r}
+# Filter for specific JobRoles
+selected_job_roles <- c("Sales Executive", "Sales Representative", "Manufacturing Director", "Research Scientist", "Manager", "Human Resources", "Labratory Technician")
+
+filtered_data <- attrition_Data %>%
+  filter(JobRole %in% selected_job_roles) %>%
+    mutate(Age_Group = cut(Age, breaks = c(16, 30, 40, 50, 65),
+                         labels = c("16-29", "30-40", "41-50", "50-65"),
+                         include.lowest = TRUE))
+
+attrition_Data$WorkLifeBalance2 <- factor(attrition_Data$WorkLifeBalance,
+                                                levels = c(1, 2, 3, 4),
+                                                labels = c("Bad", "Good", "Better", "Best"))
+
+# Calculate percentages for each JobRole and Overtime
+percentage_data <- filtered_data %>%
+  group_by(JobRole, OverTime, Attrition) %>%
+  summarise(count = n()) %>%
+  mutate(percentage = (count / sum(count)) * 100) %>%
+  arrange(Attrition)  # Ensure Attrition = Yes is plotted at the bottom
+
+# Create bar plot with facets for each JobRole
+ggplot(percentage_data, aes(x = OverTime, y = percentage, fill = Attrition)) +
+  geom_bar(stat = "identity", position = "stack") +
+  labs(title = "Selected Employee Attrition Status by Overtime and Job Role",
+       x = "Overtime", y = "Percentage") +
+  scale_fill_manual(values = c("Yes" = "red", "No" = "blue")) +  # Rearranged fill levels
+  theme_bw() +
+  facet_wrap(~ JobRole, scales = "free") +
+  geom_text(aes(label = paste0(round(percentage), "%")), 
+            position = position_stack(vjust = 0.5), size = 3, color = "black")
+
+
+# Calculate percentages for each JobRole and Age_Group
+percentage_data <- filtered_data %>%
+  group_by(JobRole, Age_Group, Attrition) %>%
+  summarise(count = n()) %>%
+  mutate(percentage = (count / sum(count)) * 100) %>%
+  arrange(Attrition)  # Ensure Attrition = Yes is plotted at the bottom
+
+# Create bar plot with facets for each JobRole
+ggplot(percentage_data, aes(x = Age_Group, y = percentage, fill = Attrition)) +
+  geom_bar(stat = "identity", position = "stack") +
+  labs(title = "Selected Employee Attrition Status by Age Group and Job Role",
+       x = "Age Group", y = "Percentage") +
+  scale_fill_manual(values = c("Yes" = "red", "No" = "blue")) +  # Rearranged fill levels
+  theme_bw() +
+  facet_wrap(~ JobRole, scales = "free") +
+  geom_text(aes(label = paste0(round(percentage), "%")), 
+            position = position_stack(vjust = 0.5), size = 3, color = "black")
+
+# Calculate percentages for each JobRole and Overtime
+percentage_data <- filtered_data %>%
+  group_by(JobRole, EnvironmentSatisfaction, Attrition) %>%
+  summarise(count = n()) %>%
+  mutate(percentage = (count / sum(count)) * 100) %>%
+  arrange(Attrition)  # Ensure Attrition = Yes is plotted at the bottom
+
+
+# Create bar plot with facets for each JobRole
+ggplot(percentage_data, aes(x = EnvironmentSatisfaction, y = percentage, fill = Attrition)) +
+  geom_bar(stat = "identity", position = "stack") +
+  labs(title = "Selected Employee Attrition Status by EnvironmentSatisfaction and Job Role",
+       x = "JobInvolvement", y = "Percentage") +
+  scale_fill_manual(values = c("Yes" = "red", "No" = "blue")) +  # Rearranged fill levels
+  theme_bw() +
+  facet_wrap(~ JobRole, scales = "free") +
+  geom_text(aes(label = paste0(round(percentage), "%")), 
+            position = position_stack(vjust = 0.5), size = 3, color = "black")
+
+# Calculate percentages for each JobRole and Overtime
+percentage_data <- filtered_data %>%
+  group_by(JobRole, JobInvolvement, Attrition) %>%
+  summarise(count = n()) %>%
+  mutate(percentage = (count / sum(count)) * 100) %>%
+  arrange(Attrition)  # Ensure Attrition = Yes is plotted at the bottom
+
+
+# Create bar plot with facets for each JobRole
+ggplot(percentage_data, aes(x = JobInvolvement, y = percentage, fill = Attrition)) +
+  geom_bar(stat = "identity", position = "stack") +
+  labs(title = "Selected Employee Attrition Status by JobInvolvement and Job Role",
+       x = "JobInvolvement", y = "Percentage") +
+  scale_fill_manual(values = c("Yes" = "red", "No" = "blue")) +  # Rearranged fill levels
+  theme_bw() +
+  facet_wrap(~ JobRole, scales = "free") +
+  geom_text(aes(label = paste0(round(percentage), "%")), 
+            position = position_stack(vjust = 0.5), size = 3, color = "black")
+
+attrition_Data$WorkLifeBalance2 <- factor(attrition_Data$WorkLifeBalance,
+                                                levels = c(1, 2, 3, 4),
+                                                labels = c("Bad", "Good", "Better", "Best"))
+
+# Calculate percentages for each JobRole and Overtime
+percentage_data <- filtered_data %>%
+  group_by(JobRole, WorkLifeBalance2, Attrition) %>%
+  summarise(count = n()) %>%
+  mutate(percentage = (count / sum(count)) * 100) %>%
+  arrange(Attrition)  # Ensure Attrition = Yes is plotted at the bottom
+
+
+# Create bar plot with facets for each JobRole
+ggplot(percentage_data, aes(x = WorkLifeBalance2, y = percentage, fill = Attrition)) +
+  geom_bar(stat = "identity", position = "stack") +
+  labs(title = "Selected Employee Attrition Status by WorkLifeBalance and Job Role",
+       x = "WorkLifeBalance", y = "Percentage") +
+  scale_fill_manual(values = c("Yes" = "red", "No" = "blue")) +  # Rearranged fill levels
+  theme_bw() +
+  facet_wrap(~ JobRole, scales = "free") +
+  geom_text(aes(label = paste0(round(percentage), "%")), 
+            position = position_stack(vjust = 0.5), size = 3, color = "black")
+
+
+attrition_Data$Attrition = factor(attrition_Data$Attrition, levels = c("Yes", "No"))
+
+attrition_Data %>% 
+  dplyr::group_by(JobRole, Attrition) %>% 
+  dplyr::summarise(cnt = n()) %>% 
+  dplyr::mutate(freq = (cnt / sum(cnt))*100) %>% 
+  ggplot(aes(x = JobRole, y = freq, fill = Attrition)) +
+  geom_bar(position = position_stack(), stat = "identity", width = .7) +
+  geom_text(aes(label = paste0(round(freq,0), "%")), 
+            position = position_stack(vjust = 0.5), size = 3) +
+  scale_y_continuous(labels = function(x) paste0(x, "%")) +
+  labs(title = "Job Role and Attrition", x = "Job Role", y = "Percentage") +
+  scale_fill_manual(values = c("red",  "blue")) +
+  theme(axis.text.x = element_text(angle = 20, hjust = 0.5))
+
+attrition_Data %>% 
+  dplyr::group_by(JobInvolvement, Attrition) %>% 
+  dplyr::summarise(cnt = n()) %>% 
+  dplyr::mutate(freq = (cnt / sum(cnt))*100) %>% 
+  ggplot(aes(x = JobInvolvement, y = freq, fill = Attrition)) +
+  geom_bar(position = position_stack(), stat = "identity", width = .7) +
+  geom_text(aes(label = paste0(round(freq,0), "%")), 
+            position = position_stack(vjust = 0.5), size = 3) +
+  scale_y_continuous(labels = function(x) paste0(x, "%")) +
+  labs(title = "JobInvolvement and Attrition", x = "JobInvolvement", y = "Percentage") +
+  scale_fill_manual(values = c("red",  "blue")) +
+  theme(axis.text.x = element_text(angle = 20, hjust = 0.5))
+
+attrition_Data %>% 
+  dplyr::group_by(Department, Attrition) %>% 
+  dplyr::summarise(cnt = n()) %>% 
+  dplyr::mutate(freq = (cnt / sum(cnt))*100) %>% 
+  ggplot(aes(x = Department, y = freq, fill = Attrition)) +
+  geom_bar(position = position_stack(), stat = "identity", width = .7) +
+  geom_text(aes(label = paste0(round(freq,0), "%")), 
+            position = position_stack(vjust = 0.5), size = 3) +
+  scale_y_continuous(labels = function(x) paste0(x, "%")) +
+  labs(title = "Department and Attrition", x = "Department", y = "Percentage") +
+  scale_fill_manual(values = c("red",  "blue")) +
+  theme(axis.text.x = element_text(angle = 20, hjust = 0.5))
+
+attrition_Data %>% 
+  dplyr::group_by(NumCompaniesWorked, Attrition) %>% 
+  dplyr::summarise(cnt = n()) %>% 
+  dplyr::mutate(freq = (cnt / sum(cnt))*100) %>% 
+  ggplot(aes(x = NumCompaniesWorked, y = freq, fill = Attrition)) +
+  geom_bar(position = position_stack(), stat = "identity", width = .7) +
+  geom_text(aes(label = paste0(round(freq,0), "%")), 
+            position = position_stack(vjust = 0.5), size = 3) +
+  scale_y_continuous(labels = function(x) paste0(x, "%")) +
+  labs(title = "NumCompaniesWorked and Attrition", x = "NumCompaniesWorked", y = "Percentage") +
+  scale_fill_manual(values = c("red",  "blue")) +
+  theme(axis.text.x = element_text(angle = 20, hjust = 0.5))
+
+
+attrition_Data %>% 
+  dplyr::group_by(OverTime, Attrition) %>% 
+  dplyr::summarise(cnt = n()) %>% 
+  dplyr::mutate(freq = (cnt / sum(cnt))*100) %>% 
+  ggplot(aes(x = OverTime, y = freq, fill = Attrition)) +
+  geom_bar(position = position_stack(), stat = "identity", width = .7) +
+   geom_text(aes(label = paste0(round(freq,0), "%")), 
+            position = position_stack(vjust = 0.5), size = 3) +
+  scale_y_continuous(labels = function(x) paste0(x, "%")) +
+  labs(title = "Over Time and Attrition", x = "Over Time", y = "Percentage") +
+  scale_fill_manual(values = c("red",  "blue"))
+
+attrition_Data %>% 
+  dplyr::group_by(MonthlyIncome, Attrition) %>% 
+  dplyr::summarise(cnt = n()) %>% 
+  dplyr::mutate(freq = (cnt / sum(cnt)) * 100) %>% 
+  ggplot(aes(x = Attrition, y = MonthlyIncome, fill = Attrition)) +
+  geom_boxplot() +
+  labs(title = "Attrition and Monthly Income", x = "Attrition", y = "Monthly Income") +
+  scale_fill_manual(values = c("red", "blue"))
+
+attrition_Data %>% 
+  dplyr::group_by(HourlyRate, Attrition) %>% 
+  dplyr::summarise(cnt = n()) %>% 
+  dplyr::mutate(freq = (cnt / sum(cnt)) * 100) %>% 
+  ggplot(aes(x = Attrition, y = HourlyRate, fill = Attrition)) +
+  geom_boxplot() +
+  labs(title = "Attrition and HourlyRate", x = "Attrition", y = "HourlyRate") +
+  scale_fill_manual(values = c("red", "blue"))
+
+attrition_Data %>% 
+  dplyr::group_by(MonthlyIncome, JobRole, Attrition) %>% 
+  dplyr::summarise(cnt = n()) %>% 
+  dplyr::mutate(freq = (cnt / sum(cnt)) * 100) %>% 
+  ggplot(aes(x = JobRole, y = MonthlyIncome, fill = Attrition)) +
+  geom_boxplot() +
+  labs(title = "Monthly Income and Job Role by Attrition", x = "JobRole", y = "Monthly Income") +
+  scale_fill_manual(values = c("red", "blue")) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotate x-axis labels
+
+
+# Create scatterplot with facets for each JobRole
+ggplot(filtered_data, aes(x = as.factor(JobSatisfaction), y = MonthlyIncome, color = Attrition, shape = Attrition)) +
+  geom_point(position = position_jitter(width = 0.2, height = 0), size = 3) +
+  scale_color_manual(values = c("Yes" = "red", "No" = "blue")) +
+  scale_shape_manual(values = c("Yes" = 19, "No" = 17)) +
+  ylab("Monthly Income") +
+  xlab("Job Satisfaction") +
+  theme_bw() +
+  facet_wrap(~ JobRole, scales = "free") +
+  ggtitle("Impact of Income and Satisfaction on Employee Attrition By Position")
+
+
+
+# Create scatterplot with facets for each JobRole for OverTime
+ggplot(filtered_data, aes(x = as.factor(YearsSinceLastPromotion), y = MonthlyIncome, color = Attrition, shape = Attrition)) +
+  geom_point(position = position_jitter(width = 0.2, height = 0), size = 3) +
+  scale_color_manual(values = c("Yes" = "red", "No" = "blue")) +
+  scale_shape_manual(values = c("Yes" = 19, "No" = 17)) +
+  ylab("Monthly Income") +
+  xlab("Years Since Last Promotion") +
+  theme_bw() +
+  facet_wrap(~ JobRole, scales = "free") +
+  ggtitle("Impact of Income and Promotion on Employee Attrition By Position") 
+```
+
+```{r}
+# Bin DistanceFromHome into 5-unit increments
+attrition_Data <- attrition_Data %>%
+  mutate(DistanceBin = cut(DistanceFromHome, breaks = seq(0, max(DistanceFromHome) + 5, by = 5), right = FALSE))
+
+# Calculate percentages within bins
+percentage_DistanceFromHome <- attrition_Data %>%
+  group_by(DistanceBin, Attrition) %>%
+  summarise(count = n()) %>%
+  mutate(percentage = (count / sum(count)) * 100)
+
+# Create the stacked bar plot with labels
+ggplot(percentage_DistanceFromHome, aes(x = DistanceBin, y = percentage, fill = Attrition, label = paste(round(percentage, 1), "%"))) +
+  geom_bar(stat = "identity", position = "stack") +
+  geom_text(position = position_stack(vjust = 0.5), size = 3, color = "white") +
+  labs(title = "Employee Attrition Status by Distance From Home",
+       x = "Distance From Home", y = "Percentage") +
+  scale_fill_manual(values = c("No" = "blue", "Yes" = "red")) + # Adjust colors if needed
+  theme_bw()
+
+attrition_Data$Attrition = factor(attrition_Data$Attrition, levels = c("Yes", "No"))
+
+attrition_Data %>% 
+  dplyr::group_by(BusinessTravel, Attrition) %>% 
+  dplyr::summarise(cnt = n()) %>% 
+  dplyr::mutate(freq = (cnt / sum(cnt))*100) %>% 
+  ggplot(aes(x = BusinessTravel, y = freq, fill = Attrition)) +
+  geom_bar(position = position_stack(), stat = "identity", width = .7) +
+   geom_text(aes(label = paste0(round(freq,0), "%")), 
+            position = position_stack(vjust = 0.5), size = 3) +
+  scale_y_continuous(labels = function(x) paste0(x, "%")) +
+  labs(title = "Business Travel and Attrition", x = "Business Travel", y = "Percentage") +
+  scale_x_discrete(breaks = c("Travel_Rarely", "Travel_Frequently", "Non-Travel"),
+                              labels = c("Travel Rarely","Travel Frequently", "Non Travel")) +
+  scale_fill_manual(values = c("red",  "blue")) +
+   theme_bw()
+
+
+
+attrition_Data$EnvironmentSatisfaction2 <- factor(attrition_Data$EnvironmentSatisfaction,
+                                                levels = c(1, 2, 3, 4),
+                                                labels = c("Low", "Medium", "High", "Very High"))
+
+attrition_Data %>% 
+  dplyr::group_by(EnvironmentSatisfaction2, Attrition) %>% 
+  dplyr::summarise(cnt = n()) %>% 
+  dplyr::mutate(freq = (cnt / sum(cnt))*100) %>% 
+  ggplot(aes(x = EnvironmentSatisfaction2, y = freq, fill = Attrition)) +
+  geom_bar(position = position_stack(), stat = "identity", width = .7) +
+  geom_text(aes(label = paste0(round(freq,0), "%")), 
+            position = position_stack(vjust = 0.5), size = 3) +
+  scale_y_continuous(labels = function(x) paste0(x, "%")) +
+  labs(title = "Environment Satisfaction and Attrition", x = "Environment Satisfaction", y = "Percentage") +
+  scale_fill_manual(values = c("red",  "blue")) +
+  theme_bw()
+
+
+attrition_Data %>% 
+  dplyr::group_by(JobSatisfaction, Attrition) %>% 
+  dplyr::summarise(cnt = n()) %>% 
+  dplyr::mutate(freq = (cnt / sum(cnt))*100) %>% 
+  ggplot(aes(x = JobSatisfaction, y = freq, fill = Attrition)) +
+  geom_bar(position = position_stack(), stat = "identity", width = .7) +
+  geom_text(aes(label = paste0(round(freq,0), "%")), 
+            position = position_stack(vjust = 0.5), size = 3) +
+  scale_y_continuous(labels = function(x) paste0(x, "%")) +
+  labs(title = "JobSatisfaction and Attrition", x = "JobSatisfaction", y = "Percentage") +
+  scale_fill_manual(values = c("red",  "blue")) +
+  theme_bw()
+
+
+
+attrition_Data$WorkLifeBalance2 <- factor(attrition_Data$WorkLifeBalance,
+                                                levels = c(1, 2, 3, 4),
+                                                labels = c("Bad", "Good", "Better", "Best"))
+attrition_Data %>% 
+  dplyr::group_by(WorkLifeBalance2, Attrition) %>% 
+  dplyr::summarise(cnt = n()) %>% 
+  dplyr::mutate(freq = (cnt / sum(cnt))*100) %>% 
+  ggplot(aes(x = WorkLifeBalance2, y = freq, fill = Attrition)) +
+  geom_bar(position = position_stack(), stat = "identity", width = .7) +
+  geom_text(aes(label = paste0(round(freq,0), "%")), 
+            position = position_stack(vjust = 0.5), size = 3) +
+  scale_y_continuous(labels = function(x) paste0(x, "%")) +
+  labs(title = "Work Life Balance and Attrition", x = "Work Life Balance", y = "Percentage") +
+  scale_fill_manual(values = c("red",  "blue")) +
+  theme_bw()
+
+attrition_Data %>% 
+  dplyr::group_by(YearsSinceLastPromotion, Attrition) %>% 
+  dplyr::summarise(cnt = n()) %>% 
+  dplyr::mutate(freq = (cnt / sum(cnt))*100) %>% 
+  ggplot(aes(x = YearsSinceLastPromotion, y = freq, fill = Attrition)) +
+  geom_bar(position = position_stack(), stat = "identity", width = .7) +
+  geom_text(aes(label = paste0(round(freq,0), "%")), 
+            position = position_stack(vjust = 0.5), size = 3) +
+  scale_y_continuous(labels = function(x) paste0(x, "%")) +
+  labs(title = "YearsSinceLastPromotion and Attrition", x = "YearsSinceLastPromotion", y = "Percentage") +
+  scale_fill_manual(values = c("red",  "blue")) +
+  theme_bw()
+
+attrition_Data %>% 
+  dplyr::group_by(TotalWorkingYears, Attrition) %>% 
+  dplyr::summarise(cnt = n()) %>% 
+  dplyr::mutate(freq = (cnt / sum(cnt))*100) %>% 
+  ggplot(aes(x = TotalWorkingYears, y = freq, fill = Attrition)) +
+  geom_bar(position = position_stack(), stat = "identity", width = .7) +
+  geom_text(aes(label = paste0(round(freq,0), "%")), 
+            position = position_stack(vjust = 0.5), size = 3) +
+  scale_y_continuous(labels = function(x) paste0(x, "%")) +
+  labs(title = "TotalWorkingYears and Attrition", x = "TotalWorkingYears", y = "Percentage") +
+  scale_fill_manual(values = c("red",  "blue")) +
+  theme_bw()
+
+filtered_data <- filtered_data %>%
+  mutate(Year_Group = cut(TotalWorkingYears, breaks = c(0, 5, 10, 15, 20, 40),
+                          labels = c("0-5", "6-10", "11-15", "16-20", "21-40"),
+                          include.lowest = TRUE))
+
+# Calculate percentages for each JobRole and Year_Group
+percentage_data <- filtered_data %>%
+  group_by(Year_Group, Attrition) %>%
+  summarise(count = n()) %>%
+  mutate(percentage = (count / sum(count)) * 100) %>%
+  arrange(Attrition)  # Ensure Attrition = Yes is plotted at the bottom
+
+# Create bar plot with facets for each JobRole
+ggplot(percentage_data, aes(x = Year_Group, y = percentage, fill = Attrition)) +
+  geom_bar(stat = "identity", position = "stack") +
+  labs(title = "Selected Employee Attrition Status by Years worked",
+       x = "Years Worked", y = "Percentage") +
+  scale_fill_manual(values = c("Yes" = "red", "No" = "blue")) +  # Rearranged fill levels
+  theme_bw() +
+  #facet_wrap(~ JobRole, scales = "free") +
+  geom_text(aes(label = paste0(round(percentage), "%")), 
+            position = position_stack(vjust = 0.5), size = 3, color = "black")
+
+attrition_Data %>% 
+  dplyr::group_by(Gender, Attrition) %>% 
+  dplyr::summarise(cnt = n()) %>% 
+  dplyr::mutate(freq = (cnt / sum(cnt))*100) %>% 
+  ggplot(aes(x = Gender, y = freq, fill = Attrition)) +
+  geom_bar(position = position_stack(), stat = "identity", width = .7) +
+   geom_text(aes(label = paste0(round(freq,0), "%")), 
+            position = position_stack(vjust = 0.5), size = 3) +
+  scale_y_continuous(labels = function(x) paste0(x, "%")) +
+  labs(title = "Gender and Attrition", x = "Gender", y = "Percentage") +
+  scale_fill_manual(values = c("red",  "blue")) +
+  theme_bw()
+```
+
+
+
+
+```{r}
+
+plot_sat_overtime <- ggplot(attrition_Data, aes(x = as.factor(OverTime), y = MonthlyIncome, fill = Attrition))+
+                       geom_boxplot()+
+                       scale_fill_manual(values = c("Yes" = "red", "No" = "blue")) + # Adjust colors accordingly
+                       ylab("Monthly Income")+
+                       xlab("Overtime")+
+                       theme_bw()+
+                       ggtitle("Impact of Monthly income and Overtime On Employee Attrition")
+plot_sat_overtime
+
+plot_sat_income <- ggplot(attrition_Data, aes(x = as.factor(JobSatisfaction), y = MonthlyIncome, fill = Attrition))+
+                       geom_boxplot()+
+                       scale_fill_manual(values = c("Yes" = "red", "No" = "blue")) + # Adjust colors accordingly
+                       ylab("Monthly Income")+
+                       xlab("Job Satisfaction")+
+                       theme_bw()+
+                       ggtitle("Impact of Monthly income and Job Satisfaction On Employee Attrition")
+plot_sat_income
+
+# Create a jittered scatterplot comparing DistanceFromHome by OverTime and Attrition
+ggplot(attrition_Data, aes(x = OverTime, y = DistanceFromHome, color = Attrition)) +
+  geom_jitter(position = position_jitter(width = 0.3), size = 3) +
+  labs(title = "Comparison of Distance From Home by Overtime and Attrition",
+       x = "Overtime", y = "Distance From Home") +
+  scale_color_manual(values = c("Yes" = "red", "No" = "blue")) +
+  theme_bw()
+
+
+# Grouping by OverTime, MaritalStatus, and Attrition to count occurrences
+grouped_data <- attrition_Data %>%
+  group_by(OverTime, MaritalStatus, Attrition) %>%
+  summarise(count = n(), .groups = "drop")
+
+# Creating a bar plot comparing Marital Status, Overtime, and Attrition
+ggplot(grouped_data, aes(x = MaritalStatus, y = count, fill = Attrition)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  facet_grid(. ~ OverTime) +  # Facet by OverTime
+  labs(title = "Comparison of Marital Status, Overtime, and Attrition",
+       x = "Marital Status", y = "Count") +
+  scale_fill_manual(values = c("Yes" = "red", "No" = "blue")) +
+  theme_bw()
+
+attrition_Data %>% 
+  dplyr::group_by(MaritalStatus, Attrition) %>% 
+  dplyr::summarise(cnt = n()) %>% 
+  dplyr::mutate(freq = (cnt / sum(cnt))*100) %>% 
+  ggplot(aes(x = MaritalStatus, y = freq, fill = Attrition)) +
+  geom_bar(position = position_stack(), stat = "identity", width = .7) +
+   geom_text(aes(label = paste0(round(freq,0), "%")), 
+            position = position_stack(vjust = 0.5), size = 3) +
+  scale_y_continuous(labels = function(x) paste0(x, "%")) +
+  labs(title = "Comparison of Marital Status and Attrition", x = "Marital Status", y = "Percentage") +
+  scale_fill_manual(values = c("red",  "blue")) +
+  theme_bw()
+
+
+
+
+
+
+
+```
+
+
+
+
+
+```{r}
+cordata <- attrition_Data %>% 
+   dplyr::select(c("DistanceFromHome", "MonthlyIncome",
+                  "NumCompaniesWorked", "TotalWorkingYears", 
+                  "YearsAtCompany", "YearsInCurrentRole", "YearsSinceLastPromotion", "YearsWithCurrManager", "Age"))
+
+# cordata <- attrition_Data %>% 
+#    dplyr::select(c("WorkLifeBalance", "MonthlyIncome",
+#                   "OverTime", "JobRole", 
+#                    "YearsSinceLastPromotion", "Age"))
+
+
+cormatrix <- cor(cordata)
+round(cormatrix, 2)
+
+ggcorrplot(cormatrix, hc.order = TRUE,outline.color = "white", lab = TRUE, colors = c("lightblue", "cornflowerblue", "blue"), lab_size = 2.5) +
+  labs(title="Correlation of Numeric Variables") 
+
+```
+
+
+
+
+
+```{r build_model_Attrition}
+
+#define intercept-only model
+intercept_only <- lm(Attrition ~ 1, data=attrition_Data3)
+
+#define model with all predictors
+attritionNum.lm <-glm(Attrition ~ Age + BusinessTravel + DailyRate + Department + 
+    DistanceFromHome + Education + EducationField + EmployeeNumber + 
+    EnvironmentSatisfaction + Gender + HourlyRate + JobInvolvement + 
+    JobLevel + JobRole + JobSatisfaction + MaritalStatus + MonthlyIncome + 
+    MonthlyRate + NumCompaniesWorked + OverTime + PercentSalaryHike + 
+    PerformanceRating + RelationshipSatisfaction + StockOptionLevel + 
+    TotalWorkingYears + TrainingTimesLastYear + WorkLifeBalance + 
+    YearsAtCompany + YearsInCurrentRole + YearsSinceLastPromotion + 
+    YearsWithCurrManager, data = attrition_Data3)
+
+
+summary(attritionNum.lm)
+
+
+```
+
+
+```{r stepwise_regression_forward_attrition}
+#perform forward stepwise regression
+model_forward <- step(intercept_only, direction='forward', scope=formula(attritionNum.lm), trace=FALSE)
+
+summary(model_forward)
+
+#view results of forward stepwise regression
+model_forward$anova
+
+#view final model
+model_forward$coefficients
+```
+
+
+```{r stepwise_regression_backward_attrition}
+model_backward <- step(attritionNum.lm, direction = "backward", scope=formula(attritionNum.lm), trace = FALSE)
+
+summary(model_backward)
+
+#view results of forward stepwise regression
+model_backward$anova
+
+#view final model
+model_backward$coefficients
+```
+
+
+```{r stepwise_regression_stepwise_attrition}
+model_both <- step(intercept_only, direction = "both", scope=formula(attritionNum.lm), trace = FALSE)
+
+summary(model_both)
+
+#view results of forward stepwise regression
+model_both$anova
+
+#view final model
+model_both$coefficients
+```
+
+
+
+# MaritalStatus + MonthlyIncome + PercentSalaryHike + PerformanceRating + YearsAtCompany + RelationshipSatisfaction + StockOptionLevel + TrainingTimesLastYear +
+# YearsInCurrentRole + YearsWithCurrManager + Age (none >60)+ EducationField + Department + EnvironmentSatisfaction + JobSatisfaction + TotalWorkingYears + MonthlyIncome + 
+```{r reduce_model_attrition}
+
+stepwise_formula <- Attrition ~ OverTime + JobRole + JobInvolvement + MaritalStatus +
+    JobSatisfaction + WorkLifeBalance + NumCompaniesWorked + Age +  DistanceFromHome +
+     EnvironmentSatisfaction + YearsSinceLastPromotion + YearsInCurrentRole + 
+  RelationshipSatisfaction + TrainingTimesLastYear + TotalWorkingYears	+ BusinessTravel
+
+#define model with all predictors
+attritionNum.lm2 <-glm(stepwise_formula, data = attrition_Data3)
+
+
+summary(attritionNum.lm2)
+
+plot(attritionNum.lm2)
+
+```
+
+```{r}
+cordata <- attrition_Data3 %>% 
+   dplyr::select(c("OverTime", "JobRole", "JobInvolvement", "MaritalStatus", 
+    "JobSatisfaction",  "WorkLifeBalance", "NumCompaniesWorked", "Age", "DistanceFromHome",
+     "EnvironmentSatisfaction", "YearsSinceLastPromotion", "YearsInCurrentRole", 
+  "RelationshipSatisfaction", "TrainingTimesLastYear", "TotalWorkingYears", "BusinessTravel"))
+
+# cordata <- attrition_Data %>% 
+#    dplyr::select(c("WorkLifeBalance", "MonthlyIncome",
+#                   "OverTime", "JobRole", 
+#                    "YearsSinceLastPromotion", "Age"))
+
+
+cormatrix <- cor(cordata)
+round(cormatrix, 2)
+
+ggcorrplot(cormatrix, hc.order = TRUE,outline.color = "white", lab = TRUE, colors = c("lightblue", "cornflowerblue", "blue"), lab_size = 2.5) +
+  labs(title="Correlation of Numeric Variables") 
+
+```
+
+
+```{r split_prepare_data_testing_attrition}
+
+# The results of the stepwise analysis
+stepwise_formula <- Attrition ~ OverTime + JobRole + JobInvolvement + MaritalStatus +
+    JobSatisfaction + WorkLifeBalance + NumCompaniesWorked + Age +  DistanceFromHome +
+     EnvironmentSatisfaction + YearsSinceLastPromotion + YearsInCurrentRole + 
+  RelationshipSatisfaction + TrainingTimesLastYear + TotalWorkingYears	+ BusinessTravel
+
+stepwise_formula2 <- Attrition ~ OverTime + JobInvolvement + 
+    JobSatisfaction + NumCompaniesWorked + Age +  
+     EnvironmentSatisfaction + YearsSinceLastPromotion + TotalWorkingYears
+
+# Create the first test model
+model_test <- glm(Attrition~., attrition_Data3, family = "binomial")
+
+summary(model_test)
+
+
+# Locking Random
+RNGkind(sample.kind = "Rounding")
+set.seed(9170) #4170
+
+# Index
+index <- sample(nrow(attrition_Data3), nrow(attrition_Data3)*0.7)
+
+# Splitting
+training_set_att <- attrition_Data3[index,]
+testing_set_att <- attrition_Data3[-index,]
+
+
+#--------------------------------------------------------
+model_base <- glm(Attrition~., training_set_att, family = "binomial")
+
+summary(model_base)
+
+#-------------------------------------------------------
+model_sig <- glm(stepwise_formula, training_set_att, family = "binomial")
+
+summary(model_sig)
+
+#-----------------------------------------------------
+
+# model_step <- step(model_base, direction = "backward", trace = FALSE)
+# 
+# summary(model_step)
+
+model_step <- step(intercept_only, direction = "both", scope=formula(stepwise_formula), trace = FALSE)
+
+summary(model_step)
+
+#------------------Predicting the model---------------------------------
+
+# Predict model base
+testing_set_att$pred_att_bs <- predict(model_base, newdata = testing_set_att, type = "response")
+
+# Predict significant only model
+testing_set_att$pred_att_sig <- predict(model_sig, newdata = testing_set_att, type = "response")
+
+# Predict step wise model
+testing_set_att$pred_att_stp <- predict(model_step, newdata = testing_set_att, type = "response")
+
+
+#------------------Changing odds to labels-----------------------------------------------------
+
+# Label model base
+testing_set_att$label_bs <- ifelse(testing_set_att$pred_att_bs>0.5, 1, 0)
+
+# Label model sig
+testing_set_att$label_sig <- ifelse(testing_set_att$pred_att_sig>0.5, 1, 0)
+
+# Label model step
+testing_set_att$label_stp <- ifelse(testing_set_att$pred_att_stp>0.5, 1, 0)
+
+```
+
+
+
+```{r Naive_Bayes_attrition}
+naive_ea <- naiveBayes(Attrition~., training_set_att, laplace = 1)
+
+testing_set_att$pred_nv <- predict(object = naive_ea,
+                           newdata = testing_set_att %>% dplyr::select(-c(pred_att_bs, pred_att_sig, pred_att_stp, label_bs, 
+                                                          label_sig, label_stp)),
+                           type="class") 
+
+confusionMatrix(data = as.factor(testing_set_att$pred_nv), reference = as.factor(testing_set_att$Attrition), positive = "1")
+```
+
+
+
+```{r KNN_model}
+
+stepWiseResult <- c( "OverTime",  "JobRole", "JobInvolvement", "MaritalStatus",
+    "JobSatisfaction", "WorkLifeBalance",  "NumCompaniesWorked", "Age",  "DistanceFromHome",
+     "EnvironmentSatisfaction", "YearsSinceLastPromotion", "YearsInCurrentRole",
+  "RelationshipSatisfaction", "TrainingTimesLastYear", "TotalWorkingYears",	"BusinessTravel")
+
+# Use KNN to classify attrition in the testing set
+classifications_att <- knn(train = training_set_att[, stepWiseResult], 
+                       test = testing_set_att[, stepWiseResult], 
+                       cl = training_set_att$Attrition, prob = TRUE, k = 5)
+
+
+# Make sure 'classifications' and 'testing_set$Survived' have the same length
+if (length(classifications_att) != nrow(testing_set_att)) {
+  stop("Mismatch in the length of 'classifications' and 'training_set_att$Attrition'")
+}
+
+
+# Create a table to compare the predicted classes with the actual classes
+class_table_att <- table(classifications_att, testing_set_att$Attrition)
+
+# Calculate and print the confusion matrix
+confusion_matrix_att <- confusionMatrix(class_table_att)
+confusion_matrix_att
+
+```
+
+
+
+# get the average of the test sets
+# Loop for many k and the average of many training / test partition
+```{r}
+iterations = 500
+numks = 30
+
+masterAcc = matrix(nrow = iterations, ncol = numks)
+  
+for(j in 1:iterations)
+{
+accs = data.frame(accuracy = numeric(30), k = numeric(30))
+
+# Index
+index <- sample(nrow(attrition_Data3), nrow(attrition_Data3)*0.7)
+
+# Splitting
+training_set_att <- attrition_Data3[index,]
+testing_set_att <- attrition_Data3[-index,]
+for(i in 1:30)
+{
+  classifications_att <- knn(train = training_set_att[, stepWiseResult], 
+                       test = testing_set_att[, stepWiseResult], 
+                       cl = training_set_att$Attrition, prob = TRUE, k = i)
+  class_table = table(classifications_att, testing_set_att$Attrition)
+  CM = confusionMatrix(class_table)
+  masterAcc[j,i] = CM$overall[1]
+}
+
+}
+
+MeanAcc = colMeans(masterAcc)
+
+plot(seq(1,numks,1),MeanAcc, type = "l")
+```
+
+
+```{r Predicting_the_missing_attrition}
+
+# Locking Random
+RNGkind(sample.kind = "Rounding")
+set.seed(9170)
+
+# Splitting
+training_set_att <- attrition_Data3
+testing_set_att2 <- attrition_Data_no_attrition
+
+
+#--------------------------------------------------------
+model_base <- glm(Attrition~., training_set_att, family = "binomial")
+
+summary(model_base)
+
+#-------------------------------------------------------
+model_sig <- glm(stepwise_formula, training_set_att, family = "binomial")
+
+summary(model_sig)
+
+#-----------------------------------------------------
+
+# model_step <- step(model_base, direction = "backward", trace = FALSE)
+# 
+# summary(model_step)
+
+model_step <- step(intercept_only, direction = "both", scope=formula(model_base), trace = FALSE)
+
+summary(model_step)
+
+#------------------Predicting the model---------------------------------
+
+# Predict model base
+testing_set_att2$pred_att_bs <- predict(model_base, newdata = testing_set_att2, type = "response")
+
+# Predict significant only model
+testing_set_att2$pred_att_sig <- predict(model_sig, newdata = testing_set_att2, type = "response")
+
+# Predict step wise model
+testing_set_att2$pred_att_stp <- predict(model_step, newdata = testing_set_att2, type = "response")
+
+
+#------------------Changing odds to labels-----------------------------------------------------
+
+# Label model base
+testing_set_att2$label_bs <- ifelse(testing_set_att2$pred_att_bs>0.5, 1, 0)
+
+# Label model sig
+testing_set_att2$label_sig <- ifelse(testing_set_att2$pred_att_sig>0.5, 1, 0)
+
+# Label model step
+testing_set_att2$label_stp <- ifelse(testing_set_att2$pred_att_stp>0.5, 1, 0)
+
+# Training the Naive Bayes model
+att_pred_model <- naiveBayes(Attrition ~ ., data = training_set_att, laplace = 1)
+
+# Make predictions on attrition_Data_no_attrition
+testing_set_att2$pred_nv <- predict(att_pred_model, newdata = testing_set_att2  %>% 
+                             dplyr::select(-c(pred_att_bs, pred_att_sig, pred_att_stp, label_bs, 
+                                                          label_sig, label_stp)),
+                           type="class")
+
+# testing_set_att2$Attrition <- testing_set_att2$pred_nv
+# 
+# # Ensure levels of pred_nv match Attrition
+# testing_set_att2$pred_nv <- factor(testing_set_att2$pred_nv, levels = levels(testing_set_att2$Attrition))
+# 
+# # Create confusion matrix
+# confusionMatrix(data = as.factor(testing_set_att2$pred_nv), reference = as.factor(testing_set_att2$Attrition), positive = "1")
+
+# Add predicted values to attrition_Data_no_attrition
+attrition_Data_no_attrition$Attrition <- testing_set_att2$pred_nv
+
+
+
+# Copy Path
+copy_Path <- "D:/University/SMU/Doing_Data_Science/DDS_repository/DDS_Final_project/CaseStudy2DDS/Attrition_Datasets/attrition_Data_no_attrition_with_predictions.csv"
+
+# Save the updated dataset with predicted values
+write.csv(attrition_Data_no_attrition, file = copy_Path, row.names = FALSE)
+
+
+# # Write predictions to a CSV file
+# write.csv(predicted_data, file = "Case2Predictions_Ercanbrack_Salary.csv", row.names = FALSE)
+
+
+```
+
+
+#------------Predictions of monthly incomes--------------------------------
+
+
+```{r build_model_monthly_income}
+
+# # Convert a factor column to character
+#attrition_Data3$Attrition <- as.factor(attrition_Data3$Attrition)
+# 
+# # Convert a factor column to numeric
+# attrition_Data3$BusinessTravel <- as.numeric(attrition_Data3$BusinessTravel)
+
+#define intercept-only model
+intercept_only <- lm(Attrition ~ 1, data=attrition_Data3)
+
+#define model with all predictors
+Income.lm <-glm(MonthlyIncome ~ Age + BusinessTravel + DailyRate + Department + 
+    DistanceFromHome + Education + EducationField + EmployeeNumber + 
+    EnvironmentSatisfaction + Gender + HourlyRate + JobInvolvement + 
+    JobLevel + JobRole + JobSatisfaction + MaritalStatus + MonthlyIncome + 
+    MonthlyRate + NumCompaniesWorked + OverTime + PercentSalaryHike + 
+    PerformanceRating + RelationshipSatisfaction + StockOptionLevel + 
+    TotalWorkingYears + TrainingTimesLastYear + WorkLifeBalance + 
+    YearsAtCompany + YearsInCurrentRole + YearsSinceLastPromotion + 
+    YearsWithCurrManager, data = attrition_Data3)
+
+
+summary(Income.lm)
+```
+
+
+
+```{r stepwise_regression_forward_Income}
+#perform forward stepwise regression
+model_forward_income <- step(intercept_only, direction='forward', scope=formula(Income.lm), trace=FALSE)
+
+summary(model_forward_income)
+
+#view results of forward stepwise regression
+model_forward_income$anova
+
+#view final model
+model_forward_income$coefficients
+```
+
+
+```{r stepwise_regression_backward_income}
+model_backward_income <- step(Income.lm, direction = "backward", scope=formula(Income.lm), trace = FALSE)
+
+summary(model_backward_income)
+
+#view results of forward stepwise regression
+model_backward_income$anova
+
+#view final model
+model_backward_income$coefficients
+```
+
+
+
+```{r stepwise_regression_stepwise}
+
+model_both_income <- step(intercept_only, direction = "both", scope=formula(Income.lm), trace = FALSE)
+
+summary(model_both_income)
+
+#view results of forward stepwise regression
+model_both_income$anova
+
+#view final model
+model_both_income$coefficients
+```
+
+
+
+
+# MaritalStatus + MonthlyIncome + PercentSalaryHike + PerformanceRating + YearsAtCompany + RelationshipSatisfaction + StockOptionLevel + TrainingTimesLastYear + JobRole +
+# YearsInCurrentRole + YearsWithCurrManager + Age (none >60)+ EducationField + Department + EnvironmentSatisfaction + JobSatisfaction + TotalWorkingYears + MonthlyIncome +
+# WorkLifeBalance +
+```{r reduce_model_income}
+
+stepwise_formula_income <- MonthlyIncome ~ OverTime + JobInvolvement + TotalWorkingYears	+
+    JobSatisfaction + StockOptionLevel+  NumCompaniesWorked + EnvironmentSatisfaction + 
+  YearsSinceLastPromotion + Department + JobRole + DistanceFromHome + EducationField +
+  TrainingTimesLastYear
+
+#define model with all predictors
+income.lm2_reduce <-glm(stepwise_formula_income, data = attrition_Data3)
+
+
+summary(income.lm2_reduce)
+
+plot(income.lm2_reduce)
+```
+
+
+
+```{r linear_regression_prediction_model_income}
+
+training_set_income <- attrition_Data3
+testing_set_income <- attrition_Data_no_attrition
+
+
+# The results of the stepwise analysis
+stepwise_formula_income_reduced <- MonthlyIncome ~ TotalWorkingYears	+
+   NumCompaniesWorked + YearsSinceLastPromotion 
+
+# reduced to significant
+stepwise_formula_income <- MonthlyIncome ~ OverTime + JobInvolvement + TotalWorkingYears	+
+    JobSatisfaction + StockOptionLevel+  NumCompaniesWorked + EnvironmentSatisfaction + 
+  YearsSinceLastPromotion + Department + JobRole + DistanceFromHome + EducationField +
+  TrainingTimesLastYear + HourlyRate
+
+# Build a linear regression model to predict MonthlyIncome
+income_model <- lm(stepwise_formula_income, data = training_set_income)
+
+summary(income_model)
+
+# Predict MonthlyIncome for testing_set_income
+predictions <- predict(income_model, newdata = testing_set_income)
+
+# Add predicted MonthlyIncome to testing_set_income
+testing_set_income$MonthlyIncome <- predictions
+
+
+
+# Get the residuals from the model
+residuals <- resid(income_model)
+
+# Calculate RMSE
+n <- length(residuals)  # Number of observations
+mse <- sum(residuals^2) / n  # Mean Squared Error (MSE)
+rmse <- sqrt(mse)  # Root Mean Squared Error (RMSE)
+print(paste("Root Mean Squared Error (RMSE):", rmse))
+
+# Copy Path
+income_copy_Path <- "D:/University/SMU/Doing_Data_Science/DDS_repository/DDS_Final_project/CaseStudy2DDS/Attrition_Datasets/attrition_Data_no_income_with_predictions.csv"
+
+# Save the updated dataset
+write.csv(testing_set_income, file = income_copy_Path, row.names = FALSE)
+
+```
+
+
+
+

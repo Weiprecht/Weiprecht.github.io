@@ -14,7 +14,7 @@ navbar:
               href: "https://weiprecht.shinyapps.io/beer_app_code/"
               
         - text: "Employment Attrition Analysis"
-          href: Employment_Attrition_Analysis.html
+          href: Final_Project_Attrition_Code.html
         - text: "Employment Project Apps"
           menu:
             - text: "Attrition Application"
