@@ -334,62 +334,221 @@ $(document).ready(function () {
 </div>
 
 
-<p>#Readme: This employee attrition model seeks to analyze the
-relationship of over 30 variables on employee attrition levels in the
-Frito Lay Coorporation. Employee attrition is the process whereby a
-company loses its employees through self election, usually because of a
-lack of satisfaction or better opportunities elsewhere. Companies spend
-millions of dollars annually to hire, process, and train talent to make
-their workforce efficient and productive. Conversely, a talented
-workforce that is dedicated to a job can increase efficiency in
-production, reduce workhours, and invite innovation that can save a
-coorporation millions. Our approach to analyzing the data began with a
-visual analysis of the impact of certain variables on attrition. The
-visual analysis was then buttressed with tests using multiple regression
-models. We then used a stepwise analysis process to identify the most
-powerful and useful variables to test against attrition. For this study,
-we used three prediction models, a K to the nearest neighbor (KNN)
-model, a Naive Bayes model, and a predictive regression model. We tested
-these models against various variable patterns (using stepwise analysis:
-Forward, Backward, and Both) to identify which variables had the most
-statistically significant impact on Attrition rates.</p>
-<p>Variable Definitions: Age: Employee age Attrition: if the employee
-leaves the job (1 = Yes, 0 = No) BusinessTravel: The frequency of job
-travels DailyRate: Billing cost for employee’s services for a single day
-Department: Employee work department DistanceFromHome: Distance traveled
-to work from home Education: Employee education level (1 = Below
-College, 2 = College, 3 = Bachelor, 4 = Master, 5 = Doctor)
-EducationField: Employee education field EmployeeCount: Employee Count
-(Constant) EmployeeNumber: Employee ID EnvironmentSatisfaction: Num
-value for environment satisfaction (1 = Low, 2 = Medium, 3 = High, 4 =
-Very High) Gender: Employee gender HourlyRate: The amount of money that
-employee earns for every hour worked JobInvolvement: Numerical value for
-job involvement (1 = Low, 2 = Medium, 3 = High, 4 = Very High) JobLevel:
-Numerical value for job level JobRole: Employee job position
-JobSatisfaction: Numerical value for job satisfaction (1 = Low, 2 =
-Medium, 3 = High, 4 = Very High) MaritalStatus: Employee marital status
-MonthlyIncome: The amount of money that employee earns in one month,
-before taxes or deductions MonthlyRate: Billing cost for employee’s
-services for a month NumCompaniesWorked: Number of companies worked at
-Over18: if employee is over 18 years old OverTime: if employee works
-overtime PercentSalaryHike: Percent increase in salary
-PerformanceRating: Numerical value for performance rating (1 = Low, 2 =
-Good, 3 = Excellent, 4 = Outstanding) RelationshipSatisfaction:
-Numerical value for relationship satisfaction (1 = Low, 2 = Medium, 3 =
-High, 4 = Very High) StandardHours: Hours employee spent working
-(Constant) StockOptionsLevel: Numerical value for stock options
-TotalWorkingYears: Total number of years employee worked
-TrainingTimesLastYear: Hours employee spent on training last year
-WorkLifeBalance: Numerical value for work life balance (1 = Bad, 2 =
-Good, 3 = Better, 4 = Best) YearsAtCompany: Number of years employee
-worked at company YearsInCurrentRole: Number of years employee worked as
-their current job role YearsSinceLastPromotion: Number of years since
-last promotion YearsWithCurrentManager: Number of years employee worked
-with current manager</p>
+<div id="readme" class="section level2">
+<h2>ReadMe:</h2>
+<div
+id="this-employee-attrition-model-seeks-to-analyze-the-relationship-of-over-30-variables-on-employee-attrition-levels-in-the-frito-lay-coorporation.-employee-attrition-is-the-process-whereby-a-company-loses-its-employees-through-self-election-usually-because-of-a-lack-of-satisfaction-or-better-opportunities-elsewhere.-companies-spend-millions-of-dollars-annually-to-hire-process-and-train-talent-to-make-their-workforce-efficient-and-productive.-conversely-a-talented-workforce-that-is-dedicated-to-a-job-can-increase-efficiency-in-production-reduce-workhours-and-invite-innovation-that-can-save-a-coorporation-millions.-our-approach-to-analyzing-the-data-began-with-a-visual-analysis-of-the-impact-of-certain-variables-on-attrition.-the-visual-analysis-was-then-buttressed-with-tests-using-multiple-regression-models.-we-then-used-a-stepwise-analysis-process-to-identify-the-most-powerful-and-useful-variables-to-test-against-attrition.-for-this-study-we-used-three-prediction-models-a-k-to-the-nearest-neighbor-knn-model-a-naive-bayes-model-and-a-predictive-regression-model.-we-tested-these-models-against-various-variable-patterns-using-stepwise-analysis-forward-backward-and-both-to-identify-which-variables-had-the-most-statistically-significant-impact-on-attrition-rates."
+class="section level3">
+<h3>This employee attrition model seeks to analyze the relationship of
+over 30 variables on employee attrition levels in the Frito Lay
+Coorporation. Employee attrition is the process whereby a company loses
+its employees through self election, usually because of a lack of
+satisfaction or better opportunities elsewhere. Companies spend millions
+of dollars annually to hire, process, and train talent to make their
+workforce efficient and productive. Conversely, a talented workforce
+that is dedicated to a job can increase efficiency in production, reduce
+workhours, and invite innovation that can save a coorporation millions.
+Our approach to analyzing the data began with a visual analysis of the
+impact of certain variables on attrition. The visual analysis was then
+buttressed with tests using multiple regression models. We then used a
+stepwise analysis process to identify the most powerful and useful
+variables to test against attrition. For this study, we used three
+prediction models, a K to the nearest neighbor (KNN) model, a Naive
+Bayes model, and a predictive regression model. We tested these models
+against various variable patterns (using stepwise analysis: Forward,
+Backward, and Both) to identify which variables had the most
+statistically significant impact on Attrition rates.</h3>
+</div>
+</div>
+<div
+id="monthly-income-analysis-the-root-mean-squared-error-rmse-for-this-model-is-2787.3-statistically-significant"
+class="section level2">
+<h2>Monthly Income Analysis: The Root Mean Squared Error (RMSE) for this
+model is 2787.3 (Statistically significant)</h2>
+</div>
+<div id="employee-attrition-model" class="section level2">
+<h2>Employee Attrition Model:</h2>
+<div
+id="accuracy---the-models-ability-to-accurately-predict-attrition-is-83-percent"
+class="section level3">
+<h3>* Accuracy - the model’s ability to accurately predict Attrition is
+83 percent</h3>
+</div>
+<div
+id="sensitivity-the-models-ability-to-predict-true-positives-70-percent"
+class="section level3">
+<h3>* Sensitivity – the model’s ability to predict true positives – 70
+percent</h3>
+</div>
+<div
+id="specificity-the-models-ability-to-predict-true-negatives-85.5-percent"
+class="section level3">
+<h3>* Specificity – the model’s ability to predict true negatives – 85.5
+percent</h3>
+</div>
+</div>
+<div id="variable-definitions" class="section level2">
+<h2>Variable Definitions:</h2>
+<div id="age-employee-age" class="section level3">
+<h3>Age: Employee age</h3>
+</div>
+<div id="attrition-if-the-employee-leaves-the-job-1-yes-0-no"
+class="section level3">
+<h3>Attrition: if the employee leaves the job (1 = Yes, 0 = No)</h3>
+</div>
+<div id="businesstravel-the-frequency-of-job-travels"
+class="section level3">
+<h3>BusinessTravel: The frequency of job travels</h3>
+</div>
+<div id="dailyrate-billing-cost-for-employees-services-for-a-single-day"
+class="section level3">
+<h3>DailyRate: Billing cost for employee’s services for a single
+day</h3>
+</div>
+<div id="department-employee-work-department" class="section level3">
+<h3>Department: Employee work department</h3>
+</div>
+<div id="distancefromhome-distance-traveled-to-work-from-home"
+class="section level3">
+<h3>DistanceFromHome: Distance traveled to work from home</h3>
+</div>
+<div
+id="education-employee-education-level-1-below-college-2-college-3-bachelor-4-master-5-doctor"
+class="section level3">
+<h3>Education: Employee education level (1 = Below College, 2 = College,
+3 = Bachelor, 4 = Master, 5 = Doctor)</h3>
+</div>
+<div id="educationfield-employee-education-field"
+class="section level3">
+<h3>EducationField: Employee education field</h3>
+</div>
+<div id="employeecount-employee-count-constant" class="section level3">
+<h3>EmployeeCount: Employee Count (Constant)</h3>
+</div>
+<div id="employeenumber-employee-id" class="section level3">
+<h3>EmployeeNumber: Employee ID</h3>
+</div>
+<div
+id="environmentsatisfaction-num-value-for-environment-satisfaction-1-low-2-medium-3-high-4-very-high"
+class="section level3">
+<h3>EnvironmentSatisfaction: Num value for environment satisfaction (1 =
+Low, 2 = Medium, 3 = High, 4 = Very High)</h3>
+</div>
+<div id="gender-employee-gender" class="section level3">
+<h3>Gender: Employee gender</h3>
+</div>
+<div
+id="hourlyrate-the-amount-of-money-that-employee-earns-for-every-hour-worked"
+class="section level3">
+<h3>HourlyRate: The amount of money that employee earns for every hour
+worked</h3>
+</div>
+<div
+id="jobinvolvement-numerical-value-for-job-involvement-1-low-2-medium-3-high-4-very-high"
+class="section level3">
+<h3>JobInvolvement: Numerical value for job involvement (1 = Low, 2 =
+Medium, 3 = High, 4 = Very High)</h3>
+</div>
+<div id="joblevel-numerical-value-for-job-level" class="section level3">
+<h3>JobLevel: Numerical value for job level</h3>
+</div>
+<div id="jobrole-employee-job-position" class="section level3">
+<h3>JobRole: Employee job position</h3>
+</div>
+<div
+id="jobsatisfaction-numerical-value-for-job-satisfaction-1-low-2-medium-3-high-4-very-high"
+class="section level3">
+<h3>JobSatisfaction: Numerical value for job satisfaction (1 = Low, 2 =
+Medium, 3 = High, 4 = Very High)</h3>
+</div>
+<div id="maritalstatus-employee-marital-status" class="section level3">
+<h3>MaritalStatus: Employee marital status</h3>
+</div>
+<div
+id="monthlyincome-the-amount-of-money-that-employee-earns-in-one-month-before-taxes-or-deductions"
+class="section level3">
+<h3>MonthlyIncome: The amount of money that employee earns in one month,
+before taxes or deductions</h3>
+</div>
+<div id="monthlyrate-billing-cost-for-employees-services-for-a-month"
+class="section level3">
+<h3>MonthlyRate: Billing cost for employee’s services for a month</h3>
+</div>
+<div id="numcompaniesworked-number-of-companies-worked-at"
+class="section level3">
+<h3>NumCompaniesWorked: Number of companies worked at</h3>
+</div>
+<div id="over18-if-employee-is-over-18-years-old"
+class="section level3">
+<h3>Over18: if employee is over 18 years old</h3>
+</div>
+<div id="overtime-if-employee-works-overtime" class="section level3">
+<h3>OverTime: if employee works overtime</h3>
+</div>
+<div id="percentsalaryhike-percent-increase-in-salary"
+class="section level3">
+<h3>PercentSalaryHike: Percent increase in salary</h3>
+</div>
+<div
+id="performancerating-numerical-value-for-performance-rating-1-low-2-good-3-excellent-4-outstanding"
+class="section level3">
+<h3>PerformanceRating: Numerical value for performance rating (1 = Low,
+2 = Good, 3 = Excellent, 4 = Outstanding)</h3>
+</div>
+<div
+id="relationshipsatisfaction-numerical-value-for-relationship-satisfaction-1-low-2-medium-3-high-4-very-high"
+class="section level3">
+<h3>RelationshipSatisfaction: Numerical value for relationship
+satisfaction (1 = Low, 2 = Medium, 3 = High, 4 = Very High)</h3>
+</div>
+<div id="standardhours-hours-employee-spent-working-constant"
+class="section level3">
+<h3>StandardHours: Hours employee spent working (Constant)</h3>
+</div>
+<div id="stockoptionslevel-numerical-value-for-stock-options"
+class="section level3">
+<h3>StockOptionsLevel: Numerical value for stock options</h3>
+</div>
+<div id="totalworkingyears-total-number-of-years-employee-worked"
+class="section level3">
+<h3>TotalWorkingYears: Total number of years employee worked</h3>
+</div>
+<div
+id="trainingtimeslastyear-hours-employee-spent-on-training-last-year"
+class="section level3">
+<h3>TrainingTimesLastYear: Hours employee spent on training last
+year</h3>
+</div>
+<div
+id="worklifebalance-numerical-value-for-work-life-balance-1-bad-2-good-3-better-4-best"
+class="section level3">
+<h3>WorkLifeBalance: Numerical value for work life balance (1 = Bad, 2 =
+Good, 3 = Better, 4 = Best)</h3>
+</div>
+<div id="yearsatcompany-number-of-years-employee-worked-at-company"
+class="section level3">
+<h3>YearsAtCompany: Number of years employee worked at company</h3>
+</div>
+<div
+id="yearsincurrentrole-number-of-years-employee-worked-as-their-current-job-role"
+class="section level3">
+<h3>YearsInCurrentRole: Number of years employee worked as their current
+job role</h3>
+</div>
+<div id="yearssincelastpromotion-number-of-years-since-last-promotion"
+class="section level3">
+<h3>YearsSinceLastPromotion: Number of years since last promotion</h3>
+</div>
+<div
+id="yearswithcurrentmanager-number-of-years-employee-worked-with-current-manager"
+class="section level3">
+<h3>YearsWithCurrentManager: Number of years employee worked with
+current manager</h3>
+</div>
 <div
 id="these-models-draw-on-code-chuncks-from-sources-such-as-smus-dds-class-lectures-internet-sources-such-as-httpsbradleyboehmke.github.iohomlknn.html-httpsrpubs.commary18929056-httpsrpubs.comhanifahplemp_att-httpswww.datacamp.comtutorialk-nearest-neighbors-knn-classification-with-r-tutorial-and-chatgpt."
-class="section level1">
-<h1>These models draw on code chuncks from sources such as SMU’s DDS
+class="section level3">
+<h3>These models draw on code chuncks from sources such as SMU’s DDS
 class lectures, Internet Sources, such as (<a
 href="https://bradleyboehmke.github.io/HOML/knn.html"
 class="uri">https://bradleyboehmke.github.io/HOML/knn.html</a>, <a
@@ -399,7 +558,8 @@ href="https://rpubs.com/hanifahpl/emp_att"
 class="uri">https://rpubs.com/hanifahpl/emp_att</a>, <a
 href="https://www.datacamp.com/tutorial/k-nearest-neighbors-knn-classification-with-r-tutorial"
 class="uri">https://www.datacamp.com/tutorial/k-nearest-neighbors-knn-classification-with-r-tutorial</a>),
-and chatGPT.</h1>
+and chatGPT.</h3>
+</div>
 </div>
 <div id="packages" class="section level1">
 <h1>Packages</h1>
@@ -524,7 +684,8 @@ percentage_data &lt;- filtered_data %&gt;%
   summarise(count = n()) %&gt;%
   mutate(percentage = (count / sum(count)) * 100) %&gt;%
   arrange(Attrition)  # Ensure Attrition = Yes is plotted at the bottom</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;JobRole&#39;, &#39;OverTime&#39;. You can override using the `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;JobRole&#39;, &#39;OverTime&#39;. You can override
+## using the `.groups` argument.</code></pre>
 <pre class="r"><code># Create bar plot with facets for each JobRole
 ggplot(percentage_data, aes(x = OverTime, y = percentage, fill = Attrition)) +
   geom_bar(stat = &quot;identity&quot;, position = &quot;stack&quot;) +
@@ -542,7 +703,8 @@ percentage_data &lt;- filtered_data %&gt;%
   summarise(count = n()) %&gt;%
   mutate(percentage = (count / sum(count)) * 100) %&gt;%
   arrange(Attrition)  # Ensure Attrition = Yes is plotted at the bottom</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;JobRole&#39;, &#39;Age_Group&#39;. You can override using the `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;JobRole&#39;, &#39;Age_Group&#39;. You can override
+## using the `.groups` argument.</code></pre>
 <pre class="r"><code># Create bar plot with facets for each JobRole
 ggplot(percentage_data, aes(x = Age_Group, y = percentage, fill = Attrition)) +
   geom_bar(stat = &quot;identity&quot;, position = &quot;stack&quot;) +
@@ -560,7 +722,8 @@ percentage_data &lt;- filtered_data %&gt;%
   summarise(count = n()) %&gt;%
   mutate(percentage = (count / sum(count)) * 100) %&gt;%
   arrange(Attrition)  # Ensure Attrition = Yes is plotted at the bottom</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;JobRole&#39;, &#39;EnvironmentSatisfaction&#39;. You can override using the `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;JobRole&#39;, &#39;EnvironmentSatisfaction&#39;. You
+## can override using the `.groups` argument.</code></pre>
 <pre class="r"><code># Create bar plot with facets for each JobRole
 ggplot(percentage_data, aes(x = EnvironmentSatisfaction, y = percentage, fill = Attrition)) +
   geom_bar(stat = &quot;identity&quot;, position = &quot;stack&quot;) +
@@ -578,7 +741,8 @@ percentage_data &lt;- filtered_data %&gt;%
   summarise(count = n()) %&gt;%
   mutate(percentage = (count / sum(count)) * 100) %&gt;%
   arrange(Attrition)  # Ensure Attrition = Yes is plotted at the bottom</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;JobRole&#39;, &#39;JobInvolvement&#39;. You can override using the `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;JobRole&#39;, &#39;JobInvolvement&#39;. You can
+## override using the `.groups` argument.</code></pre>
 <pre class="r"><code># Create bar plot with facets for each JobRole
 ggplot(percentage_data, aes(x = JobInvolvement, y = percentage, fill = Attrition)) +
   geom_bar(stat = &quot;identity&quot;, position = &quot;stack&quot;) +
@@ -600,7 +764,8 @@ percentage_data &lt;- filtered_data %&gt;%
   summarise(count = n()) %&gt;%
   mutate(percentage = (count / sum(count)) * 100) %&gt;%
   arrange(Attrition)  # Ensure Attrition = Yes is plotted at the bottom</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;JobRole&#39;, &#39;WorkLifeBalance2&#39;. You can override using the `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;JobRole&#39;, &#39;WorkLifeBalance2&#39;. You can
+## override using the `.groups` argument.</code></pre>
 <pre class="r"><code># Create bar plot with facets for each JobRole
 ggplot(percentage_data, aes(x = WorkLifeBalance2, y = percentage, fill = Attrition)) +
   geom_bar(stat = &quot;identity&quot;, position = &quot;stack&quot;) +
@@ -626,7 +791,8 @@ attrition_Data %&gt;%
   labs(title = &quot;Job Role and Attrition&quot;, x = &quot;Job Role&quot;, y = &quot;Percentage&quot;) +
   scale_fill_manual(values = c(&quot;red&quot;,  &quot;blue&quot;)) +
   theme(axis.text.x = element_text(angle = 20, hjust = 0.5))</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;JobRole&#39;. You can override using the `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;JobRole&#39;. You can override using the
+## `.groups` argument.</code></pre>
 <p><img src="Final_Project_Attrition_Code_files/figure-html/unnamed-chunk-1-6.png" width="672" /></p>
 <pre class="r"><code>attrition_Data %&gt;% 
   dplyr::group_by(JobInvolvement, Attrition) %&gt;% 
@@ -640,7 +806,8 @@ attrition_Data %&gt;%
   labs(title = &quot;JobInvolvement and Attrition&quot;, x = &quot;JobInvolvement&quot;, y = &quot;Percentage&quot;) +
   scale_fill_manual(values = c(&quot;red&quot;,  &quot;blue&quot;)) +
   theme(axis.text.x = element_text(angle = 20, hjust = 0.5))</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;JobInvolvement&#39;. You can override using the `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;JobInvolvement&#39;. You can override using
+## the `.groups` argument.</code></pre>
 <p><img src="Final_Project_Attrition_Code_files/figure-html/unnamed-chunk-1-7.png" width="672" /></p>
 <pre class="r"><code>attrition_Data %&gt;% 
   dplyr::group_by(Department, Attrition) %&gt;% 
@@ -654,7 +821,8 @@ attrition_Data %&gt;%
   labs(title = &quot;Department and Attrition&quot;, x = &quot;Department&quot;, y = &quot;Percentage&quot;) +
   scale_fill_manual(values = c(&quot;red&quot;,  &quot;blue&quot;)) +
   theme(axis.text.x = element_text(angle = 20, hjust = 0.5))</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;Department&#39;. You can override using the `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;Department&#39;. You can override using the
+## `.groups` argument.</code></pre>
 <p><img src="Final_Project_Attrition_Code_files/figure-html/unnamed-chunk-1-8.png" width="672" /></p>
 <pre class="r"><code>attrition_Data %&gt;% 
   dplyr::group_by(NumCompaniesWorked, Attrition) %&gt;% 
@@ -668,7 +836,8 @@ attrition_Data %&gt;%
   labs(title = &quot;NumCompaniesWorked and Attrition&quot;, x = &quot;NumCompaniesWorked&quot;, y = &quot;Percentage&quot;) +
   scale_fill_manual(values = c(&quot;red&quot;,  &quot;blue&quot;)) +
   theme(axis.text.x = element_text(angle = 20, hjust = 0.5))</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;NumCompaniesWorked&#39;. You can override using the `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;NumCompaniesWorked&#39;. You can override
+## using the `.groups` argument.</code></pre>
 <p><img src="Final_Project_Attrition_Code_files/figure-html/unnamed-chunk-1-9.png" width="672" /></p>
 <pre class="r"><code>attrition_Data %&gt;% 
   dplyr::group_by(OverTime, Attrition) %&gt;% 
@@ -681,7 +850,8 @@ attrition_Data %&gt;%
   scale_y_continuous(labels = function(x) paste0(x, &quot;%&quot;)) +
   labs(title = &quot;Over Time and Attrition&quot;, x = &quot;Over Time&quot;, y = &quot;Percentage&quot;) +
   scale_fill_manual(values = c(&quot;red&quot;,  &quot;blue&quot;))</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;OverTime&#39;. You can override using the `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;OverTime&#39;. You can override using the
+## `.groups` argument.</code></pre>
 <p><img src="Final_Project_Attrition_Code_files/figure-html/unnamed-chunk-1-10.png" width="672" /></p>
 <pre class="r"><code>attrition_Data %&gt;% 
   dplyr::group_by(MonthlyIncome, Attrition) %&gt;% 
@@ -691,7 +861,8 @@ attrition_Data %&gt;%
   geom_boxplot() +
   labs(title = &quot;Attrition and Monthly Income&quot;, x = &quot;Attrition&quot;, y = &quot;Monthly Income&quot;) +
   scale_fill_manual(values = c(&quot;red&quot;, &quot;blue&quot;))</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;MonthlyIncome&#39;. You can override using the `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;MonthlyIncome&#39;. You can override using the
+## `.groups` argument.</code></pre>
 <p><img src="Final_Project_Attrition_Code_files/figure-html/unnamed-chunk-1-11.png" width="672" /></p>
 <pre class="r"><code>attrition_Data %&gt;% 
   dplyr::group_by(HourlyRate, Attrition) %&gt;% 
@@ -701,7 +872,8 @@ attrition_Data %&gt;%
   geom_boxplot() +
   labs(title = &quot;Attrition and HourlyRate&quot;, x = &quot;Attrition&quot;, y = &quot;HourlyRate&quot;) +
   scale_fill_manual(values = c(&quot;red&quot;, &quot;blue&quot;))</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;HourlyRate&#39;. You can override using the `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;HourlyRate&#39;. You can override using the
+## `.groups` argument.</code></pre>
 <p><img src="Final_Project_Attrition_Code_files/figure-html/unnamed-chunk-1-12.png" width="672" /></p>
 <pre class="r"><code>attrition_Data %&gt;% 
   dplyr::group_by(MonthlyIncome, JobRole, Attrition) %&gt;% 
@@ -712,7 +884,8 @@ attrition_Data %&gt;%
   labs(title = &quot;Monthly Income and Job Role by Attrition&quot;, x = &quot;JobRole&quot;, y = &quot;Monthly Income&quot;) +
   scale_fill_manual(values = c(&quot;red&quot;, &quot;blue&quot;)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotate x-axis labels</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;MonthlyIncome&#39;, &#39;JobRole&#39;. You can override using the `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;MonthlyIncome&#39;, &#39;JobRole&#39;. You can
+## override using the `.groups` argument.</code></pre>
 <p><img src="Final_Project_Attrition_Code_files/figure-html/unnamed-chunk-1-13.png" width="672" /></p>
 <pre class="r"><code># Create scatterplot with facets for each JobRole
 ggplot(filtered_data, aes(x = as.factor(JobSatisfaction), y = MonthlyIncome, color = Attrition, shape = Attrition)) +
@@ -745,7 +918,8 @@ percentage_DistanceFromHome &lt;- attrition_Data %&gt;%
   group_by(DistanceBin, Attrition) %&gt;%
   summarise(count = n()) %&gt;%
   mutate(percentage = (count / sum(count)) * 100)</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;DistanceBin&#39;. You can override using the `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;DistanceBin&#39;. You can override using the
+## `.groups` argument.</code></pre>
 <pre class="r"><code># Create the stacked bar plot with labels
 ggplot(percentage_DistanceFromHome, aes(x = DistanceBin, y = percentage, fill = Attrition, label = paste(round(percentage, 1), &quot;%&quot;))) +
   geom_bar(stat = &quot;identity&quot;, position = &quot;stack&quot;) +
@@ -771,7 +945,8 @@ attrition_Data %&gt;%
                               labels = c(&quot;Travel Rarely&quot;,&quot;Travel Frequently&quot;, &quot;Non Travel&quot;)) +
   scale_fill_manual(values = c(&quot;red&quot;,  &quot;blue&quot;)) +
    theme_bw()</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;BusinessTravel&#39;. You can override using the `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;BusinessTravel&#39;. You can override using
+## the `.groups` argument.</code></pre>
 <p><img src="Final_Project_Attrition_Code_files/figure-html/unnamed-chunk-2-2.png" width="672" /></p>
 <pre class="r"><code>attrition_Data$EnvironmentSatisfaction2 &lt;- factor(attrition_Data$EnvironmentSatisfaction,
                                                 levels = c(1, 2, 3, 4),
@@ -789,7 +964,8 @@ attrition_Data %&gt;%
   labs(title = &quot;Environment Satisfaction and Attrition&quot;, x = &quot;Environment Satisfaction&quot;, y = &quot;Percentage&quot;) +
   scale_fill_manual(values = c(&quot;red&quot;,  &quot;blue&quot;)) +
   theme_bw()</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;EnvironmentSatisfaction2&#39;. You can override using the `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;EnvironmentSatisfaction2&#39;. You can
+## override using the `.groups` argument.</code></pre>
 <p><img src="Final_Project_Attrition_Code_files/figure-html/unnamed-chunk-2-3.png" width="672" /></p>
 <pre class="r"><code>attrition_Data %&gt;% 
   dplyr::group_by(JobSatisfaction, Attrition) %&gt;% 
@@ -803,7 +979,8 @@ attrition_Data %&gt;%
   labs(title = &quot;JobSatisfaction and Attrition&quot;, x = &quot;JobSatisfaction&quot;, y = &quot;Percentage&quot;) +
   scale_fill_manual(values = c(&quot;red&quot;,  &quot;blue&quot;)) +
   theme_bw()</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;JobSatisfaction&#39;. You can override using the `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;JobSatisfaction&#39;. You can override using
+## the `.groups` argument.</code></pre>
 <p><img src="Final_Project_Attrition_Code_files/figure-html/unnamed-chunk-2-4.png" width="672" /></p>
 <pre class="r"><code>attrition_Data$WorkLifeBalance2 &lt;- factor(attrition_Data$WorkLifeBalance,
                                                 levels = c(1, 2, 3, 4),
@@ -820,7 +997,8 @@ attrition_Data %&gt;%
   labs(title = &quot;Work Life Balance and Attrition&quot;, x = &quot;Work Life Balance&quot;, y = &quot;Percentage&quot;) +
   scale_fill_manual(values = c(&quot;red&quot;,  &quot;blue&quot;)) +
   theme_bw()</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;WorkLifeBalance2&#39;. You can override using the `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;WorkLifeBalance2&#39;. You can override using
+## the `.groups` argument.</code></pre>
 <p><img src="Final_Project_Attrition_Code_files/figure-html/unnamed-chunk-2-5.png" width="672" /></p>
 <pre class="r"><code>attrition_Data %&gt;% 
   dplyr::group_by(YearsSinceLastPromotion, Attrition) %&gt;% 
@@ -834,7 +1012,8 @@ attrition_Data %&gt;%
   labs(title = &quot;YearsSinceLastPromotion and Attrition&quot;, x = &quot;YearsSinceLastPromotion&quot;, y = &quot;Percentage&quot;) +
   scale_fill_manual(values = c(&quot;red&quot;,  &quot;blue&quot;)) +
   theme_bw()</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;YearsSinceLastPromotion&#39;. You can override using the `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;YearsSinceLastPromotion&#39;. You can override
+## using the `.groups` argument.</code></pre>
 <p><img src="Final_Project_Attrition_Code_files/figure-html/unnamed-chunk-2-6.png" width="672" /></p>
 <pre class="r"><code>attrition_Data %&gt;% 
   dplyr::group_by(TotalWorkingYears, Attrition) %&gt;% 
@@ -848,7 +1027,8 @@ attrition_Data %&gt;%
   labs(title = &quot;TotalWorkingYears and Attrition&quot;, x = &quot;TotalWorkingYears&quot;, y = &quot;Percentage&quot;) +
   scale_fill_manual(values = c(&quot;red&quot;,  &quot;blue&quot;)) +
   theme_bw()</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;TotalWorkingYears&#39;. You can override using the `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;TotalWorkingYears&#39;. You can override using
+## the `.groups` argument.</code></pre>
 <p><img src="Final_Project_Attrition_Code_files/figure-html/unnamed-chunk-2-7.png" width="672" /></p>
 <pre class="r"><code>filtered_data &lt;- filtered_data %&gt;%
   mutate(Year_Group = cut(TotalWorkingYears, breaks = c(0, 5, 10, 15, 20, 40),
@@ -861,7 +1041,8 @@ percentage_data &lt;- filtered_data %&gt;%
   summarise(count = n()) %&gt;%
   mutate(percentage = (count / sum(count)) * 100) %&gt;%
   arrange(Attrition)  # Ensure Attrition = Yes is plotted at the bottom</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;Year_Group&#39;. You can override using the `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;Year_Group&#39;. You can override using the
+## `.groups` argument.</code></pre>
 <pre class="r"><code># Create bar plot with facets for each JobRole
 ggplot(percentage_data, aes(x = Year_Group, y = percentage, fill = Attrition)) +
   geom_bar(stat = &quot;identity&quot;, position = &quot;stack&quot;) +
@@ -885,7 +1066,8 @@ ggplot(percentage_data, aes(x = Year_Group, y = percentage, fill = Attrition)) +
   labs(title = &quot;Gender and Attrition&quot;, x = &quot;Gender&quot;, y = &quot;Percentage&quot;) +
   scale_fill_manual(values = c(&quot;red&quot;,  &quot;blue&quot;)) +
   theme_bw()</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;Gender&#39;. You can override using the `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;Gender&#39;. You can override using the
+## `.groups` argument.</code></pre>
 <p><img src="Final_Project_Attrition_Code_files/figure-html/unnamed-chunk-2-9.png" width="672" /></p>
 <pre class="r"><code>plot_sat_overtime &lt;- ggplot(attrition_Data, aes(x = as.factor(OverTime), y = MonthlyIncome, fill = Attrition))+
                        geom_boxplot()+
@@ -939,7 +1121,8 @@ ggplot(grouped_data, aes(x = MaritalStatus, y = count, fill = Attrition)) +
   labs(title = &quot;Comparison of Marital Status and Attrition&quot;, x = &quot;Marital Status&quot;, y = &quot;Percentage&quot;) +
   scale_fill_manual(values = c(&quot;red&quot;,  &quot;blue&quot;)) +
   theme_bw()</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;MaritalStatus&#39;. You can override using the `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;MaritalStatus&#39;. You can override using the
+## `.groups` argument.</code></pre>
 <p><img src="Final_Project_Attrition_Code_files/figure-html/unnamed-chunk-3-5.png" width="672" /></p>
 <pre class="r"><code>cordata &lt;- attrition_Data %&gt;% 
    dplyr::select(c(&quot;DistanceFromHome&quot;, &quot;MonthlyIncome&quot;,
@@ -954,26 +1137,36 @@ ggplot(grouped_data, aes(x = MaritalStatus, y = count, fill = Attrition)) +
 
 cormatrix &lt;- cor(cordata)
 round(cormatrix, 2)</code></pre>
-<pre><code>##                         DistanceFromHome MonthlyIncome NumCompaniesWorked TotalWorkingYears YearsAtCompany YearsInCurrentRole YearsSinceLastPromotion YearsWithCurrManager
-## DistanceFromHome                    1.00         -0.01              -0.05              0.00          -0.02              -0.01                   -0.02                -0.02
-## MonthlyIncome                      -0.01          1.00               0.16              0.78           0.49               0.36                    0.32                 0.33
-## NumCompaniesWorked                 -0.05          0.16               1.00              0.26          -0.14              -0.10                   -0.07                -0.12
-## TotalWorkingYears                   0.00          0.78               0.26              1.00           0.64               0.49                    0.45                 0.46
-## YearsAtCompany                     -0.02          0.49              -0.14              0.64           1.00               0.78                    0.64                 0.77
-## YearsInCurrentRole                 -0.01          0.36              -0.10              0.49           0.78               1.00                    0.55                 0.71
-## YearsSinceLastPromotion            -0.02          0.32              -0.07              0.45           0.64               0.55                    1.00                 0.51
-## YearsWithCurrManager               -0.02          0.33              -0.12              0.46           0.77               0.71                    0.51                 1.00
-## Age                                 0.01          0.48               0.29              0.65           0.29               0.21                    0.22                 0.19
-##                          Age
-## DistanceFromHome        0.01
-## MonthlyIncome           0.48
-## NumCompaniesWorked      0.29
-## TotalWorkingYears       0.65
-## YearsAtCompany          0.29
-## YearsInCurrentRole      0.21
-## YearsSinceLastPromotion 0.22
-## YearsWithCurrManager    0.19
-## Age                     1.00</code></pre>
+<pre><code>##                         DistanceFromHome MonthlyIncome NumCompaniesWorked
+## DistanceFromHome                    1.00         -0.01              -0.05
+## MonthlyIncome                      -0.01          1.00               0.16
+## NumCompaniesWorked                 -0.05          0.16               1.00
+## TotalWorkingYears                   0.00          0.78               0.26
+## YearsAtCompany                     -0.02          0.49              -0.14
+## YearsInCurrentRole                 -0.01          0.36              -0.10
+## YearsSinceLastPromotion            -0.02          0.32              -0.07
+## YearsWithCurrManager               -0.02          0.33              -0.12
+## Age                                 0.01          0.48               0.29
+##                         TotalWorkingYears YearsAtCompany YearsInCurrentRole
+## DistanceFromHome                     0.00          -0.02              -0.01
+## MonthlyIncome                        0.78           0.49               0.36
+## NumCompaniesWorked                   0.26          -0.14              -0.10
+## TotalWorkingYears                    1.00           0.64               0.49
+## YearsAtCompany                       0.64           1.00               0.78
+## YearsInCurrentRole                   0.49           0.78               1.00
+## YearsSinceLastPromotion              0.45           0.64               0.55
+## YearsWithCurrManager                 0.46           0.77               0.71
+## Age                                  0.65           0.29               0.21
+##                         YearsSinceLastPromotion YearsWithCurrManager  Age
+## DistanceFromHome                          -0.02                -0.02 0.01
+## MonthlyIncome                              0.32                 0.33 0.48
+## NumCompaniesWorked                        -0.07                -0.12 0.29
+## TotalWorkingYears                          0.45                 0.46 0.65
+## YearsAtCompany                             0.64                 0.77 0.29
+## YearsInCurrentRole                         0.55                 0.71 0.21
+## YearsSinceLastPromotion                    1.00                 0.51 0.22
+## YearsWithCurrManager                       0.51                 1.00 0.19
+## Age                                        0.22                 0.19 1.00</code></pre>
 <pre class="r"><code>ggcorrplot(cormatrix, hc.order = TRUE,outline.color = &quot;white&quot;, lab = TRUE, colors = c(&quot;lightblue&quot;, &quot;cornflowerblue&quot;, &quot;blue&quot;), lab_size = 2.5) +
   labs(title=&quot;Correlation of Numeric Variables&quot;) </code></pre>
 <p><img src="Final_Project_Attrition_Code_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
@@ -1102,12 +1295,20 @@ model_forward$anova</code></pre>
 </div>
 <pre class="r"><code>#view final model
 model_forward$coefficients</code></pre>
-<pre><code>##              (Intercept)                 OverTime           JobInvolvement        TotalWorkingYears          JobSatisfaction         StockOptionLevel       NumCompaniesWorked 
-##              0.679980353              0.219522581             -0.082858907             -0.006999530             -0.039796158             -0.052767487              0.019449320 
-##  EnvironmentSatisfaction  YearsSinceLastPromotion         DistanceFromHome       YearsInCurrentRole          WorkLifeBalance                      Age RelationshipSatisfaction 
-##             -0.029631794              0.017083996              0.003680928             -0.009781401             -0.037574553             -0.003722152             -0.021928593 
-##               Department                  JobRole           EducationField    TrainingTimesLastYear               HourlyRate 
-##             -0.100720564              0.018178716              0.017390374             -0.017090726              0.000777976</code></pre>
+<pre><code>##              (Intercept)                 OverTime           JobInvolvement 
+##              0.679980353              0.219522581             -0.082858907 
+##        TotalWorkingYears          JobSatisfaction         StockOptionLevel 
+##             -0.006999530             -0.039796158             -0.052767487 
+##       NumCompaniesWorked  EnvironmentSatisfaction  YearsSinceLastPromotion 
+##              0.019449320             -0.029631794              0.017083996 
+##         DistanceFromHome       YearsInCurrentRole          WorkLifeBalance 
+##              0.003680928             -0.009781401             -0.037574553 
+##                      Age RelationshipSatisfaction               Department 
+##             -0.003722152             -0.021928593             -0.100720564 
+##                  JobRole           EducationField    TrainingTimesLastYear 
+##              0.018178716              0.017390374             -0.017090726 
+##               HourlyRate 
+##              0.000777976</code></pre>
 <pre class="r"><code>model_backward &lt;- step(attritionNum.lm, direction = &quot;backward&quot;, scope=formula(attritionNum.lm), trace = FALSE)
 
 summary(model_backward)</code></pre>
@@ -1160,12 +1361,20 @@ model_backward$anova</code></pre>
 </div>
 <pre class="r"><code>#view final model
 model_backward$coefficients</code></pre>
-<pre><code>##              (Intercept)                      Age               Department         DistanceFromHome           EducationField  EnvironmentSatisfaction               HourlyRate 
-##              0.679980353             -0.003722152             -0.100720564              0.003680928              0.017390374             -0.029631794              0.000777976 
-##           JobInvolvement                  JobRole          JobSatisfaction       NumCompaniesWorked                 OverTime RelationshipSatisfaction         StockOptionLevel 
-##             -0.082858907              0.018178716             -0.039796158              0.019449320              0.219522581             -0.021928593             -0.052767487 
-##        TotalWorkingYears    TrainingTimesLastYear          WorkLifeBalance       YearsInCurrentRole  YearsSinceLastPromotion 
-##             -0.006999530             -0.017090726             -0.037574553             -0.009781401              0.017083996</code></pre>
+<pre><code>##              (Intercept)                      Age               Department 
+##              0.679980353             -0.003722152             -0.100720564 
+##         DistanceFromHome           EducationField  EnvironmentSatisfaction 
+##              0.003680928              0.017390374             -0.029631794 
+##               HourlyRate           JobInvolvement                  JobRole 
+##              0.000777976             -0.082858907              0.018178716 
+##          JobSatisfaction       NumCompaniesWorked                 OverTime 
+##             -0.039796158              0.019449320              0.219522581 
+## RelationshipSatisfaction         StockOptionLevel        TotalWorkingYears 
+##             -0.021928593             -0.052767487             -0.006999530 
+##    TrainingTimesLastYear          WorkLifeBalance       YearsInCurrentRole 
+##             -0.017090726             -0.037574553             -0.009781401 
+##  YearsSinceLastPromotion 
+##              0.017083996</code></pre>
 <pre class="r"><code>model_both &lt;- step(intercept_only, direction = &quot;both&quot;, scope=formula(attritionNum.lm), trace = FALSE)
 
 summary(model_both)</code></pre>
@@ -1218,26 +1427,33 @@ model_both$anova</code></pre>
 </div>
 <pre class="r"><code>#view final model
 model_both$coefficients</code></pre>
-<pre><code>##              (Intercept)                 OverTime           JobInvolvement        TotalWorkingYears          JobSatisfaction         StockOptionLevel       NumCompaniesWorked 
-##              0.679980353              0.219522581             -0.082858907             -0.006999530             -0.039796158             -0.052767487              0.019449320 
-##  EnvironmentSatisfaction  YearsSinceLastPromotion         DistanceFromHome       YearsInCurrentRole          WorkLifeBalance                      Age RelationshipSatisfaction 
-##             -0.029631794              0.017083996              0.003680928             -0.009781401             -0.037574553             -0.003722152             -0.021928593 
-##               Department                  JobRole           EducationField    TrainingTimesLastYear               HourlyRate 
-##             -0.100720564              0.018178716              0.017390374             -0.017090726              0.000777976</code></pre>
-</div>
+<pre><code>##              (Intercept)                 OverTime           JobInvolvement 
+##              0.679980353              0.219522581             -0.082858907 
+##        TotalWorkingYears          JobSatisfaction         StockOptionLevel 
+##             -0.006999530             -0.039796158             -0.052767487 
+##       NumCompaniesWorked  EnvironmentSatisfaction  YearsSinceLastPromotion 
+##              0.019449320             -0.029631794              0.017083996 
+##         DistanceFromHome       YearsInCurrentRole          WorkLifeBalance 
+##              0.003680928             -0.009781401             -0.037574553 
+##                      Age RelationshipSatisfaction               Department 
+##             -0.003722152             -0.021928593             -0.100720564 
+##                  JobRole           EducationField    TrainingTimesLastYear 
+##              0.018178716              0.017390374             -0.017090726 
+##               HourlyRate 
+##              0.000777976</code></pre>
 <div
 id="maritalstatus-monthlyincome-percentsalaryhike-performancerating-yearsatcompany-relationshipsatisfaction-stockoptionlevel-trainingtimeslastyear"
-class="section level1">
-<h1>MaritalStatus + MonthlyIncome + PercentSalaryHike +
+class="section level3">
+<h3>MaritalStatus + MonthlyIncome + PercentSalaryHike +
 PerformanceRating + YearsAtCompany + RelationshipSatisfaction +
-StockOptionLevel + TrainingTimesLastYear +</h1>
+StockOptionLevel + TrainingTimesLastYear +</h3>
 </div>
 <div
 id="yearsincurrentrole-yearswithcurrmanager-age-none-60-educationfield-department-environmentsatisfaction-jobsatisfaction-totalworkingyears-monthlyincome"
-class="section level1">
-<h1>YearsInCurrentRole + YearsWithCurrManager + Age (none &gt;60)+
+class="section level3">
+<h3>YearsInCurrentRole + YearsWithCurrManager + Age (none &gt;60)+
 EducationField + Department + EnvironmentSatisfaction + JobSatisfaction
-+ TotalWorkingYears + MonthlyIncome +</h1>
++ TotalWorkingYears + MonthlyIncome +</h3>
 <pre class="r"><code>stepwise_formula &lt;- Attrition ~ OverTime + JobRole + JobInvolvement + MaritalStatus +
     JobSatisfaction + WorkLifeBalance + NumCompaniesWorked + Age +  DistanceFromHome +
      EnvironmentSatisfaction + YearsSinceLastPromotion + YearsInCurrentRole + 
@@ -1297,40 +1513,108 @@ summary(attritionNum.lm2)</code></pre>
 
 cormatrix &lt;- cor(cordata)
 round(cormatrix, 2)</code></pre>
-<pre><code>##                          OverTime JobRole JobInvolvement MaritalStatus JobSatisfaction WorkLifeBalance NumCompaniesWorked   Age DistanceFromHome EnvironmentSatisfaction
-## OverTime                     1.00   -0.07          -0.04         -0.04            0.03            0.00               0.00  0.00             0.06                    0.06
-## JobRole                     -0.07    1.00          -0.03          0.03           -0.01           -0.03              -0.04 -0.07            -0.02                    0.04
-## JobInvolvement              -0.04   -0.03           1.00         -0.02           -0.05            0.01              -0.01  0.02             0.00                    0.00
-## MaritalStatus               -0.04    0.03          -0.02          1.00            0.00           -0.02               0.01  0.03             0.08                   -0.04
-## JobSatisfaction              0.03   -0.01          -0.05          0.00            1.00           -0.03              -0.08 -0.02            -0.02                   -0.02
-## WorkLifeBalance              0.00   -0.03           0.01         -0.02           -0.03            1.00               0.02 -0.01            -0.01                    0.08
-## NumCompaniesWorked           0.00   -0.04          -0.01          0.01           -0.08            0.02               1.00  0.29            -0.05                    0.01
-## Age                          0.00   -0.07           0.02          0.03           -0.02           -0.01               0.29  1.00             0.01                   -0.01
-## DistanceFromHome             0.06   -0.02           0.00          0.08           -0.02           -0.01              -0.05  0.01             1.00                   -0.04
-## EnvironmentSatisfaction      0.06    0.04           0.00         -0.04           -0.02            0.08               0.01 -0.01            -0.04                    1.00
-## YearsSinceLastPromotion     -0.02   -0.06          -0.03          0.04           -0.02            0.04              -0.07  0.22            -0.02                    0.01
-## YearsInCurrentRole          -0.03   -0.13           0.01          0.06            0.00            0.08              -0.10  0.21            -0.01                    0.02
-## RelationshipSatisfaction     0.02    0.03           0.02         -0.05           -0.03            0.04               0.04 -0.01             0.04                    0.00
-## TrainingTimesLastYear       -0.06    0.07          -0.02         -0.04           -0.03            0.02              -0.07 -0.05            -0.04                   -0.01
-## TotalWorkingYears           -0.03   -0.11          -0.01          0.04           -0.05            0.02               0.26  0.65             0.00                   -0.02
-## BusinessTravel              -0.03   -0.02          -0.04         -0.08            0.04            0.03               0.02  0.00             0.06                    0.00
-##                          YearsSinceLastPromotion YearsInCurrentRole RelationshipSatisfaction TrainingTimesLastYear TotalWorkingYears BusinessTravel
-## OverTime                                   -0.02              -0.03                     0.02                 -0.06             -0.03          -0.03
-## JobRole                                    -0.06              -0.13                     0.03                  0.07             -0.11          -0.02
-## JobInvolvement                             -0.03               0.01                     0.02                 -0.02             -0.01          -0.04
-## MaritalStatus                               0.04               0.06                    -0.05                 -0.04              0.04          -0.08
-## JobSatisfaction                            -0.02               0.00                    -0.03                 -0.03             -0.05           0.04
-## WorkLifeBalance                             0.04               0.08                     0.04                  0.02              0.02           0.03
-## NumCompaniesWorked                         -0.07              -0.10                     0.04                 -0.07              0.26           0.02
-## Age                                         0.22               0.21                    -0.01                 -0.05              0.65           0.00
-## DistanceFromHome                           -0.02              -0.01                     0.04                 -0.04              0.00           0.06
-## EnvironmentSatisfaction                     0.01               0.02                     0.00                 -0.01             -0.02           0.00
-## YearsSinceLastPromotion                     1.00               0.55                     0.03                 -0.04              0.45           0.04
-## YearsInCurrentRole                          0.55               1.00                     0.00                 -0.02              0.49          -0.02
-## RelationshipSatisfaction                    0.03               0.00                     1.00                  0.02             -0.02           0.05
-## TrainingTimesLastYear                      -0.04              -0.02                     0.02                  1.00             -0.04           0.00
-## TotalWorkingYears                           0.45               0.49                    -0.02                 -0.04              1.00          -0.03
-## BusinessTravel                              0.04              -0.02                     0.05                  0.00             -0.03           1.00</code></pre>
+<pre><code>##                          OverTime JobRole JobInvolvement MaritalStatus
+## OverTime                     1.00   -0.07          -0.04         -0.04
+## JobRole                     -0.07    1.00          -0.03          0.03
+## JobInvolvement              -0.04   -0.03           1.00         -0.02
+## MaritalStatus               -0.04    0.03          -0.02          1.00
+## JobSatisfaction              0.03   -0.01          -0.05          0.00
+## WorkLifeBalance              0.00   -0.03           0.01         -0.02
+## NumCompaniesWorked           0.00   -0.04          -0.01          0.01
+## Age                          0.00   -0.07           0.02          0.03
+## DistanceFromHome             0.06   -0.02           0.00          0.08
+## EnvironmentSatisfaction      0.06    0.04           0.00         -0.04
+## YearsSinceLastPromotion     -0.02   -0.06          -0.03          0.04
+## YearsInCurrentRole          -0.03   -0.13           0.01          0.06
+## RelationshipSatisfaction     0.02    0.03           0.02         -0.05
+## TrainingTimesLastYear       -0.06    0.07          -0.02         -0.04
+## TotalWorkingYears           -0.03   -0.11          -0.01          0.04
+## BusinessTravel              -0.03   -0.02          -0.04         -0.08
+##                          JobSatisfaction WorkLifeBalance NumCompaniesWorked
+## OverTime                            0.03            0.00               0.00
+## JobRole                            -0.01           -0.03              -0.04
+## JobInvolvement                     -0.05            0.01              -0.01
+## MaritalStatus                       0.00           -0.02               0.01
+## JobSatisfaction                     1.00           -0.03              -0.08
+## WorkLifeBalance                    -0.03            1.00               0.02
+## NumCompaniesWorked                 -0.08            0.02               1.00
+## Age                                -0.02           -0.01               0.29
+## DistanceFromHome                   -0.02           -0.01              -0.05
+## EnvironmentSatisfaction            -0.02            0.08               0.01
+## YearsSinceLastPromotion            -0.02            0.04              -0.07
+## YearsInCurrentRole                  0.00            0.08              -0.10
+## RelationshipSatisfaction           -0.03            0.04               0.04
+## TrainingTimesLastYear              -0.03            0.02              -0.07
+## TotalWorkingYears                  -0.05            0.02               0.26
+## BusinessTravel                      0.04            0.03               0.02
+##                            Age DistanceFromHome EnvironmentSatisfaction
+## OverTime                  0.00             0.06                    0.06
+## JobRole                  -0.07            -0.02                    0.04
+## JobInvolvement            0.02             0.00                    0.00
+## MaritalStatus             0.03             0.08                   -0.04
+## JobSatisfaction          -0.02            -0.02                   -0.02
+## WorkLifeBalance          -0.01            -0.01                    0.08
+## NumCompaniesWorked        0.29            -0.05                    0.01
+## Age                       1.00             0.01                   -0.01
+## DistanceFromHome          0.01             1.00                   -0.04
+## EnvironmentSatisfaction  -0.01            -0.04                    1.00
+## YearsSinceLastPromotion   0.22            -0.02                    0.01
+## YearsInCurrentRole        0.21            -0.01                    0.02
+## RelationshipSatisfaction -0.01             0.04                    0.00
+## TrainingTimesLastYear    -0.05            -0.04                   -0.01
+## TotalWorkingYears         0.65             0.00                   -0.02
+## BusinessTravel            0.00             0.06                    0.00
+##                          YearsSinceLastPromotion YearsInCurrentRole
+## OverTime                                   -0.02              -0.03
+## JobRole                                    -0.06              -0.13
+## JobInvolvement                             -0.03               0.01
+## MaritalStatus                               0.04               0.06
+## JobSatisfaction                            -0.02               0.00
+## WorkLifeBalance                             0.04               0.08
+## NumCompaniesWorked                         -0.07              -0.10
+## Age                                         0.22               0.21
+## DistanceFromHome                           -0.02              -0.01
+## EnvironmentSatisfaction                     0.01               0.02
+## YearsSinceLastPromotion                     1.00               0.55
+## YearsInCurrentRole                          0.55               1.00
+## RelationshipSatisfaction                    0.03               0.00
+## TrainingTimesLastYear                      -0.04              -0.02
+## TotalWorkingYears                           0.45               0.49
+## BusinessTravel                              0.04              -0.02
+##                          RelationshipSatisfaction TrainingTimesLastYear
+## OverTime                                     0.02                 -0.06
+## JobRole                                      0.03                  0.07
+## JobInvolvement                               0.02                 -0.02
+## MaritalStatus                               -0.05                 -0.04
+## JobSatisfaction                             -0.03                 -0.03
+## WorkLifeBalance                              0.04                  0.02
+## NumCompaniesWorked                           0.04                 -0.07
+## Age                                         -0.01                 -0.05
+## DistanceFromHome                             0.04                 -0.04
+## EnvironmentSatisfaction                      0.00                 -0.01
+## YearsSinceLastPromotion                      0.03                 -0.04
+## YearsInCurrentRole                           0.00                 -0.02
+## RelationshipSatisfaction                     1.00                  0.02
+## TrainingTimesLastYear                        0.02                  1.00
+## TotalWorkingYears                           -0.02                 -0.04
+## BusinessTravel                               0.05                  0.00
+##                          TotalWorkingYears BusinessTravel
+## OverTime                             -0.03          -0.03
+## JobRole                              -0.11          -0.02
+## JobInvolvement                       -0.01          -0.04
+## MaritalStatus                         0.04          -0.08
+## JobSatisfaction                      -0.05           0.04
+## WorkLifeBalance                       0.02           0.03
+## NumCompaniesWorked                    0.26           0.02
+## Age                                   0.65           0.00
+## DistanceFromHome                      0.00           0.06
+## EnvironmentSatisfaction              -0.02           0.00
+## YearsSinceLastPromotion               0.45           0.04
+## YearsInCurrentRole                    0.49          -0.02
+## RelationshipSatisfaction             -0.02           0.05
+## TrainingTimesLastYear                -0.04           0.00
+## TotalWorkingYears                     1.00          -0.03
+## BusinessTravel                       -0.03           1.00</code></pre>
 <pre class="r"><code>ggcorrplot(cormatrix, hc.order = TRUE,outline.color = &quot;white&quot;, lab = TRUE, colors = c(&quot;lightblue&quot;, &quot;cornflowerblue&quot;, &quot;blue&quot;), lab_size = 2.5) +
   labs(title=&quot;Correlation of Numeric Variables&quot;) </code></pre>
 <p><img src="Final_Project_Attrition_Code_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
@@ -1399,7 +1683,8 @@ summary(model_test)</code></pre>
 ## Number of Fisher Scoring iterations: 6</code></pre>
 <pre class="r"><code># Locking Random
 RNGkind(sample.kind = &quot;Rounding&quot;)</code></pre>
-<pre><code>## Warning in RNGkind(sample.kind = &quot;Rounding&quot;): non-uniform &#39;Rounding&#39; sampler used</code></pre>
+<pre><code>## Warning in RNGkind(sample.kind = &quot;Rounding&quot;): non-uniform &#39;Rounding&#39; sampler
+## used</code></pre>
 <pre class="r"><code>set.seed(9170) #4170
 
 # Index
@@ -1652,14 +1937,13 @@ confusion_matrix_att</code></pre>
 ##        &#39;Positive&#39; Class : 0               
 ## </code></pre>
 </div>
-<div id="get-the-average-of-the-test-sets" class="section level1">
-<h1>get the average of the test sets</h1>
-</div>
+<div id="get-the-average-of-the-test-sets" class="section level3">
+<h3>get the average of the test sets</h3>
 <div
 id="loop-for-many-k-and-the-average-of-many-training-test-partition"
-class="section level1">
-<h1>Loop for many k and the average of many training / test
-partition</h1>
+class="section level4">
+<h4>Loop for many k and the average of many training / test
+partition</h4>
 <pre class="r"><code>iterations = 500
 numks = 30
 
@@ -1693,7 +1977,8 @@ plot(seq(1,numks,1),MeanAcc, type = &quot;l&quot;)</code></pre>
 <p><img src="Final_Project_Attrition_Code_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <pre class="r"><code># Locking Random
 RNGkind(sample.kind = &quot;Rounding&quot;)</code></pre>
-<pre><code>## Warning in RNGkind(sample.kind = &quot;Rounding&quot;): non-uniform &#39;Rounding&#39; sampler used</code></pre>
+<pre><code>## Warning in RNGkind(sample.kind = &quot;Rounding&quot;): non-uniform &#39;Rounding&#39; sampler
+## used</code></pre>
 <pre class="r"><code>set.seed(9170)
 
 # Splitting
@@ -1914,8 +2199,10 @@ Income.lm &lt;-glm(MonthlyIncome ~ Age + BusinessTravel + DailyRate + Department
     TotalWorkingYears + TrainingTimesLastYear + WorkLifeBalance + 
     YearsAtCompany + YearsInCurrentRole + YearsSinceLastPromotion + 
     YearsWithCurrManager, data = attrition_Data3)</code></pre>
-<pre><code>## Warning in model.matrix.default(mt, mf, contrasts): the response appeared on the right-hand side and was dropped</code></pre>
-<pre><code>## Warning in model.matrix.default(mt, mf, contrasts): problem with term 17 in model.matrix: no columns are assigned</code></pre>
+<pre><code>## Warning in model.matrix.default(mt, mf, contrasts): the response appeared on
+## the right-hand side and was dropped</code></pre>
+<pre><code>## Warning in model.matrix.default(mt, mf, contrasts): problem with term 17 in
+## model.matrix: no columns are assigned</code></pre>
 <pre class="r"><code>summary(Income.lm)</code></pre>
 <pre><code>## 
 ## Call:
@@ -2025,15 +2312,25 @@ model_forward_income$anova</code></pre>
 </div>
 <pre class="r"><code>#view final model
 model_forward_income$coefficients</code></pre>
-<pre><code>##              (Intercept)                 OverTime           JobInvolvement        TotalWorkingYears          JobSatisfaction         StockOptionLevel       NumCompaniesWorked 
-##              0.679980353              0.219522581             -0.082858907             -0.006999530             -0.039796158             -0.052767487              0.019449320 
-##  EnvironmentSatisfaction  YearsSinceLastPromotion         DistanceFromHome       YearsInCurrentRole          WorkLifeBalance                      Age RelationshipSatisfaction 
-##             -0.029631794              0.017083996              0.003680928             -0.009781401             -0.037574553             -0.003722152             -0.021928593 
-##               Department                  JobRole           EducationField    TrainingTimesLastYear               HourlyRate 
-##             -0.100720564              0.018178716              0.017390374             -0.017090726              0.000777976</code></pre>
+<pre><code>##              (Intercept)                 OverTime           JobInvolvement 
+##              0.679980353              0.219522581             -0.082858907 
+##        TotalWorkingYears          JobSatisfaction         StockOptionLevel 
+##             -0.006999530             -0.039796158             -0.052767487 
+##       NumCompaniesWorked  EnvironmentSatisfaction  YearsSinceLastPromotion 
+##              0.019449320             -0.029631794              0.017083996 
+##         DistanceFromHome       YearsInCurrentRole          WorkLifeBalance 
+##              0.003680928             -0.009781401             -0.037574553 
+##                      Age RelationshipSatisfaction               Department 
+##             -0.003722152             -0.021928593             -0.100720564 
+##                  JobRole           EducationField    TrainingTimesLastYear 
+##              0.018178716              0.017390374             -0.017090726 
+##               HourlyRate 
+##              0.000777976</code></pre>
 <pre class="r"><code>model_backward_income &lt;- step(Income.lm, direction = &quot;backward&quot;, scope=formula(Income.lm), trace = FALSE)</code></pre>
-<pre><code>## Warning in model.matrix.default(object, data = structure(list(MonthlyIncome = c(4403L, : the response appeared on the right-hand side and was dropped</code></pre>
-<pre><code>## Warning in model.matrix.default(object, data = structure(list(MonthlyIncome = c(4403L, : problem with term 17 in model.matrix: no columns are assigned</code></pre>
+<pre><code>## Warning in model.matrix.default(object, data = structure(list(MonthlyIncome =
+## c(4403L, : the response appeared on the right-hand side and was dropped</code></pre>
+<pre><code>## Warning in model.matrix.default(object, data = structure(list(MonthlyIncome =
+## c(4403L, : problem with term 17 in model.matrix: no columns are assigned</code></pre>
 <pre class="r"><code>summary(model_backward_income)</code></pre>
 <pre><code>## 
 ## Call:
@@ -2073,10 +2370,14 @@ model_backward_income$anova</code></pre>
 </div>
 <pre class="r"><code>#view final model
 model_backward_income$coefficients</code></pre>
-<pre><code>##             (Intercept)          BusinessTravel              Department        DistanceFromHome EnvironmentSatisfaction                JobLevel       PercentSalaryHike 
-##             -1279.47263              -187.42102               384.54999               -15.39188               -81.95753              3781.33287                31.62287 
-##       PerformanceRating       TotalWorkingYears    YearsWithCurrManager 
-##              -313.37357                59.15472               -54.18839</code></pre>
+<pre><code>##             (Intercept)          BusinessTravel              Department 
+##             -1279.47263              -187.42102               384.54999 
+##        DistanceFromHome EnvironmentSatisfaction                JobLevel 
+##               -15.39188               -81.95753              3781.33287 
+##       PercentSalaryHike       PerformanceRating       TotalWorkingYears 
+##                31.62287              -313.37357                59.15472 
+##    YearsWithCurrManager 
+##               -54.18839</code></pre>
 <pre class="r"><code>model_both_income &lt;- step(intercept_only, direction = &quot;both&quot;, scope=formula(Income.lm), trace = FALSE)
 
 summary(model_both_income)</code></pre>
@@ -2129,29 +2430,35 @@ model_both_income$anova</code></pre>
 </div>
 <pre class="r"><code>#view final model
 model_both_income$coefficients</code></pre>
-<pre><code>##              (Intercept)                 OverTime           JobInvolvement        TotalWorkingYears          JobSatisfaction         StockOptionLevel       NumCompaniesWorked 
-##              0.679980353              0.219522581             -0.082858907             -0.006999530             -0.039796158             -0.052767487              0.019449320 
-##  EnvironmentSatisfaction  YearsSinceLastPromotion         DistanceFromHome       YearsInCurrentRole          WorkLifeBalance                      Age RelationshipSatisfaction 
-##             -0.029631794              0.017083996              0.003680928             -0.009781401             -0.037574553             -0.003722152             -0.021928593 
-##               Department                  JobRole           EducationField    TrainingTimesLastYear               HourlyRate 
-##             -0.100720564              0.018178716              0.017390374             -0.017090726              0.000777976</code></pre>
+<pre><code>##              (Intercept)                 OverTime           JobInvolvement 
+##              0.679980353              0.219522581             -0.082858907 
+##        TotalWorkingYears          JobSatisfaction         StockOptionLevel 
+##             -0.006999530             -0.039796158             -0.052767487 
+##       NumCompaniesWorked  EnvironmentSatisfaction  YearsSinceLastPromotion 
+##              0.019449320             -0.029631794              0.017083996 
+##         DistanceFromHome       YearsInCurrentRole          WorkLifeBalance 
+##              0.003680928             -0.009781401             -0.037574553 
+##                      Age RelationshipSatisfaction               Department 
+##             -0.003722152             -0.021928593             -0.100720564 
+##                  JobRole           EducationField    TrainingTimesLastYear 
+##              0.018178716              0.017390374             -0.017090726 
+##               HourlyRate 
+##              0.000777976</code></pre>
+</div>
 </div>
 <div
 id="maritalstatus-monthlyincome-percentsalaryhike-performancerating-yearsatcompany-relationshipsatisfaction-stockoptionlevel-trainingtimeslastyear-jobrole"
-class="section level1">
-<h1>MaritalStatus + MonthlyIncome + PercentSalaryHike +
+class="section level3">
+<h3>MaritalStatus + MonthlyIncome + PercentSalaryHike +
 PerformanceRating + YearsAtCompany + RelationshipSatisfaction +
-StockOptionLevel + TrainingTimesLastYear + JobRole +</h1>
+StockOptionLevel + TrainingTimesLastYear + JobRole +</h3>
 </div>
 <div
-id="yearsincurrentrole-yearswithcurrmanager-age-none-60-educationfield-department-environmentsatisfaction-jobsatisfaction-totalworkingyears-monthlyincome-1"
-class="section level1">
-<h1>YearsInCurrentRole + YearsWithCurrManager + Age (none &gt;60)+
+id="yearsincurrentrole-yearswithcurrmanager-age-none-60-educationfield-department-environmentsatisfaction-jobsatisfaction-totalworkingyears-monthlyincome-worklifebalance"
+class="section level3">
+<h3>YearsInCurrentRole + YearsWithCurrManager + Age (none &gt;60)+
 EducationField + Department + EnvironmentSatisfaction + JobSatisfaction
-+ TotalWorkingYears + MonthlyIncome +</h1>
-</div>
-<div id="worklifebalance" class="section level1">
-<h1>WorkLifeBalance +</h1>
++ TotalWorkingYears + MonthlyIncome + WorkLifeBalance +</h3>
 <pre class="r"><code>stepwise_formula_income &lt;- MonthlyIncome ~ OverTime + JobInvolvement + TotalWorkingYears    +
     JobSatisfaction + StockOptionLevel+  NumCompaniesWorked + EnvironmentSatisfaction + 
   YearsSinceLastPromotion + Department + JobRole + DistanceFromHome + EducationField +
@@ -2265,6 +2572,7 @@ income_copy_Path &lt;- &quot;D:/University/SMU/Doing_Data_Science/DDS_repository
 
 # Save the updated dataset
 write.csv(testing_set_income, file = income_copy_Path, row.names = FALSE)</code></pre>
+</div>
 </div>
 
 
