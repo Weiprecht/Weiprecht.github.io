@@ -19,6 +19,10 @@ navbar:
           menu:
             - text: "Attrition Application"
               href: " https://weiprecht.shinyapps.io/attrition_app/"
+        - text: "Employment Project Presentation"
+          menu:
+            - text: "Attrition Video"
+              href: " https://raw.githubusercontent.com/Weiprecht/CaseStudy2DDS/main/GMT20231210-042538_Recording_1920x1080.mp4"
         - text: "Ames Real Estate Analysis"
           href: Housing_Final_Project_Code.html
         - text: "Ames Real Estate Project App"
