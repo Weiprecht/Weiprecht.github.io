@@ -1,0 +1,10 @@
+name: attrition_app
+title:
+username: weiprecht
+account: weiprecht
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 10763429
+bundleId: 8030030
+url: https://weiprecht.shinyapps.io/attrition_app/
+version: 1

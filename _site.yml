@@ -18,7 +18,7 @@ navbar:
         - text: "Employment Project Apps"
           menu:
             - text: "Attrition Application"
-              href: "https://weiprecht.shinyapps.io/attrition_app_code/"
+              href: " https://weiprecht.shinyapps.io/attrition_app/"
         - text: "Ames Real Estate Analysis"
           href: Housing_Final_Project_Code.html
         - text: "Ames Real Estate Project App"
