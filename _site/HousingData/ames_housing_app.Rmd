@@ -1,0 +1,88 @@
+---
+title: "Ames Housing App"
+date: "`r Sys.Date()`"
+output: html_document
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(shiny)
+library(shinyjs)
+library(ggplot2)
+library(readr)
+
+# URL to the raw content of the CSV file on GitHub
+github_url <- "https://raw.githubusercontent.com/Weiprecht/Weiprecht.github.io/main/HousingData/AmesHousing_Data3.csv"
+
+
+# Read the CSV file from the GitHub repository
+housing_data <- read_csv(github_url)
+
+# UI part
+ui <- fluidPage(
+  titlePanel("Ames Housing Data Analysis"),
+  
+  fluidRow(
+    column(6,
+      plotOutput("scatterplot1", height = "400px"),
+      plotOutput("scatterplot2", height = "400px")
+    ),
+    column(6,
+      selectInput("neighborhood", "Select Neighborhood:",
+                  choices = c("BrkSide", "Edwards", "NAmes"),
+                  selected = "BrkSide"),
+      plotOutput("histogram1", height = "200px"),
+      plotOutput("histogram2", height = "200px")
+    )
+  )
+)
+
+# Server part
+server <- function(input, output) {
+  output$scatterplot1 <- renderPlot({
+    ggplot(housing_data, aes(x = GrLivAreaHundr, y = SalePriceHundr, color = Neighborhood)) +
+      geom_point() +
+      geom_smooth(method = "lm", formula = y ~ x, se = FALSE) +
+      labs(title = "Relationship of Price and Living Area by Neighborhood",
+           x = "Total Area", y = "Sale Price", color = "Neighborhood")
+  })
+  
+  output$scatterplot2 <- renderPlot({
+    ggplot(housing_data, aes(x = lGrLivAreaHundr, y = lSalePriceHundr, color = Neighborhood)) +
+      geom_point() +
+      geom_smooth(method = "lm", formula = y ~ x, se = FALSE) +
+      labs(title = "Relationship of LogPrice and LogLiving Area by Neighborhood",
+           x = "Logged Area (in hundreds of sqrft)", y = "Logged Sale Price (in hundreds)", color = "Neighborhood")
+  })
+  
+  output$histogram1 <- renderPlot({
+    selected_neighborhood <- input$neighborhood
+    filtered_data <- housing_data[housing_data$Neighborhood == selected_neighborhood, ]
+    
+    ggplot(filtered_data, aes(x = GrLivAreaHundr)) +
+      geom_histogram(binwidth = 1, fill = "blue", color = "black") +
+      labs(title = paste("Histogram of GrLivAreaHundr for", selected_neighborhood),
+           x = "Total Area", y = "Frequency")
+  })
+  
+  output$histogram2 <- renderPlot({
+    selected_neighborhood <- input$neighborhood
+    filtered_data <- housing_data[housing_data$Neighborhood == selected_neighborhood, ]
+    
+    ggplot(filtered_data, aes(x = SalePriceHundr)) +
+      geom_histogram(binwidth = 10^2, fill = "green", color = "black") +
+      labs(title = paste("Histogram of SalePriceHundr for", selected_neighborhood),
+           x = "Sale Price", y = "Frequency")
+  })
+}
+
+# Run the application
+shinyApp(ui = ui, server = server)
+
+```
+

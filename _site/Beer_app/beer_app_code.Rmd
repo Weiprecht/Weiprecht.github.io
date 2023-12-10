@@ -1,0 +1,97 @@
+---
+title: "Beer Data App"
+date: "`r Sys.Date()`"
+output: html_document
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(shiny)
+library(shinyjs)
+library(ggplot2)
+library(readr)
+
+# URL to the raw content of the CSV file on GitHub
+github_url <- "https://raw.githubusercontent.com/Weiprecht/Weiprecht.github.io/main/Beer_app/beer_updated.csv"
+
+# Read the CSV file from the GitHub repository
+beer_data <- read_csv(github_url)
+
+# UI part
+ui <- fluidPage(
+  shinyjs::useShinyjs(),  # Enable shinyjs
+  titlePanel("Beer Dataset Analysis"),
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("stateInput", "Select State:",
+                  choices = c("All", unique(beer_data$State))),
+      selectInput("varInput", "Select Variable:",
+                  choices = c("IBU", "ABV")),
+      sliderInput("binSize", "Adjust Bin Size:",
+                  min = 0.01, max = 3.5, value = 0.2, step = 0.01),  # Slider for bin size (initial values for any selection)
+      actionButton("returnButton", "Return to Home Page")  # New button
+    ),
+    mainPanel(
+      plotOutput(outputId = "histogram")
+    )
+  )
+)
+
+
+# Server part
+server <- function(input, output, session) {
+  filtered_data <- reactive({
+    req(input$stateInput, input$varInput)
+    
+    if (input$stateInput == "All") {
+      filtered <- beer_data
+    } else {
+      filtered <- beer_data[beer_data$State == input$stateInput, ]
+    }
+    
+    if (input$varInput == "IBU") {
+      filtered <- filtered[, c("State", "IBU")]
+    } else {
+      filtered <- filtered[, c("State", "ABV")]
+    }
+    
+    return(filtered)  # Return the filtered dataset
+  })
+  
+  observeEvent(input$varInput, {
+    if (input$varInput == "IBU") {
+      updateSliderInput(session, "binSize", 
+                        min = 2, max = 4, value = 1, step = 0.1)
+    } else if (input$varInput == "ABV") {
+      updateSliderInput(session, "binSize", 
+                        min = 0.001, max = 0.01, value = 0.01, step = 0.001)
+    }
+  })
+  
+  output$histogram <- renderPlot({
+    ggplot(filtered_data(), aes(x = .data[[input$varInput]])) +
+      geom_histogram(binwidth = input$binSize, fill = "blue", color = "black") +
+      labs(x = input$varInput, y = "Frequency", title = "Count of Beer Observations By State and Variable Type (IBU, ABV)")
+  })
+  
+  observeEvent(input$returnButton, {
+    tryCatch({
+      cat("Return button clicked\n")  # Log message in R console
+      url <- "https://weiprecht.github.io/index.html"
+      shinyjs::runjs(sprintf("window.location.href = '%s'", url))
+    }, error = function(e) {
+      cat("Error occurred:", conditionMessage(e), "\n")  # Log error message
+    })
+  })
+}
+
+# Run the application 
+shinyApp(ui = ui, server = server)
+
+
+```

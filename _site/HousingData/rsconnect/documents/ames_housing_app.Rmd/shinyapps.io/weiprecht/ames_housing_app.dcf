@@ -1,0 +1,10 @@
+name: ames_housing_app
+title:
+username: weiprecht
+account: weiprecht
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 10686096
+bundleId: 7992980
+url: https://weiprecht.shinyapps.io/ames_housing_app/
+version: 1

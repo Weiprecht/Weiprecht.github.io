@@ -1,16 +1,17 @@
 ---
-title: "DDS Mid-term Project Code"
+title: "DDS Mid-term Project Code2"
 author: "Adam E."
 date: "`r Sys.Date()`"
-output: html_document:
-  theme: cerulean # Replace with your desired theme
+output:
+  html_document:
+    df_print: paged
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-# General Information: https://thegrowlerguys.com/understanding-abv-and-ibu/
-#What is the IBU?
+### General Information: https://thegrowlerguys.com/understanding-abv-and-ibu/
+### What is the IBU?
 Beer is produced by fermenting starch and then flavored with hops.  Hops are the plants that contribute to the bitterness of a beer, but not all hops will make beer bitter.  The bitterness comes from alpha acids found in the resin glands of the flowers of the hop plants.  The degree of bitterness will depend on three factors:
 
 The type of hops used.  Hops with a higher concentration of alpha acids will generate a stronger bitter taste.  These are usually referred to as “bittering hops.”  Hops with less concentration are called “aroma hops” and will add flavors such as citrus, pine, or mango.

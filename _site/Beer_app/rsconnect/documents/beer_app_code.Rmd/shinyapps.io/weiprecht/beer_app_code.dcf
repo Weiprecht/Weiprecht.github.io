@@ -1,0 +1,10 @@
+name: beer_app_code
+title:
+username: weiprecht
+account: weiprecht
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 10681558
+bundleId: 7992006
+url: https://weiprecht.shinyapps.io/beer_app_code/
+version: 1
