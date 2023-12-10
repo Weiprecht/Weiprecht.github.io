@@ -100,8 +100,11 @@ Path <- "D:/University/SMU/Doing_Data_Science/DDS_repository/DDS_Final_project/C
 attrition_Data = read.csv(Path, header=TRUE)
 
 # Drop because they are irrelavant and only have one option
-attrition_Data <- attrition_Data[, !names(attrition_Data) %in% c("Over18", "Over18Num", "EmployeeCount", "StandardHours", "TravelNum")]
+attrition_Data <- attrition_Data[, !names(attrition_Data) %in% c("Over18", "EmployeeCount", "StandardHours", "TravelNum")]
 attrition_Data
+
+attrition_Data$Attrition = factor(attrition_Data$Attrition, levels = c("Yes", "No"))
+
 
 # create an alternative model for regression
 attrition_Data3 <- attrition_Data
@@ -216,7 +219,7 @@ ggplot(percentage_data, aes(x = OverTime, y = percentage, fill = Attrition)) +
   geom_text(aes(label = paste0(round(percentage), "%")), 
             position = position_stack(vjust = 0.5), size = 3, color = "black")
 
-
+#-----------------------------------------------------------
 # Calculate percentages for each JobRole and Age_Group
 percentage_data <- filtered_data %>%
   group_by(JobRole, Age_Group, Attrition) %>%
@@ -235,6 +238,7 @@ ggplot(percentage_data, aes(x = Age_Group, y = percentage, fill = Attrition)) +
   geom_text(aes(label = paste0(round(percentage), "%")), 
             position = position_stack(vjust = 0.5), size = 3, color = "black")
 
+#-------------------------------------------------------------------------
 # Calculate percentages for each JobRole and Overtime
 percentage_data <- filtered_data %>%
   group_by(JobRole, EnvironmentSatisfaction, Attrition) %>%
@@ -254,6 +258,7 @@ ggplot(percentage_data, aes(x = EnvironmentSatisfaction, y = percentage, fill = 
   geom_text(aes(label = paste0(round(percentage), "%")), 
             position = position_stack(vjust = 0.5), size = 3, color = "black")
 
+#-----------------------------------------------------------------------------
 # Calculate percentages for each JobRole and Overtime
 percentage_data <- filtered_data %>%
   group_by(JobRole, JobInvolvement, Attrition) %>%
@@ -272,6 +277,9 @@ ggplot(percentage_data, aes(x = JobInvolvement, y = percentage, fill = Attrition
   facet_wrap(~ JobRole, scales = "free") +
   geom_text(aes(label = paste0(round(percentage), "%")), 
             position = position_stack(vjust = 0.5), size = 3, color = "black")
+
+
+#--------------------------------------------------------------------------------
 
 attrition_Data$WorkLifeBalance2 <- factor(attrition_Data$WorkLifeBalance,
                                                 levels = c(1, 2, 3, 4),
@@ -296,6 +304,7 @@ ggplot(percentage_data, aes(x = WorkLifeBalance2, y = percentage, fill = Attriti
   geom_text(aes(label = paste0(round(percentage), "%")), 
             position = position_stack(vjust = 0.5), size = 3, color = "black")
 
+#---------------------------------------------------------------------------------------
 
 attrition_Data$Attrition = factor(attrition_Data$Attrition, levels = c("Yes", "No"))
 
@@ -311,6 +320,8 @@ attrition_Data %>%
   labs(title = "Job Role and Attrition", x = "Job Role", y = "Percentage") +
   scale_fill_manual(values = c("red",  "blue")) +
   theme(axis.text.x = element_text(angle = 20, hjust = 0.5))
+
+#-------------------------------------------------------------------------------------
 
 attrition_Data %>% 
   dplyr::group_by(JobInvolvement, Attrition) %>% 

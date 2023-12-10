@@ -23,11 +23,6 @@ github_url <- "https://raw.githubusercontent.com/Weiprecht/Weiprecht.github.io/m
 # Read the CSV file from the GitHub repository
 attrition_Data <- read_csv(github_url)
 
-#spec(attrition_Data)
-
-attrition_Data2 <- attrition_Data
-attrition_Data2$Attrition = factor(attrition_Data2$Attrition, levels = c("Yes", "No"))
-
 
 # # UI part
 ui <- fluidPage(
@@ -36,7 +31,7 @@ ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
       selectInput("selected_variable", "Select Variable:",
-                  choices = c("OverTime", "JobRole", "EmployeeSatisfaction"),
+                  choices = c("OverTime", "JobRole", "EnvironmentSatisfaction"),
                   selected = "OverTime")
     ),
     mainPanel(
@@ -48,7 +43,7 @@ ui <- fluidPage(
 # Server part
 server <- function(input, output) {
   output$attrition_barplot <- renderPlot({
-    attrition_Data2 %>%
+    attrition_Data %>%
       group_by(Attrition, !!sym(input$selected_variable)) %>%
       summarise(cnt = n()) %>%
       mutate(freq = (cnt / sum(cnt)) * 100) %>%
